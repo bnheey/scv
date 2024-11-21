@@ -7,7 +7,7 @@ const App = () => {
   return (
     <div className="flex items-center justify-center">
       <Router>
-        <div className="w-[500px] h-screen bg-white flex flex-col justify-between py-[30px]">
+        <div className="w-[500px] h-screen bg-white flex flex-col justify-between pt-[30px]">
           <AppRouter />
           <Navigation />
         </div>
