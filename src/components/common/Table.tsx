@@ -1,73 +1,104 @@
-// sort 기능이 있는 테이블 컴포넌트
-import React, { ReactNode } from "react";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { CaretDown, CaretUp } from "@phosphor-icons/react";
+import React, { useState } from "react";
+import Text from "./Text";
 import clsx from "clsx";
 
 interface TableProps {
-  children: ReactNode;
-  className?: string;
+  data: Array<{ [key: string]: any }>;
+  columns: Array<{ key: string; label: string }>;
 }
 
-interface TableHeaderProps {
-  children: ReactNode;
-  className?: string;
-}
+const Table = ({ data, columns }: TableProps) => {
+  const [sortConfig, setSortConfig] = useState<{
+    key: string;
+    direction: "asc" | "desc";
+  } | null>(null);
 
-interface TableBodyProps {
-  children: ReactNode;
-  className?: string;
-}
+  const sortedData = React.useMemo(() => {
+    const sortableData = [...data];
+    if (sortConfig !== null) {
+      sortableData.sort((a, b) => {
+        if (a[sortConfig.key] < b[sortConfig.key]) {
+          return sortConfig.direction === "asc" ? -1 : 1;
+        }
+        if (a[sortConfig.key] > b[sortConfig.key]) {
+          return sortConfig.direction === "asc" ? 1 : -1;
+        }
+        return 0;
+      });
+    }
+    return sortableData;
+  }, [data, sortConfig]);
 
-interface TableRowProps {
-  children: ReactNode;
-  className?: string;
-}
+  const requestSort = (key: string) => {
+    let direction: "asc" | "desc" = "asc";
+    if (
+      sortConfig &&
+      sortConfig.key === key &&
+      sortConfig.direction === "asc"
+    ) {
+      direction = "desc";
+    }
+    setSortConfig({ key, direction });
+  };
+  console.log(sortConfig?.key);
 
-interface TableCellProps {
-  children: ReactNode;
-  className?: string;
-}
-
-interface TableSortProps {
-  children: ReactNode;
-  sortKey: string;
-  sortDirection: string;
-  onClick: (sortKey: string) => void;
-}
-
-const Table = ({ children, className }: TableProps) => {
-  return <table className={clsx("w-full", className)}>{children}</table>;
-};
-
-const TableHeader = ({ children, className }: TableHeaderProps) => {
-  return <thead className={clsx(className)}>{children}</thead>;
-};
-
-const TableBody = ({ children, className }: TableBodyProps) => {
-  return <tbody className={clsx(className)}>{children}</tbody>;
-};
-
-const TableRow = ({ children, className }: TableRowProps) => {
-  return <tr className={clsx(className)}>{children}</tr>;
-};
-
-const TableCell = ({ children, className }: TableCellProps) => {
-  return <td className={clsx("px-4 py-2", className)}>{children}</td>;
-};
-
-const TableSort = ({
-  children,
-  sortKey,
-  sortDirection,
-  onClick,
-}: TableSortProps) => {
   return (
-    <th className="cursor-pointer" onClick={() => onClick(sortKey)}>
-      <div className="flex items-center">
-        {children}
-        {sortDirection === "ASC" ? "▲" : "▼"}
-      </div>
-    </th>
+    <table className="min-w-full">
+      <thead>
+        <tr className="sticky top-0">
+          {columns.map((column, index) => (
+            <th
+              key={column.key}
+              onClick={() => requestSort(column.key)}
+              className={clsx(
+                "px-5 py-2 cursor-pointer",
+                (!sortConfig?.key && index === 0) ||
+                  sortConfig?.key === column.key
+                  ? "bg-scv-pink"
+                  : "bg-gray-200"
+              )}
+            >
+              <Text
+                type={
+                  (!sortConfig?.key && index === 0) ||
+                  sortConfig?.key === column.key
+                    ? "normalMediumWhite"
+                    : "normalMediumBlack"
+                }
+                className={clsx("flex items-center gap-1 text-left")}
+              >
+                {column.label}
+                {sortConfig?.key === column.key ? (
+                  sortConfig.direction === "asc" ? (
+                    <CaretUp size={16} weight="fill" />
+                  ) : (
+                    <CaretDown size={16} weight="fill" />
+                  )
+                ) : (
+                  <CaretDown size={16} weight="fill" />
+                )}
+              </Text>
+            </th>
+          ))}
+        </tr>
+      </thead>
+      <tbody className="bg-white divide-y divide-gray-200">
+        {sortedData.map((item, index) => (
+          <tr key={index}>
+            {columns.map((column) => (
+              <td key={column.key} className="px-4 py-2 whitespace-nowrap">
+                <Text type="normalBlack" className="text-left ">
+                  {item[column.key]}
+                </Text>
+              </td>
+            ))}
+          </tr>
+        ))}
+      </tbody>
+    </table>
   );
 };
 
-export { Table, TableHeader, TableBody, TableRow, TableCell, TableSort };
+export default Table;
