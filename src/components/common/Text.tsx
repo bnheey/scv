@@ -3,7 +3,13 @@ import { ReactNode } from "react";
 
 interface TextProps {
   children: ReactNode;
-  type?: "bigTitleBlack" | "titleBlack" | "subTitleBlack" | "normalBlack";
+  type?:
+    | "bigTitleBlack"
+    | "titleBlack"
+    | "subTitleBlack"
+    | "smallMediumWhite"
+    | "smallBlack"
+    | "normalBlack";
   className?: string;
 }
 
@@ -16,6 +22,10 @@ const Text = ({ children, type, className }: TextProps) => {
         return "text-black text-[18px] leading-[28px] font-pretendard-bold";
       case "subTitleBlack":
         return "text-black text-[16px] leading-[22px] font-pretendard-medium";
+      case "smallMediumWhite":
+        return "text-white text-[11px] leading-5 font-pretendard-medium";
+      case "smallBlack":
+        return "text-black text-[11px] leading-5";
       case "normalBlack":
       default:
         return "text-black text-[14px] leading-5";
