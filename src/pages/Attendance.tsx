@@ -1,7 +1,7 @@
 import { useLocation } from "react-router-dom";
-import AttendanceCalendar from "../components/Attendance/AttendanceCalendar";
 import Tabs from "../components/common/Tabs";
 import Title from "../components/common/Title";
+import Calendar from "../components/Attendance/Details/Calendar";
 
 const Attendance = () => {
   const location = useLocation();
@@ -20,7 +20,7 @@ const Attendance = () => {
     <div className="flex flex-col gap-3">
       <Title className="text-left">출석 확인</Title>
       <Tabs tabs={tabs} />
-      {view === "details" && <AttendanceCalendar />}
+      {view === "details" && <Calendar />}
     </div>
   );
 };
