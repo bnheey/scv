@@ -3,7 +3,7 @@ import moment from "moment";
 import { useEffect, useState } from "react";
 import ReactCalendar from "react-calendar";
 import { Value } from "react-calendar/src/shared/types.js";
-import "../../../assets/css/calendar.css";
+import "../../../assets/css/Calendar.css";
 import useLoading from "../../../hooks/useLoading";
 import { getAttendance } from "../../../middleware/endpoints/attendance";
 import { ScheduleInfoList } from "../../../types/Attendance";
@@ -83,7 +83,7 @@ const Calendar = () => {
         defaultActiveStartDate={currentDate}
         prev2Label={null}
         next2Label={null}
-        formatDay={(locale, date) => String(date.getDate())}
+        formatDay={(_, date) => String(date.getDate())}
         tileClassName="aspect-square rounded-full flex items-center justify-center"
         tileContent={({ date }) => {
           const targetSchedule =

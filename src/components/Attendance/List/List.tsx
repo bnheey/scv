@@ -1,12 +1,11 @@
-import { useEffect, useState } from "react";
-import { TotalAttendanceList } from "../../../types/Attendance";
-import Table from "../../common/Table";
-import useLoading from "../../../hooks/useLoading";
-import moment from "moment";
-import { getAttendance } from "../../../middleware/endpoints/attendance";
-import { formatDate } from "../../../utils/date";
-import Text from "../../common/Text";
 import { CaretLeft, CaretRight } from "@phosphor-icons/react";
+import moment from "moment";
+import { useEffect, useState } from "react";
+import { getAttendance } from "../../../middleware/endpoints/attendance";
+import { TotalAttendanceList } from "../../../types/Attendance";
+import { formatDate } from "../../../utils/date";
+import Table from "../../common/Table";
+import Text from "../../common/Text";
 
 const List = () => {
   const [currentDate, setCurrentDate] = useState(new Date());
