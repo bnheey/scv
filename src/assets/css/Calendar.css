@@ -46,10 +46,6 @@
   background: none;
 }
 
-.react-calendar__navigation .react-calendar__navigation__arrow:enabled:hover {
-  background-color: #f0f0f0;
-}
-
 .react-calendar__month-view__weekdays {
   text-align: center;
   text-transform: uppercase;
@@ -87,6 +83,8 @@
 }
 
 .react-calendar__tile {
+  display: flex;
+  flex-direction: column;
   max-width: 100%;
   padding: 10px 6.6667px;
   background: none;
@@ -106,8 +104,7 @@
   color: #cdcdcd;
 }
 
-.react-calendar__tile:enabled:hover,
-.react-calendar__tile:enabled:focus {
+.react-calendar__tile:enabled:hover {
   background-color: #e6e6e6;
 }
 
