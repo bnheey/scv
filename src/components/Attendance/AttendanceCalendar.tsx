@@ -19,6 +19,12 @@ const AttendanceCalendar = () => {
     }
   };
 
+  const handleTodayClick = () => {
+    const today = new Date();
+    setActiveStartDate(today);
+    setDate(today);
+  };
+
   return (
     <div className="relative flex flex-col gap-3">
       <Calendar
@@ -31,12 +37,21 @@ const AttendanceCalendar = () => {
         onClickDay={() => {
           console.log("click");
         }}
+        onActiveStartDateChange={({ activeStartDate }) =>
+          setActiveStartDate(activeStartDate)
+        }
         defaultActiveStartDate={date}
         prev2Label={null}
         next2Label={null}
         formatDay={(locale, date) => String(date.getDate())}
         tileClassName="aspect-square rounded-full flex items-center justify-center"
       />
+      <button
+        onClick={handleTodayClick}
+        className="absolute top-0 px-2 py-1 my-2 bg-gray-100 right-20"
+      >
+        <Text type="smallBlack">오늘</Text>
+      </button>
       <hr />
       <div className="flex flex-col items-start mt-1">
         <Text type="subTitleBlack">
