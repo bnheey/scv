@@ -51,17 +51,16 @@ const List = () => {
           <CaretRight />
         </button>
       </div>
-      <div className="w-full max-h-[calc(100vh-260px)] overflow-y-auto">
-        <Table
-          data={
-            totalAttendanceList?.map((member) => ({
-              name: member.name,
-              total: member.totalAttendance,
-            })) ?? []
-          }
-          columns={columns}
-        />
-      </div>
+      <Table
+        data={
+          totalAttendanceList?.map((member) => ({
+            name: member.name,
+            total: member.totalAttendance,
+          })) ?? []
+        }
+        height="calc(100vh - 280px)"
+        columns={columns}
+      />
     </div>
   );
 };

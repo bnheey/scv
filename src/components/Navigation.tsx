@@ -8,8 +8,8 @@ const Navigation = () => {
   const currentPath = location.pathname;
 
   return (
-    <nav className="pt-2.5 border-t-[0.5px] h-20">
-      <ul className="flex items-center justify-around h-[50px]">
+    <nav className="border-t-[0.5px] h-[70px]">
+      <ul className="flex items-center justify-around mt-1">
         {[
           {
             to: "/attendance",
@@ -23,7 +23,7 @@ const Navigation = () => {
           <li
             key={to}
             className={clsx(
-              "w-16 h-16 p-2 rounded-full",
+              "w-14 h-14 p-2 rounded-full",
               paths.includes(currentPath) ? "bg-gray-100 shadow-md" : "bg-white"
             )}
           >
@@ -32,7 +32,7 @@ const Navigation = () => {
               className="flex flex-col items-center gap-1 text-black hover:text-black"
             >
               <Icon
-                size={24}
+                size={18}
                 weight={paths.includes(currentPath) ? "fill" : "light"}
               />
               <Text type="normalBlack">{label}</Text>

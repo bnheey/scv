@@ -5,3 +5,8 @@
   color: black;
   text-align: center;
 }
+
+button {
+  background: white;
+  cursor: pointer;
+}
