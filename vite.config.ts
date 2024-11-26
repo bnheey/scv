@@ -7,5 +7,8 @@ export default defineConfig({
       "@": "src",
     },
   },
+  server: {
+    open: true,
+  },
   plugins: [react()],
 });
