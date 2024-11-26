@@ -42,7 +42,7 @@ const List = () => {
         </button>
         <Text type="subTitleBlack" className="font-pretendard">
           {formatDate(currentDate, "yyyy년 MM월")}
-        </Text>{" "}
+        </Text>
         <button
           onClick={() => {
             setCurrentDate(moment(currentDate).add(1, "month").toDate());

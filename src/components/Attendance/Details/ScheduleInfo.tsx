@@ -15,7 +15,7 @@ const ScheduleInfo = ({
     <div className="flex flex-col items-start mt-1">
       <Text type="subTitleBlack">{date}</Text>
       {scheduleInfoList.length > 0 ? (
-        <div className="flex flex-col gap-2 mt-2">
+        <div className="flex flex-col w-full gap-2 mt-2">
           {scheduleInfoList.map((x) => (
             <div key={x.scheduleId} className="flex flex-col items-start gap-1">
               <Text

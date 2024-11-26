@@ -18,7 +18,6 @@ const Calendar = () => {
   );
   const [scheduleInfoList, setScheduleInfoList] = useState<ScheduleInfoList>();
   const [scheduleInfo, setScheduleInfo] = useState<ScheduleInfoList>([]);
-
   const { isLoading, setIsLoading, Loading } = useLoading();
 
   const onChange = (newDate: Value) => {
@@ -66,8 +65,9 @@ const Calendar = () => {
     });
   }, [activeStartDate]);
 
+  // TODO 스크롤 위치 고민
   return (
-    <div className="relative flex flex-col gap-3">
+    <div className="relative flex flex-col gap-3 max-h-[calc(100vh-200px)] overflow-y-auto">
       <ReactCalendar
         view="month"
         minDetail="month"
@@ -110,10 +110,17 @@ const Calendar = () => {
             );
           }
         }}
+        navigationLabel={({ date }) => {
+          return (
+            <Text type="subTitleBlack" className="font-pretendard">
+              {formatDate(date, "YYYY년 MM월")}
+            </Text>
+          );
+        }}
       />
       <button
         onClick={handleTodayClick}
-        className="absolute top-0 px-2 py-1 my-2 bg-gray-100 right-20"
+        className="absolute top-0 px-2 py-1 my-2 bg-gray-100 right-[21%]"
       >
         <Text type="smallBlack">오늘</Text>
       </button>
