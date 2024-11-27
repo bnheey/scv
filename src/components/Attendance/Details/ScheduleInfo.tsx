@@ -1,8 +1,8 @@
-import { CalendarSlash } from "@phosphor-icons/react";
-import Text from "../../common/Text";
-import { formatDate } from "../../../utils/date";
-import { ScheduleInfoList } from "../../../types/Attendance";
+import { CalendarSlash, ClipboardText } from "@phosphor-icons/react";
 import clsx from "clsx";
+import { ScheduleInfoList, SimpleMember } from "../../../types/Attendance";
+import { formatDate } from "../../../utils/date";
+import Text from "../../common/Text";
 
 const ScheduleInfo = ({
   date,
@@ -11,31 +11,54 @@ const ScheduleInfo = ({
   date: string;
   scheduleInfoList: ScheduleInfoList;
 }) => {
+  const handleOnPaste = (memberList: SimpleMember[]) => {
+    navigator.clipboard.writeText(
+      `참석: ${memberList.length} \n(${memberList
+        .map((x) => x.name)
+        .join(", ")})`
+    );
+  };
+
   return (
     <div className="flex flex-col items-start mt-1">
       <Text type="subTitleBlack">{date}</Text>
       {scheduleInfoList.length > 0 ? (
         <div className="flex flex-col w-full gap-2 mt-2">
-          {scheduleInfoList.map((x) => (
-            <div key={x.scheduleId} className="flex flex-col items-start gap-1">
-              <Text
-                type="normalMediumWhite"
+          {scheduleInfoList.map((schedule) => (
+            <div
+              key={schedule.scheduleId}
+              className="flex flex-col items-start gap-1"
+            >
+              <div
                 className={clsx(
-                  "w-full pl-2 rounded-sm text-start",
-                  formatDate(x.scheduleTime, "A") === "AM"
+                  "flex items-center justify-between w-full pl-2 pr-4 py-[1.5px] gap-2 rounded-sm ",
+                  formatDate(schedule.scheduleTime, "A") === "AM"
                     ? "bg-scv-pink"
                     : "bg-scv-green"
                 )}
               >
-                {formatDate(x.scheduleTime, "a")}{" "}
-                {formatDate(x.scheduleTime, "hh:ss")}
-              </Text>
+                <Text type="normalMediumWhite" className={clsx()}>
+                  {formatDate(schedule.scheduleTime, "a")}{" "}
+                  {formatDate(schedule.scheduleTime, "hh:ss")}
+                </Text>
+                <button
+                  className="flex items-center justify-center p-0 bg-transparent"
+                  onClick={() => {
+                    handleOnPaste(schedule.memberList);
+                  }}
+                >
+                  <ClipboardText size={16} weight="fill" color="white" />
+                  <Text type="smallMediumWhite" className="ml-[2px]">
+                    복사
+                  </Text>
+                </button>
+              </div>
               <div className="flex flex-wrap pl-2">
-                {x.memberList.map((item, index) => (
+                {schedule.memberList.map((item, index) => (
                   <div className="flex" key={index}>
                     <Text>{item.name}</Text>
                     <Text className="mr-1">
-                      {x.memberList.length - 1 !== index ? ", " : ""}
+                      {schedule.memberList.length - 1 !== index ? ", " : ""}
                     </Text>
                   </div>
                 ))}

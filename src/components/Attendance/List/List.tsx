@@ -1,4 +1,4 @@
-import { CaretLeft, CaretRight } from "@phosphor-icons/react";
+import { CaretLeft, CaretRight, ClipboardText } from "@phosphor-icons/react";
 import moment from "moment";
 import { useEffect, useState } from "react";
 import { getAttendance } from "../../../middleware/endpoints/attendance";
@@ -30,13 +30,43 @@ const List = () => {
     { key: "total", label: "출석수" },
   ];
 
+  const handleOnPaste = (totalAttendance?: TotalAttendanceList) => {
+    if (!totalAttendance) return null;
+
+    const groupedAttendance: { [key: number]: string[] } = {};
+
+    totalAttendance.forEach((item) => {
+      const total = item.totalAttendance || 0;
+      if (!groupedAttendance[total]) {
+        groupedAttendance[total] = [];
+      }
+      groupedAttendance[total].push(item.name);
+    });
+
+    const sortedAttendance = Object.keys(groupedAttendance).sort((a, b) =>
+      Number(a) < Number(b) ? 1 : -1
+    );
+
+    const pasteText = `[📅 ${formatDate(
+      currentDate,
+      "yyyy년 MM월"
+    )} 출석 현황]\n\n${sortedAttendance.map(
+      (total, index) =>
+        `${index > 0 ? "\n" : ""}${total}회: ${groupedAttendance[
+          Number(total)
+        ].join(", ")}`
+    )}`;
+    navigator.clipboard.writeText(pasteText);
+  };
+
   return (
-    <div>
-      <div className="flex items-center justify-center pb-2">
+    <div className="relative flex flex-col items-center justify-center gap-3">
+      <div className="flex items-center justify-center pt-2">
         <button
           onClick={() => {
             setCurrentDate(moment(currentDate).add(-1, "month").toDate());
           }}
+          className="py-0"
         >
           <CaretLeft />
         </button>
@@ -47,10 +77,22 @@ const List = () => {
           onClick={() => {
             setCurrentDate(moment(currentDate).add(1, "month").toDate());
           }}
+          className="py-0"
         >
           <CaretRight />
         </button>
       </div>
+      <button
+        className="flex absolute top-[6px] right-1 items-center justify-center px-[6px] py-[3px] gap-[2px] rounded-md bg-white border border-scv-pink"
+        onClick={() => {
+          handleOnPaste(totalAttendanceList);
+        }}
+      >
+        <ClipboardText size={18} weight="fill" color="#dd9595" />
+        <Text type="normalMediumWhite" className="!text-scv-pink">
+          복사
+        </Text>
+      </button>
       <Table
         data={
           totalAttendanceList?.map((member) => ({
