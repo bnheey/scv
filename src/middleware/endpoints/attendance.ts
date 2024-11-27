@@ -12,7 +12,7 @@ export const getAttendance = async ({
     scheduleInfoList: ScheduleInfoList;
     totalAttendanceList: TotalAttendanceList;
   }>(
-    `http://35.227.188.57:8080/api/attendance?startDateTime=${startDateTime}&endDateTime=${endDateTime}`
+    `https://35.227.188.57/api/attendance?startDateTime=${startDateTime}&endDateTime=${endDateTime}`
   );
   return data;
 };
