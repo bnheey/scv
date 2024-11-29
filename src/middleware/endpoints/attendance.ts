@@ -12,7 +12,7 @@ export const getAttendance = async ({
     scheduleInfoList: ScheduleInfoList;
     totalAttendanceList: TotalAttendanceList;
   }>(
-    `https://35.227.188.57/api/attendance?startDateTime=${startDateTime}&endDateTime=${endDateTime}`
+    `https://scvclub.ddns.net/api/attendance?startDateTime=${startDateTime}&endDateTime=${endDateTime}`
   );
   return data;
 };
