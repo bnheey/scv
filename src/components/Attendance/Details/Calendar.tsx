@@ -67,7 +67,7 @@ const Calendar = () => {
 
   // TODO 스크롤 위치 고민
   return (
-    <div className="relative flex flex-col gap-3 max-h-[calc(100vh-200px)] overflow-y-auto">
+    <div className="relative flex flex-col gap-3 max-h-[calc(100vh-130px)] overflow-y-auto">
       <ReactCalendar
         view="month"
         minDetail="month"
