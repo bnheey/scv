@@ -38,8 +38,7 @@ const Lnb = ({ onClose }: LnbProps) => {
     if (isClosing) {
       const timer = setTimeout(() => {
         onClose();
-      }, 460);
-
+      }, 295);
       return () => clearTimeout(timer);
     }
   }, [isClosing, onClose]);
@@ -71,7 +70,11 @@ const Lnb = ({ onClose }: LnbProps) => {
               )}
               key={label}
             >
-              <Link to={to} className="flex gap-3 text-black hover:text-black">
+              <Link
+                to={to}
+                className="flex gap-3 text-black hover:text-black"
+                onClick={handleClose}
+              >
                 <Icon
                   size={20}
                   weight={paths.includes(currentPath) ? "fill" : "light"}
