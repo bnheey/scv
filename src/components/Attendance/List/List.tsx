@@ -50,17 +50,20 @@ const List = () => {
     const pasteText = `[📅 ${formatDate(
       currentDate,
       "yyyy년 MM월"
-    )} 출석 현황]\n\n${sortedAttendance.map(
-      (total, index) =>
-        `${index > 0 ? "\n" : ""}${total}회: ${groupedAttendance[
-          Number(total)
-        ].join(", ")}`
-    )}`;
+    )} 출석 현황]\n\n${sortedAttendance
+      .map((total) => {
+        const names = groupedAttendance[Number(total)].map((name) =>
+          Number(total) <= 1 ? `@${name}` : name
+        );
+        return `${total}회\n${names.join(", ")}\n`;
+      })
+      .join("\n")}`;
+
     navigator.clipboard.writeText(pasteText);
   };
 
   return (
-    <div className="relative flex flex-col items-center justify-center gap-3">
+    <div className="relative flex flex-col items-center justify-center gap-5">
       <div className="flex items-center justify-center pt-2">
         <button
           onClick={() => {
@@ -100,7 +103,7 @@ const List = () => {
             total: member.totalAttendance,
           })) ?? []
         }
-        height="calc(100vh - 280px)"
+        height="calc(100vh - 210px)"
         columns={columns}
       />
     </div>
