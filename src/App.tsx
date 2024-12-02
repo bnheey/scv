@@ -1,8 +1,11 @@
 import { BrowserRouter as Router } from "react-router-dom";
 import "./App.css";
 import AppRouter from "./components/AppRouter";
+import { useModal } from "./middleware/stores/modal";
+import Modal from "./components/common/Modal";
 
 const App = () => {
+  const { isOpen } = useModal();
   return (
     <div className="flex items-center justify-center">
       <Router>
@@ -10,6 +13,7 @@ const App = () => {
           <AppRouter />
         </div>
       </Router>
+      {isOpen ? <Modal /> : null}
     </div>
   );
 };
