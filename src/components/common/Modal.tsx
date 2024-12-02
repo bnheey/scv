@@ -3,8 +3,16 @@ import { useModal } from "../../middleware/stores/modal";
 import Text from "./Text";
 
 const Modal = () => {
-  const { closeModal, onClick, title, message, width, height, children } =
-    useModal();
+  const {
+    closeModal,
+    onConfirm,
+    title,
+    message,
+    width,
+    height,
+    children,
+    confirmText,
+  } = useModal();
   return (
     <div className={`fixed inset-0 z-50 flex items-center justify-center`}>
       {/* 딤드 */}
@@ -31,11 +39,11 @@ const Modal = () => {
           <button
             className="py-2 rounded-md w-fit bg-scv-pink"
             onClick={() => {
-              if (onClick) onClick();
+              if (onConfirm) onConfirm();
               closeModal();
             }}
           >
-            <Text type="normalMediumWhite">닫기</Text>
+            <Text type="normalMediumWhite">{confirmText || "닫기"}</Text>
           </button>
         </div>
       </div>
