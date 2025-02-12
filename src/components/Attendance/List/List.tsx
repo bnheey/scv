@@ -49,6 +49,11 @@ const List = () => {
         return 0;
       });
       setTotalAttendanceList([...sortedData]);
+      const tbodyElement = document.getElementsByTagName("tbody")[0];
+      tbodyElement?.scrollTo({
+        top: 0,
+        behavior: "smooth",
+      });
     }
   }, [fixedMembers]);
 
