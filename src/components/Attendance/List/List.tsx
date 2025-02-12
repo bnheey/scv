@@ -1,3 +1,4 @@
+import Cookies from "js-cookie";
 import { CaretLeft, CaretRight, ClipboardText } from "@phosphor-icons/react";
 import moment from "moment";
 import { useEffect, useState } from "react";
@@ -6,11 +7,14 @@ import { TotalAttendanceList } from "../../../types/Attendance";
 import { formatDate } from "../../../utils/date";
 import Table from "../../common/Table";
 import Text from "../../common/Text";
+import Favorite from "./Star";
 
 const List = () => {
+  const FIXED_MEMBERS = JSON.parse(Cookies.get("FIX_MEMBERS") || "[]");
+  const [fixedMembers, setFixedMembers] = useState<number[]>(FIXED_MEMBERS);
   const [currentDate, setCurrentDate] = useState(new Date());
   const [totalAttendanceList, setTotalAttendanceList] =
-    useState<TotalAttendanceList>();
+    useState<TotalAttendanceList>([]);
 
   useEffect(() => {
     getAttendance({
@@ -26,9 +30,48 @@ const List = () => {
   }, [currentDate]);
 
   const columns = [
-    { key: "name", label: "이름" },
-    { key: "total", label: "출석수" },
+    { key: "fix", label: "", width: 45 },
+    { key: "name", label: "이름", sort: true },
+    { key: "total", label: "출석수", sort: true },
   ];
+
+  useEffect(() => {
+    if (fixedMembers.length > 0) {
+      // fixedMembers 에 호함된 멤버들을 상단으로 정렬
+      const sortedData = totalAttendanceList?.sort((a, b) => {
+        if (
+          fixedMembers.includes(a.memberId) &&
+          fixedMembers.includes(b.memberId)
+        )
+          return 0;
+        if (fixedMembers.includes(a.memberId)) return -1;
+        if (fixedMembers.includes(b.memberId)) return 1;
+        return 0;
+      });
+      setTotalAttendanceList([...sortedData]);
+    }
+  }, [fixedMembers]);
+
+  const data =
+    totalAttendanceList?.map((member) => ({
+      isFixed: fixedMembers.includes(member.memberId),
+      fix: (
+        <Favorite
+          isFixed={fixedMembers.includes(member.memberId)}
+          onClick={() => {
+            setFixedMembers((prev) => {
+              const updatedFixMembers = prev.includes(member.memberId)
+                ? prev.filter((id) => id !== member.memberId)
+                : [...prev, member.memberId];
+              Cookies.set("FIX_MEMBERS", JSON.stringify(updatedFixMembers));
+              return updatedFixMembers;
+            });
+          }}
+        />
+      ),
+      name: member.name,
+      total: member.totalAttendance,
+    })) ?? [];
 
   const handleOnPaste = (totalAttendance?: TotalAttendanceList) => {
     if (!totalAttendance) return null;
@@ -97,12 +140,9 @@ const List = () => {
         </Text>
       </button>
       <Table
-        data={
-          totalAttendanceList?.map((member) => ({
-            name: member.name,
-            total: member.totalAttendance,
-          })) ?? []
-        }
+        data={data}
+        defaultSort="asc"
+        defaultSortKey="name"
         height="calc(100vh - 210px)"
         columns={columns}
       />
