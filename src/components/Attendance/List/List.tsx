@@ -68,7 +68,9 @@ const List = () => {
               const updatedFixMembers = prev.includes(member.memberId)
                 ? prev.filter((id) => id !== member.memberId)
                 : [...prev, member.memberId];
-              Cookies.set("FIX_MEMBERS", JSON.stringify(updatedFixMembers));
+              Cookies.set("FIX_MEMBERS", JSON.stringify(updatedFixMembers), {
+                expires: 365,
+              });
               return updatedFixMembers;
             });
           }}
