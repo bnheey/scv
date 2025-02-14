@@ -3,20 +3,22 @@ import { CaretLeft, CaretRight, ClipboardText } from "@phosphor-icons/react";
 import moment from "moment";
 import { useEffect, useState } from "react";
 import { getAttendance } from "../../../middleware/endpoints/attendance";
-import { TotalAttendanceList } from "../../../types/Attendance";
+import { AttendanceList } from "../../../types/Attendance";
 import { formatDate } from "../../../utils/date";
 import Table from "../../common/Table";
 import Text from "../../common/Text";
 import Favorite from "./Star";
+import LoadingBadminton from "../../common/LoadingBadminton";
 
 const List = () => {
   const FIXED_MEMBERS = JSON.parse(Cookies.get("FIX_MEMBERS") || "[]");
   const [fixedMembers, setFixedMembers] = useState<number[]>(FIXED_MEMBERS);
   const [currentDate, setCurrentDate] = useState(new Date());
-  const [totalAttendanceList, setTotalAttendanceList] =
-    useState<TotalAttendanceList>([]);
+  const [attendanceList, setAttendanceList] = useState<AttendanceList>([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
+    setIsLoading(true);
     getAttendance({
       startDateTime: moment(currentDate)
         .startOf("month")
@@ -25,7 +27,8 @@ const List = () => {
         .endOf("month")
         .format("yyyy-MM-DDTHH:mm:ss"),
     }).then((attendance) => {
-      setTotalAttendanceList(attendance.totalAttendanceList);
+      setAttendanceList(attendance.totalAttendanceList);
+      setIsLoading(false);
     });
   }, [currentDate]);
 
@@ -38,7 +41,7 @@ const List = () => {
   useEffect(() => {
     if (fixedMembers.length > 0) {
       // fixedMembers 에 호함된 멤버들을 상단으로 정렬
-      const sortedData = totalAttendanceList?.sort((a, b) => {
+      const sortedData = attendanceList?.sort((a, b) => {
         if (
           fixedMembers.includes(a.memberId) &&
           fixedMembers.includes(b.memberId)
@@ -48,7 +51,7 @@ const List = () => {
         if (fixedMembers.includes(b.memberId)) return 1;
         return 0;
       });
-      setTotalAttendanceList([...sortedData]);
+      setAttendanceList([...sortedData]);
       const tbodyElement = document.getElementsByTagName("tbody")[0];
       tbodyElement?.scrollTo({
         top: 0,
@@ -58,7 +61,7 @@ const List = () => {
   }, [fixedMembers]);
 
   const data =
-    totalAttendanceList?.map((member) => ({
+    attendanceList?.map((member) => ({
       isFixed: fixedMembers.includes(member.memberId),
       fix: (
         <Favorite
@@ -80,7 +83,7 @@ const List = () => {
       total: member.totalAttendance,
     })) ?? [];
 
-  const handleOnPaste = (totalAttendance?: TotalAttendanceList) => {
+  const handleOnPaste = (totalAttendance?: AttendanceList) => {
     if (!totalAttendance) return null;
 
     const groupedAttendance: { [key: number]: string[] } = {};
@@ -138,7 +141,7 @@ const List = () => {
       <button
         className="flex absolute top-[6px] right-1 items-center justify-center px-[6px] py-[3px] gap-[2px] rounded-md bg-white border border-scv-pink"
         onClick={() => {
-          handleOnPaste(totalAttendanceList);
+          handleOnPaste(attendanceList);
         }}
       >
         <ClipboardText size={18} weight="fill" color="#dd9595" />
@@ -146,13 +149,17 @@ const List = () => {
           복사
         </Text>
       </button>
-      <Table
-        data={data}
-        defaultSort="asc"
-        defaultSortKey="name"
-        height="calc(100vh - 210px)"
-        columns={columns}
-      />
+      {isLoading ? (
+        <LoadingBadminton />
+      ) : (
+        <Table
+          data={data}
+          defaultSort="asc"
+          defaultSortKey="name"
+          height="calc(100vh - 210px)"
+          columns={columns}
+        />
+      )}
     </div>
   );
 };
