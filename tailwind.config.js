@@ -11,6 +11,8 @@ export default {
       colors: {
         "scv-pink": "#dd9595",
         "scv-green": "#a0cb7c",
+        "scv-blue": "#60a5fa",
+        "scv-light-blue": "#93c5fd",
       },
       keyframes: {
         slideIn: {
