@@ -80,6 +80,7 @@ const Calendar = () => {
           setCurrentDate(activeStartDate);
           setActiveStartDate(activeStartDate);
         }}
+        maxDate={new Date()}
         defaultActiveStartDate={currentDate}
         prev2Label={null}
         next2Label={null}

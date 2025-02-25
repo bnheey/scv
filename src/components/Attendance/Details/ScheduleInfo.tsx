@@ -46,6 +46,7 @@ const ScheduleInfo = ({
                 <Text type="normalMediumWhite" className={clsx()}>
                   {formatDate(schedule.scheduleTime, "a")}{" "}
                   {formatDate(schedule.scheduleTime, "hh:mm")}
+                  {` (총 ${schedule.memberList.length}명)`}
                 </Text>
                 <button
                   className="flex items-center justify-center p-0 bg-transparent"
