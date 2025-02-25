@@ -40,6 +40,7 @@ const CopyButton = ({ currentDate, attendanceList }: CopyButtonProps) => {
 
     navigator.clipboard.writeText(pasteText);
   };
+
   return (
     <button
       className="flex absolute top-[6px] right-1 items-center justify-center px-[6px] py-[3px] gap-[2px] rounded-md bg-white border border-scv-pink"

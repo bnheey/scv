@@ -6,8 +6,8 @@ import { AttendanceList } from "../../../types/Attendance";
 import LoadingBadminton from "../../common/LoadingBadminton";
 import Table from "../../common/Table";
 import CopyButton from "./CopyButton";
-import Favorite from "./Star";
 import ListHeader from "./ListHeader";
+import Favorite from "./Star";
 
 const List = () => {
   const FIXED_MEMBERS = JSON.parse(Cookies.get("FIX_MEMBERS") || "[]");
@@ -84,7 +84,11 @@ const List = () => {
 
   return (
     <div className="relative flex flex-col items-center justify-center gap-5">
-      <ListHeader currentDate={currentDate} setCurrentDate={setCurrentDate} />
+      <ListHeader
+        currentDate={currentDate}
+        setCurrentDate={setCurrentDate}
+        attendanceList={attendanceList}
+      />
       <CopyButton currentDate={currentDate} attendanceList={attendanceList} />
       {isLoading ? (
         <LoadingBadminton />
