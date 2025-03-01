@@ -6,6 +6,7 @@ import { useMembers } from "../../middleware/stores/members";
 import { useModal } from "../../middleware/stores/modal";
 import Select from "../common/Select";
 import Text from "../common/Text";
+import Button from "../common/Button";
 
 const Input = ({
   setMembersInfo,
@@ -15,6 +16,7 @@ const Input = ({
       {
         name: string;
         tier: number;
+        member_id: number;
       }[]
     >
   >;
@@ -32,29 +34,27 @@ const Input = ({
   }, []);
 
   const handleSortNames = (inputText: string) => {
-    const namePattern = /\d+\.\s([가-힣]+(?:\(게\))?|게스트\d{0,2})/g;
+    const namePattern = /\d+\.\s*([가-힣]+\d{0,2}(?:\(게\))?)/g;
     const names = [];
     let match;
     while ((match = namePattern.exec(inputText)) !== null) {
       names.push(match[1]);
-    }
-    if (names.length % 2 !== 0) {
-      for (let i = 0; i < names.length; i++) {
-        if (!names[i].includes("게스트") && !names[i].includes("(게)")) {
-          names.push(names[i]);
-          break;
-        }
-      }
     }
     return names;
   };
 
   const handleOnClick = (inputText: string) => {
     const names = handleSortNames(inputText);
+    let count = 0;
     const selectMembers = names.reduce((acc, name) => {
       const member = members.find((member) => member.name === name);
-      if (member) {
+      if (member && member.tier !== 0) {
         acc.push(member);
+        acc.push(member);
+        if (count < 2) {
+          acc.push(member);
+          count++;
+        }
       }
       return acc;
     }, [] as typeof members);
@@ -62,8 +62,9 @@ const Input = ({
     const guestNames = names.filter(
       (name) => !selectMembers.map((member) => member.name).includes(name)
     );
+
     if (guestNames.length > 0) {
-      let guests = [] as { name: string; tier: number }[];
+      let guests = [] as { name: string; tier: number; member_id: number }[];
       openModal({
         title: "게스트 등록",
         message: "게스트의 티어를 선택해주세요.",
@@ -74,7 +75,7 @@ const Input = ({
               const newGuests = [...guests];
               newGuests[index] = newGuests[index]
                 ? newGuests[index]
-                : { name: guest, tier: 1 };
+                : { name: guest, tier: 1, member_id: Math.random() };
               guests = newGuests;
               return (
                 <div className="flex items-center gap-3" key={index}>
@@ -90,6 +91,7 @@ const Input = ({
                         newGuests[index] = {
                           name: guest,
                           tier: Number(e.target.value),
+                          member_id: guests?.[index].member_id,
                         };
                       } else {
                         newGuests[index].tier = Number(e.target.value);
@@ -104,7 +106,8 @@ const Input = ({
           </div>
         ),
         onConfirm: () => {
-          setMembersInfo([...selectMembers, ...guests]);
+          const players = [...selectMembers, ...guests, ...guests];
+          setMembersInfo(players);
           location.search = "?type=output";
         },
       });
@@ -114,7 +117,7 @@ const Input = ({
         message: "입력된 이름이 없거나 잘못된 이름입니다.",
       });
     } else {
-      setMembersInfo([...selectMembers]);
+      setMembersInfo(selectMembers);
       location.search = "?type=output";
     }
   };
@@ -128,14 +131,15 @@ const Input = ({
         ref={inputRef}
         className="px-3 py-2 h-[55%] text-sm bg-white border"
       />
-      <button
-        className="px-6 ml-auto bg-scv-pink w-fit"
+      <Button
+        className="ml-auto"
         onClick={() => {
           handleOnClick(inputRef.current?.value || "");
         }}
+        size="lg"
       >
-        <Text type="normalMediumWhite">경기 배치</Text>
-      </button>
+        경기 배치
+      </Button>
     </>
   );
 };
