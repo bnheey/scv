@@ -13,13 +13,14 @@ const Header = () => {
     setIsLnbOpen(!isLnbOpen);
   };
   const getTitle = () => {
-    const path = location.pathname;
+    const path = location.pathname.split("/")[1];
+
     switch (path) {
-      case "/attendance":
+      case "attendance":
         return "출석 확인";
-      case "/game":
+      case "game":
         return "경기표 생성";
-      case "/admin":
+      case "admin":
         return "관리자";
       default:
         return "출석 확인";

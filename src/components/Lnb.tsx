@@ -27,10 +27,10 @@ const Lnb = ({ onClose }: LnbProps) => {
       paths: ["/attendance", "/"],
     },
     {
-      to: "/game?type=input",
+      to: "/game",
       icon: Network,
       label: "경기표",
-      paths: ["/game?type=input"],
+      paths: ["/game"],
     },
     { to: "/admin", icon: UserGear, label: "관리자", paths: ["/admin"] },
   ];

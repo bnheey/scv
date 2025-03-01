@@ -1,12 +1,12 @@
 import { Dispatch, SetStateAction, useEffect, useRef } from "react";
-import { useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { TierOptions } from "../../constants/Member";
 import { getMembers } from "../../middleware/endpoints/members";
 import { useMembers } from "../../middleware/stores/members";
 import { useModal } from "../../middleware/stores/modal";
+import Button from "../common/Button";
 import Select from "../common/Select";
 import Text from "../common/Text";
-import Button from "../common/Button";
 
 const Input = ({
   setMembersInfo,
@@ -24,7 +24,7 @@ const Input = ({
   const inputRef = useRef<HTMLTextAreaElement>(null);
   const { members, setMembers } = useMembers();
   const { openModal } = useModal();
-  const location = useLocation();
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (members.length > 0) return;
@@ -108,7 +108,7 @@ const Input = ({
         onConfirm: () => {
           const players = [...selectMembers, ...guests, ...guests];
           setMembersInfo(players);
-          location.search = "?type=output";
+          navigate("/game/output");
         },
       });
     } else if (selectMembers.length < 1) {
@@ -118,7 +118,7 @@ const Input = ({
       });
     } else {
       setMembersInfo(selectMembers);
-      location.search = "?type=output";
+      navigate("/game/output");
     }
   };
 

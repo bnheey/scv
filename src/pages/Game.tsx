@@ -1,19 +1,28 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import Input from "../components/Game/Input";
-import { useLocation } from "react-router-dom";
 import Output from "../components/Game/Output/Output";
 
 const Game = () => {
   const location = useLocation();
-  const query = new URLSearchParams(location.search);
-  const type = query.get("type");
+  const subPath = location.pathname.split("/")[2];
+  const navigate = useNavigate();
+
   const [membersInfo, setMembersInfo] = useState<
     { name: string; tier: number; member_id: number }[]
   >([]);
 
+  useEffect(() => {
+    if (subPath === "output") {
+      if (membersInfo.length === 0) {
+        navigate("/game");
+      }
+    }
+  }, [subPath]);
+
   return (
     <div className="flex flex-col h-full gap-3 mt-2">
-      {type === "output" ? (
+      {subPath === "output" ? (
         <Output membersInfo={membersInfo} />
       ) : (
         <Input setMembersInfo={setMembersInfo} />
