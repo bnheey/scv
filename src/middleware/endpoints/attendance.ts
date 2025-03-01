@@ -1,5 +1,5 @@
 import axios from "axios";
-import { ScheduleInfoList, TotalAttendanceList } from "../../types/Attendance";
+import { ScheduleInfoList, AttendanceList } from "../../types/Attendance";
 
 export const getAttendance = async ({
   startDateTime,
@@ -10,7 +10,7 @@ export const getAttendance = async ({
 }) => {
   const { data } = await axios.get<{
     scheduleInfoList: ScheduleInfoList;
-    totalAttendanceList: TotalAttendanceList;
+    totalAttendanceList: AttendanceList;
   }>(
     `https://scvclub.ddns.net/api/attendance?startDateTime=${startDateTime}&endDateTime=${endDateTime}`
   );

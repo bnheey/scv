@@ -5,19 +5,37 @@ import Text from "./Text";
 import clsx from "clsx";
 
 interface TableProps {
-  data: Array<{ [key: string]: any }>;
-  columns: Array<{ key: string; label: string }>;
+  data: Array<{ isFixed?: boolean; [key: string]: any }>;
+  columns: Array<{
+    key: string;
+    label: string;
+    sort?: boolean;
+    width?: number;
+  }>;
+  defaultSortKey?: string;
+  defaultSort?: "asc" | "desc";
   height?: string | number;
 }
 
-const Table = ({ data, columns, height }: TableProps) => {
+const Table = ({
+  data,
+  columns,
+  height,
+  defaultSortKey,
+  defaultSort,
+}: TableProps) => {
   const [sortConfig, setSortConfig] = useState<{
     key: string;
     direction: "asc" | "desc";
-  } | null>(null);
+  } | null>({
+    key: defaultSortKey || columns[0].key,
+    direction: defaultSort || "asc",
+  });
 
   const sortedData = React.useMemo(() => {
-    const sortableData = [...data];
+    const fixedData = data.filter((item) => item.isFixed);
+    const sortableData = data.filter((item) => !item.isFixed);
+
     if (sortConfig !== null) {
       sortableData.sort((a, b) => {
         if (a[sortConfig.key] < b[sortConfig.key]) {
@@ -29,7 +47,7 @@ const Table = ({ data, columns, height }: TableProps) => {
         return 0;
       });
     }
-    return sortableData;
+    return [...fixedData, ...sortableData];
   }, [data, sortConfig]);
 
   const requestSort = (key: string) => {
@@ -57,8 +75,11 @@ const Table = ({ data, columns, height }: TableProps) => {
           {columns.map((column, index) => (
             <th
               key={column.key}
-              onClick={() => requestSort(column.key)}
+              onClick={() => {
+                if (column.sort) requestSort(column.key);
+              }}
               className="bg-white cursor-pointer"
+              style={{ width: column.width ? `${column.width}px` : "" }}
             >
               <Text
                 type={"normalMediumBlack"}
@@ -71,15 +92,16 @@ const Table = ({ data, columns, height }: TableProps) => {
                 )}
               >
                 {column.label}
-                {sortConfig?.key === column.key ? (
-                  sortConfig.direction === "asc" ? (
-                    <CaretUp size={16} weight="fill" />
+                {column.sort &&
+                  (sortConfig?.key === column.key ? (
+                    sortConfig.direction === "asc" ? (
+                      <CaretUp size={16} weight="fill" />
+                    ) : (
+                      <CaretDown size={16} weight="fill" />
+                    )
                   ) : (
                     <CaretDown size={16} weight="fill" />
-                  )
-                ) : (
-                  <CaretDown size={16} weight="fill" />
-                )}
+                  ))}
               </Text>
             </th>
           ))}
@@ -92,7 +114,11 @@ const Table = ({ data, columns, height }: TableProps) => {
         {sortedData.map((item, index) => (
           <tr key={index} className="table w-full table-fixed">
             {columns.map((column) => (
-              <td key={column.key} className="px-4 py-2 whitespace-nowrap">
+              <td
+                key={column.key}
+                className="px-4 py-2 whitespace-nowrap"
+                style={{ width: column.width ? `${column.width}px` : "" }}
+              >
                 <Text type="normalBlack" className="text-left">
                   {item[column.key]}
                 </Text>

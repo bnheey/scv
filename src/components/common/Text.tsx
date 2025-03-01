@@ -1,7 +1,7 @@
 import clsx from "clsx";
 import { ReactNode } from "react";
 
-interface TextProps {
+interface TextProps extends React.HTMLAttributes<HTMLParagraphElement> {
   children: ReactNode;
   type?:
     | "bigTitleBlack"
@@ -16,7 +16,7 @@ interface TextProps {
   className?: string;
 }
 
-const Text = ({ children, type, className }: TextProps) => {
+const Text = ({ children, type, className, ...props }: TextProps) => {
   const getClassName = () => {
     switch (type) {
       case "bigTitleBlack":
@@ -41,7 +41,11 @@ const Text = ({ children, type, className }: TextProps) => {
     }
   };
 
-  return <p className={clsx(getClassName(), className)}>{children}</p>;
+  return (
+    <p className={clsx(getClassName(), className)} {...props}>
+      {children}
+    </p>
+  );
 };
 
 export default Text;
