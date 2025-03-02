@@ -6,12 +6,14 @@ import DragAndDropGrid from "./DragAndDropGrid";
 import { createGames } from "../../../utils/games";
 import { formatDate } from "../../../utils/date";
 import type { Member } from "../../../types/Members";
+import { useModal } from "../../../middleware/stores/modal";
 
 const Output = ({ membersInfo }: { membersInfo: Member[] }) => {
   const [games, setGames] = useState(createGames(membersInfo));
   const [pinnedGames, setPinnedGames] = useState<boolean[]>(
     Array(games.length).fill(false)
   );
+  const { openModal } = useModal();
 
   const groupedByTier = membersInfo.reduce((acc, member) => {
     if (!acc[member.tier]) {
@@ -97,6 +99,10 @@ const Output = ({ membersInfo }: { membersInfo: Member[] }) => {
         <Button
           onClick={() => {
             handleOnPaste();
+            openModal({
+              title: "알림",
+              message: "경기표가 복사되었습니다.",
+            });
           }}
         >
           경기표 생성
