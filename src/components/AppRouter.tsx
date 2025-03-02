@@ -1,10 +1,21 @@
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useLocation } from "react-router-dom";
 import Admin from "../pages/Admin";
 import Attendance from "../pages/Attendance";
 import Game from "../pages/Game";
 import Header from "./Header";
+import { useEffect } from "react";
+import { useModal } from "../middleware/stores/modal";
 
 const AppRouter = () => {
+  const location = useLocation();
+  const { isOpen, closeModal } = useModal();
+
+  useEffect(() => {
+    if (isOpen) {
+      closeModal();
+    }
+  }, [location.pathname]);
+
   return (
     <>
       <Header />
