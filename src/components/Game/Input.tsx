@@ -7,19 +7,12 @@ import { useModal } from "../../middleware/stores/modal";
 import Button from "../common/Button";
 import Select from "../common/Select";
 import Text from "../common/Text";
+import { Member } from "../../types/Members";
 
 const Input = ({
   setMembersInfo,
 }: {
-  setMembersInfo: Dispatch<
-    SetStateAction<
-      {
-        name: string;
-        tier: number;
-        member_id: number;
-      }[]
-    >
-  >;
+  setMembersInfo: Dispatch<SetStateAction<Member[]>>;
 }) => {
   const inputRef = useRef<HTMLTextAreaElement>(null);
   const { members, setMembers } = useMembers();
@@ -107,7 +100,7 @@ const Input = ({
         ),
         onConfirm: () => {
           const players = [...selectMembers, ...guests, ...guests];
-          setMembersInfo(players);
+          setMembersInfo([...players]);
           navigate("/game/output");
         },
       });

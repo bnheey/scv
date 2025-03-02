@@ -6,20 +6,23 @@ import {
 } from "@hello-pangea/dnd";
 import { CaretUpDown, PushPin } from "@phosphor-icons/react";
 import clsx from "clsx";
-import { useState } from "react";
 import { Game } from "../../../types/Games";
 import { getDuplicateMembers, getTierGapMembers } from "../../../utils/games";
+import Text from "../../common/Text";
 
 interface DragAndDropGridProps {
   games: Game[];
   setGames: React.Dispatch<React.SetStateAction<Game[]>>;
+  pinnedGames: boolean[];
+  setPinnedGames: React.Dispatch<React.SetStateAction<boolean[]>>;
 }
 
-const DragAndDropGrid = ({ games, setGames }: DragAndDropGridProps) => {
-  const [pinnedGames, setPinnedGames] = useState<boolean[]>(
-    Array(games.length).fill(false)
-  );
-
+const DragAndDropGrid = ({
+  games,
+  setGames,
+  pinnedGames,
+  setPinnedGames,
+}: DragAndDropGridProps) => {
   const handleOnDragEnd = (result: DropResult) => {
     const { source, destination, type } = result;
 
@@ -30,6 +33,11 @@ const DragAndDropGrid = ({ games, setGames }: DragAndDropGridProps) => {
       const [movedGame] = newGames.splice(source.index, 1);
       newGames.splice(destination.index, 0, movedGame);
       setGames(newGames);
+
+      const newPinnedGames = Array.from(pinnedGames);
+      const [movedPinnedGame] = newPinnedGames.splice(source.index, 1);
+      newPinnedGames.splice(destination.index, 0, movedPinnedGame);
+      setPinnedGames(newPinnedGames);
     } else if (type === "member") {
       const sourceGameIndex = games.findIndex(
         (game) => game.gameId === Number(source.droppableId)
@@ -106,7 +114,7 @@ const DragAndDropGrid = ({ games, setGames }: DragAndDropGridProps) => {
                         <div
                           {...provided.droppableProps}
                           ref={provided.innerRef}
-                          className="flex items-center justify-between p-2 px-3 bg-white border rounded shadow-sm"
+                          className="relative flex items-center justify-between p-2 px-3 pr-8 bg-white border rounded shadow-sm"
                         >
                           <button
                             className="p-0"
@@ -129,7 +137,11 @@ const DragAndDropGrid = ({ games, setGames }: DragAndDropGridProps) => {
                           <div className="flex items-center gap-1">
                             {game.members.map((member, memberIndex) => (
                               <>
-                                {memberIndex === 2 ? "vs" : ""}
+                                {memberIndex === 2 ? (
+                                  <Text className="mx-0.5">vs</Text>
+                                ) : (
+                                  ""
+                                )}
                                 <Draggable
                                   key={`member-${member.member_id}-${gameIndex}-${memberIndex}`}
                                   draggableId={`member-${member.member_id}-${gameIndex}-${memberIndex}`}
@@ -158,7 +170,9 @@ const DragAndDropGrid = ({ games, setGames }: DragAndDropGridProps) => {
                               </>
                             ))}
                           </div>
-                          <CaretUpDown size={16} weight="bold" />{" "}
+                          <div className="absolute right-2.5">
+                            <CaretUpDown size={16} weight="bold" />
+                          </div>
                           {provided.placeholder}
                         </div>
                       )}

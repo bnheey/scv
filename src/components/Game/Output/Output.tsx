@@ -5,13 +5,14 @@ import Text from "../../common/Text";
 import DragAndDropGrid from "./DragAndDropGrid";
 import { createGames } from "../../../utils/games";
 import { formatDate } from "../../../utils/date";
+import type { Member } from "../../../types/Members";
 
-const Output = ({
-  membersInfo,
-}: {
-  membersInfo: { name: string; tier: number; member_id: number }[];
-}) => {
+const Output = ({ membersInfo }: { membersInfo: Member[] }) => {
   const [games, setGames] = useState(createGames(membersInfo));
+  const [pinnedGames, setPinnedGames] = useState<boolean[]>(
+    Array(games.length).fill(false)
+  );
+  console.log(membersInfo);
 
   const groupedByTier = membersInfo.reduce((acc, member) => {
     if (!acc[member.tier]) {
@@ -70,12 +71,27 @@ const Output = ({
         </div>
       ))}
       <div className="w-full max-h-[70%] px-3 py-2 border overflow-y-scroll rounded-md mt-4">
-        <DragAndDropGrid games={games} setGames={setGames} />
+        <DragAndDropGrid
+          games={games}
+          setGames={setGames}
+          pinnedGames={pinnedGames}
+          setPinnedGames={setPinnedGames}
+        />
       </div>
       <div className="flex items-center justify-end gap-1 mt-3">
         <Button
           color="text"
-          onClick={() => setGames([...createGames(membersInfo)])}
+          onClick={() =>
+            setGames([
+              ...createGames(
+                games,
+                "game",
+                pinnedGames
+                  .map((pinned, idx) => (pinned ? idx : -1))
+                  .filter((idx) => idx !== -1)
+              ),
+            ])
+          }
         >
           랜덤 재배치
         </Button>

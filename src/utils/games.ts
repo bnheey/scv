@@ -1,16 +1,46 @@
-import { GameMember } from "../types/Games";
+import { Game, GameMember } from "../types/Games";
+import type { Member } from "../types/Members";
+
+export const getGamesToMember = (games: Game[], pinnedIdxs: number[]) => {
+  const members = [] as GameMember[];
+  const pinnedMembers = {} as { [key: number]: GameMember[] };
+  games.map((game, idx) => {
+    if (pinnedIdxs.includes(idx)) {
+      pinnedMembers[idx] = game.members;
+    } else {
+      members.push(...game.members);
+    }
+  });
+
+  return { members, pinnedMembers };
+};
 
 export const createGames = (
-  users: { member_id: number; name: string; tier: number }[]
+  membersOrGames: Member[] | Game[],
+  type: "member" | "game" = "member",
+  pinnedIdxs: number[] = []
 ) => {
-  users = [...users];
-  users.sort(() => Math.random() - 0.5);
+  let filteredMembers = [] as Member[];
+  let pinned = {} as { [key: number]: GameMember[] };
+
+  if (type === "game") {
+    const { members, pinnedMembers } = getGamesToMember(
+      membersOrGames as Game[],
+      pinnedIdxs
+    );
+    filteredMembers = [...members];
+    pinned = pinnedMembers;
+  } else {
+    filteredMembers = [...(membersOrGames as Member[])];
+  }
+
+  filteredMembers.sort(() => Math.random() - 0.5);
 
   const games = [];
   let gameId = 1;
 
-  while (users.length >= 4) {
-    const group = users.splice(0, 4);
+  while (filteredMembers.length >= 4) {
+    const group = filteredMembers.splice(0, 4);
 
     const combinations = [
       [
@@ -69,6 +99,16 @@ export const createGames = (
             duplicate: ids.filter((id) => id === user.member_id).length > 1,
           })),
         ],
+      });
+    }
+  }
+
+  if (pinnedIdxs.length > 0) {
+    for (const idx in pinned) {
+      games.splice(Number(idx), 0, {
+        gameId: gameId++,
+        title: `game ${gameId - 1}`,
+        members: pinned[idx],
       });
     }
   }

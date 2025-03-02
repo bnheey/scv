@@ -2,15 +2,14 @@ import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import Input from "../components/Game/Input";
 import Output from "../components/Game/Output/Output";
+import type { Member } from "../types/Members";
 
 const Game = () => {
   const location = useLocation();
   const subPath = location.pathname.split("/")[2];
   const navigate = useNavigate();
 
-  const [membersInfo, setMembersInfo] = useState<
-    { name: string; tier: number; member_id: number }[]
-  >([]);
+  const [membersInfo, setMembersInfo] = useState<Member[]>([]);
 
   useEffect(() => {
     if (subPath === "output") {
