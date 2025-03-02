@@ -1,34 +1,23 @@
 import { useState } from "react";
-import { TierOptions } from "../../../constants/Member";
+import { useModal } from "../../../middleware/stores/modal";
+import type { Member } from "../../../types/Members";
+import { formatDate } from "../../../utils/date";
+import {
+  createGames,
+  getTierText,
+  sortedTiersDesc,
+  uniqueMembers,
+} from "../../../utils/games";
 import Button from "../../common/Button";
 import Text from "../../common/Text";
 import DragAndDropGrid from "./DragAndDropGrid";
-import { createGames } from "../../../utils/games";
-import { formatDate } from "../../../utils/date";
-import type { Member } from "../../../types/Members";
 
 const Output = ({ membersInfo }: { membersInfo: Member[] }) => {
   const [games, setGames] = useState(createGames(membersInfo));
   const [pinnedGames, setPinnedGames] = useState<boolean[]>(
     Array(games.length).fill(false)
   );
-
-  const groupedByTier = membersInfo.reduce((acc, member) => {
-    if (!acc[member.tier]) {
-      acc[member.tier] = [];
-    }
-    acc[member.tier].push(member.name);
-    return acc;
-  }, {} as { [key: number]: string[] });
-
-  const sortedTiersDesc = Object.keys(groupedByTier)
-    .map(Number)
-    .sort((a, b) => b - a);
-
-  const getTierText = (tier: number) =>
-    `${TierOptions[tier - 1]?.label[0]}: ${[
-      ...new Set(groupedByTier[tier]),
-    ].join(", ")}`;
+  const { openModal } = useModal();
 
   const handleOnPaste = () => {
     const gamesText = games
@@ -43,29 +32,26 @@ const Output = ({ membersInfo }: { membersInfo: Member[] }) => {
       )
       .join("\n");
 
-    const uniqueMembersInfo = membersInfo.filter(
-      (member, index, self) =>
-        index === self.findIndex((m) => m.member_id === member.member_id)
-    );
-
     const pasteText = `SCV경기표🏸\n(${formatDate(new Date(), "M월 D일")} ${
       formatDate(new Date(), "a") == "오전" ? "오전 9시" : "오후 7시 30분"
-    })\n${sortedTiersDesc
-      .map((tier) => getTierText(tier))
-      .join("\n")}\n\n총원 : ${uniqueMembersInfo.length}명\n\n${gamesText}`;
+    })\n${sortedTiersDesc(membersInfo)
+      .map((tier) => getTierText(membersInfo, tier))
+      .join("\n")}\n\n총원 : ${
+      uniqueMembers(membersInfo).length
+    }명\n\n${gamesText}`;
 
     navigator.clipboard.writeText(pasteText);
   };
 
   return (
     <div className="h-full">
-      {sortedTiersDesc.map((tier) => (
+      {sortedTiersDesc(membersInfo).map((tier) => (
         <div key={tier}>
           <Text
             type="smallMediumWhite"
             className="px-2 !text-black !leading-[17px] text-left "
           >
-            {getTierText(tier)}
+            {getTierText(membersInfo, tier)}
           </Text>
         </div>
       ))}
@@ -97,6 +83,10 @@ const Output = ({ membersInfo }: { membersInfo: Member[] }) => {
         <Button
           onClick={() => {
             handleOnPaste();
+            openModal({
+              title: "알림",
+              message: "경기표가 복사되었습니다.",
+            });
           }}
         >
           경기표 생성
