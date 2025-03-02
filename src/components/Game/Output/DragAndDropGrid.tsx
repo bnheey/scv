@@ -131,7 +131,7 @@ const DragAndDropGrid = ({ games, setGames }: DragAndDropGridProps) => {
                               <>
                                 {memberIndex === 2 ? "vs" : ""}
                                 <Draggable
-                                  key={member.member_id}
+                                  key={`member-${member.member_id}-${gameIndex}-${memberIndex}`}
                                   draggableId={`member-${member.member_id}-${gameIndex}-${memberIndex}`}
                                   index={memberIndex}
                                 >

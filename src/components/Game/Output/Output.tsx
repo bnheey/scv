@@ -69,11 +69,16 @@ const Output = ({
           </Text>
         </div>
       ))}
-      <div className="w-full h-[75%] overflow-y-scroll rounded-md mt-4">
+      <div className="w-full max-h-[70%] px-3 py-2 border overflow-y-scroll rounded-md mt-4">
         <DragAndDropGrid games={games} setGames={setGames} />
       </div>
       <div className="flex items-center justify-end gap-1 mt-3">
-        {/* <Button color="text">랜덤 재배치</Button> */}
+        <Button
+          color="text"
+          onClick={() => setGames([...createGames(membersInfo)])}
+        >
+          랜덤 재배치
+        </Button>
         <Button
           onClick={() => {
             handleOnPaste();
