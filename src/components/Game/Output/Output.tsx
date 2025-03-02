@@ -12,7 +12,6 @@ const Output = ({ membersInfo }: { membersInfo: Member[] }) => {
   const [pinnedGames, setPinnedGames] = useState<boolean[]>(
     Array(games.length).fill(false)
   );
-  console.log(membersInfo);
 
   const groupedByTier = membersInfo.reduce((acc, member) => {
     if (!acc[member.tier]) {
@@ -70,7 +69,7 @@ const Output = ({ membersInfo }: { membersInfo: Member[] }) => {
           </Text>
         </div>
       ))}
-      <div className="w-full max-h-[70%] px-3 py-2 border overflow-y-scroll rounded-md mt-4">
+      <div className="w-full max-h-[70%] py-2 border-y border-y-gray-300 overflow-y-scroll mt-4">
         <DragAndDropGrid
           games={games}
           setGames={setGames}

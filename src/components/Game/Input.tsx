@@ -123,6 +123,11 @@ const Input = ({
       <textarea
         ref={inputRef}
         className="px-3 py-2 h-[55%] text-sm bg-white border"
+        onPaste={() => {
+          setTimeout(() => {
+            inputRef.current?.blur();
+          }, 0);
+        }}
       />
       <Button
         className="ml-auto"

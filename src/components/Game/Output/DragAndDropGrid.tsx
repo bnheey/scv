@@ -114,7 +114,7 @@ const DragAndDropGrid = ({
                         <div
                           {...provided.droppableProps}
                           ref={provided.innerRef}
-                          className="relative flex items-center justify-between p-2 px-3 pr-8 bg-white border rounded shadow-sm"
+                          className="relative flex items-center justify-between p-2 px-3 pr-8 bg-white border-[0.5px] rounded shadow-sm"
                         >
                           <button
                             className="p-0"
@@ -171,7 +171,7 @@ const DragAndDropGrid = ({
                             ))}
                           </div>
                           <div className="absolute right-2.5">
-                            <CaretUpDown size={16} weight="bold" />
+                            <CaretUpDown size={16} weight="light" />
                           </div>
                           {provided.placeholder}
                         </div>
