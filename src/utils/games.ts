@@ -63,17 +63,41 @@ export const createGames = (
     for (const [[team1A, team1B], [team2A, team2B]] of combinations) {
       const team1Sum = team1A.tier + team1B.tier;
       const team2Sum = team2A.tier + team2B.tier;
-      const tierGap = team1Sum - team2Sum;
+      const tierGap = Math.abs(team1Sum - team2Sum);
+      // 중복 확인
+      const isDuplicate =
+        new Set([
+          team1A.member_id,
+          team1B.member_id,
+          team2A.member_id,
+          team2B.member_id,
+        ]).size !== 4;
 
-      if (tierGap === 0) {
-        bestCombination = { team1: [team1A, team1B], team2: [team2A, team2B] };
-        minTierGap = tierGap;
-        break;
+      if (!isDuplicate) {
+        if (tierGap < minTierGap) {
+          minTierGap = tierGap;
+          bestCombination = {
+            team1: [team1A, team1B],
+            team2: [team2A, team2B],
+          };
+        }
       }
-      // 티어 차이가 동일한 게임이 없는 경우 차이가 가장 적은 조합 선택
-      if (tierGap < minTierGap) {
-        minTierGap = tierGap;
-        bestCombination = { team1: [team1A, team1B], team2: [team2A, team2B] };
+    }
+
+    // 중복이 없는 조합이 없을 경우, 티어 차이가 가장 적은 조합 선택
+    if (!bestCombination) {
+      for (const [[team1A, team1B], [team2A, team2B]] of combinations) {
+        const team1Sum = team1A.tier + team1B.tier;
+        const team2Sum = team2A.tier + team2B.tier;
+        const tierGap = Math.abs(team1Sum - team2Sum);
+
+        if (tierGap < minTierGap) {
+          minTierGap = tierGap;
+          bestCombination = {
+            team1: [team1A, team1B],
+            team2: [team2A, team2B],
+          };
+        }
       }
     }
 
