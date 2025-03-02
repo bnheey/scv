@@ -114,7 +114,7 @@ const DragAndDropGrid = ({
                         <div
                           {...provided.droppableProps}
                           ref={provided.innerRef}
-                          className="relative flex items-center justify-between p-2 px-3 pr-8 bg-white border-[0.5px] rounded shadow-sm"
+                          className="relative flex items-center justify-around p-2 px-3 pr-8 bg-white border-[0.5px] rounded shadow-sm"
                         >
                           <button
                             className="p-0"
@@ -153,8 +153,10 @@ const DragAndDropGrid = ({
                                       {...provided.draggableProps}
                                       {...provided.dragHandleProps}
                                       className={clsx(
-                                        "p-1.5 border border-gray-200 rounded bg-white",
-                                        member.duplicate ? "!bg-red-600" : "",
+                                        "py-1.5 px-2 border border-gray-200 rounded bg-white",
+                                        member.duplicate
+                                          ? "!bg-red-600 border-none text-white"
+                                          : "",
                                         member.tierGap === 1
                                           ? "!border !border-orange-300"
                                           : "",
