@@ -11,6 +11,12 @@ const ScheduleInfo = ({
   date: string;
   scheduleInfoList: ScheduleInfoList;
 }) => {
+  const sortedScheduleInfoList = scheduleInfoList.sort((a, b) => {
+    return (
+      new Date(a.scheduleTime).getTime() - new Date(b.scheduleTime).getTime()
+    );
+  });
+
   const handleOnPaste = (memberList: SimpleMember[]) => {
     navigator.clipboard.writeText(
       `참석: ${memberList.length} \n(${memberList
@@ -22,9 +28,9 @@ const ScheduleInfo = ({
   return (
     <div className="flex flex-col items-start mt-1">
       <Text type="subTitleBlack">{date}</Text>
-      {scheduleInfoList.length > 0 ? (
+      {sortedScheduleInfoList.length > 0 ? (
         <div className="flex flex-col w-full gap-2 mt-2">
-          {scheduleInfoList.map((schedule) => (
+          {sortedScheduleInfoList.map((schedule) => (
             <div
               key={schedule.scheduleId}
               className="flex flex-col items-start gap-1"
@@ -39,7 +45,8 @@ const ScheduleInfo = ({
               >
                 <Text type="normalMediumWhite" className={clsx()}>
                   {formatDate(schedule.scheduleTime, "a")}{" "}
-                  {formatDate(schedule.scheduleTime, "hh:ss")}
+                  {formatDate(schedule.scheduleTime, "hh:mm")}
+                  {` (총 ${schedule.memberList.length}명)`}
                 </Text>
                 <button
                   className="flex items-center justify-center p-0 bg-transparent"

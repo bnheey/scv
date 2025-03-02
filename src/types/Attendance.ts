@@ -12,4 +12,4 @@ export interface ScheduleInfo {
 }
 
 export type ScheduleInfoList = ScheduleInfo[];
-export type TotalAttendanceList = SimpleMember[];
+export type AttendanceList = SimpleMember[];
