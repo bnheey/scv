@@ -11,7 +11,7 @@ const AppRouter = () => {
       <Routes>
         <Route path="/" element={<Attendance />} />
         <Route path="/attendance" element={<Attendance />} />
-        <Route path="/game" element={<Game />} />
+        <Route path="/game/*" element={<Game />} />
         <Route path="/admin" element={<Admin />} />
       </Routes>
     </>

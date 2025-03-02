@@ -26,7 +26,12 @@ const Lnb = ({ onClose }: LnbProps) => {
       label: "출석",
       paths: ["/attendance", "/"],
     },
-    { to: "/game", icon: Network, label: "경기표", paths: ["/game"] },
+    {
+      to: "/game",
+      icon: Network,
+      label: "경기표",
+      paths: ["/game"],
+    },
     { to: "/admin", icon: UserGear, label: "관리자", paths: ["/admin"] },
   ];
 
@@ -38,7 +43,7 @@ const Lnb = ({ onClose }: LnbProps) => {
     if (isClosing) {
       const timer = setTimeout(() => {
         onClose();
-      }, 295);
+      }, 400);
       return () => clearTimeout(timer);
     }
   }, [isClosing, onClose]);
