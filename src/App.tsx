@@ -6,6 +6,7 @@ import { useModal } from "./middleware/stores/modal";
 
 const App = () => {
   const { isOpen } = useModal();
+
   return (
     <div className="flex items-center justify-center app">
       <Router>
