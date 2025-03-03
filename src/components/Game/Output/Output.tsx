@@ -19,13 +19,12 @@ const Output = ({ membersInfo }: { membersInfo: Member[] }) => {
     Array(games.length).fill(false)
   );
   const { openModal } = useModal();
-  console.log(games);
 
   const handleOnPaste = () => {
     const gamesText = games
       .map(
         (game, gameIdx) =>
-          `${gameIdx + 1}경기: ${game.members
+          `${gameIdx + 1}경기 ${game.members
             .map(
               (member, memberIdx) =>
                 member.name + (memberIdx === 1 ? " vs" : "")

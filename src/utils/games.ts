@@ -232,7 +232,7 @@ export const getTierText = (members: Member[], tier: number) => {
   const tieredMembers = groupedByTier(members);
   return `${TierOptions[tier - 1]?.label[0]}: ${[
     ...new Set(tieredMembers[tier]),
-  ].join(", ")}`;
+  ].join(" ")}`;
 };
 
 /**
