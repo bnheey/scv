@@ -20,7 +20,7 @@ const Game = () => {
   }, [subPath]);
 
   return (
-    <div className="flex flex-col h-full gap-3 mt-2">
+    <div className="flex flex-col h-full gap-3 mt-2 overflow-auto">
       {subPath === "output" ? (
         <Output membersInfo={membersInfo} />
       ) : (
