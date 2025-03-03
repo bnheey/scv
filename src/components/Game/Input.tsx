@@ -45,7 +45,7 @@ const Input = ({
       if (member && member.tier !== 0) {
         acc.push(member);
         acc.push(member);
-        if (count < 2) {
+        if (names.length % 2 === 1 && count < 2) {
           acc.push(member);
           count++;
         }

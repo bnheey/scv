@@ -153,19 +153,21 @@ const DragAndDropGrid = ({
                                       {...provided.draggableProps}
                                       {...provided.dragHandleProps}
                                       className={clsx(
-                                        "py-1.5 px-2 border border-gray-200 rounded bg-white",
+                                        "text-nowrap py-1.5 px-1 border border-gray-200 rounded bg-white",
                                         member.duplicate
                                           ? "!bg-red-600 border-none text-white"
                                           : "",
                                         member.tierGap === 1
                                           ? "!border !border-orange-300"
                                           : "",
-                                        member.tierGap === 2
+                                        member.tierGap >= 2
                                           ? "!border !border-red-600"
                                           : ""
                                       )}
                                     >
-                                      {member.name}
+                                      {member.name
+                                        .replace(/\s+/g, "")
+                                        .replace(/\(.*?\)/g, "")}
                                     </div>
                                   )}
                                 </Draggable>
