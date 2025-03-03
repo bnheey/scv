@@ -12,6 +12,7 @@ interface TextProps extends React.HTMLAttributes<HTMLParagraphElement> {
     | "smallBlack"
     | "normalMediumWhite"
     | "normalMediumBlack"
+    | "normalGray"
     | "normalBlack";
   className?: string;
 }
@@ -35,6 +36,8 @@ const Text = ({ children, type, className, ...props }: TextProps) => {
         return "text-white text-[14px] leading-5 font-pretendard-medium";
       case "normalMediumBlack":
         return "text-black text-[14px] leading-5 font-pretendard-medium";
+      case "normalGray":
+        return "text-gray-400 text-[14px] leading-5";
       case "normalBlack":
       default:
         return "text-black text-[14px] leading-5";

@@ -11,6 +11,7 @@ import {
 import Button from "../../common/Button";
 import Text from "../../common/Text";
 import DragAndDropGrid from "./DragAndDropGrid";
+import InfoTooltip from "./InfoTooltip";
 
 const Output = ({ membersInfo }: { membersInfo: Member[] }) => {
   const [games, setGames] = useState(createGames(membersInfo));
@@ -46,16 +47,21 @@ const Output = ({ membersInfo }: { membersInfo: Member[] }) => {
 
   return (
     <div className="h-full">
-      {sortedTiersDesc(membersInfo).map((tier) => (
-        <div key={tier}>
-          <Text
-            type="smallMediumWhite"
-            className="px-2 !text-black !leading-[17px] text-left "
-          >
-            {getTierText(membersInfo, tier)}
-          </Text>
+      <div className="relative">
+        {sortedTiersDesc(membersInfo).map((tier) => (
+          <div key={tier}>
+            <Text
+              type="smallMediumWhite"
+              className="px-2 !text-black !leading-[17px] text-left "
+            >
+              {getTierText(membersInfo, tier)}
+            </Text>
+          </div>
+        ))}
+        <div className="absolute top-0 right-0 z-30">
+          <InfoTooltip />
         </div>
-      ))}
+      </div>
       <div className="w-full max-h-[70%] py-2 border-y border-y-gray-300 overflow-y-scroll mt-4">
         <DragAndDropGrid
           games={games}
