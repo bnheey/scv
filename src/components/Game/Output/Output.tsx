@@ -18,6 +18,7 @@ const Output = ({ membersInfo }: { membersInfo: Member[] }) => {
     Array(games.length).fill(false)
   );
   const { openModal } = useModal();
+  console.log(games);
 
   const handleOnPaste = () => {
     const gamesText = games
