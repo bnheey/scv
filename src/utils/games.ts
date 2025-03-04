@@ -121,6 +121,9 @@ export const createGames = (
         ...bestCombination.team1.map((member) => member.member_id),
         ...bestCombination.team2.map((member) => member.member_id),
       ];
+      const tierGap =
+        bestCombination.team1.reduce((acc, member) => acc + member.tier, 0) -
+        bestCombination.team2.reduce((acc, member) => acc + member.tier, 0);
 
       // 게임 추가
       games.push({
@@ -129,12 +132,12 @@ export const createGames = (
         members: [
           ...bestCombination.team1.map((user) => ({
             ...user,
-            tierGap: minTierGap > 0 ? minTierGap : 0,
+            tierGap: tierGap > 0 ? tierGap : 0,
             duplicate: ids.filter((id) => id === user.member_id).length > 1,
           })),
           ...bestCombination.team2.map((user) => ({
             ...user,
-            tierGap: minTierGap < 0 ? -minTierGap : 0,
+            tierGap: tierGap < 0 ? -tierGap : 0,
             duplicate: ids.filter((id) => id === user.member_id).length > 1,
           })),
         ],
