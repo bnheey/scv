@@ -38,6 +38,7 @@ export const createGames = (
   let filteredMembers = [] as Member[];
   let pinned = {} as { [key: number]: GameMember[] };
 
+  // type 이 game 일 경우, 고정되어있는 게임의 멤버 정보와 나머지 멤버 정보를 분리
   if (type === "game") {
     const { members, pinnedMembers } = getGamesToMember(
       membersOrGames as Game[],
@@ -49,63 +50,53 @@ export const createGames = (
     filteredMembers = [...(membersOrGames as Member[])];
   }
 
-  filteredMembers.sort(() => Math.random() - 0.5);
+  let attempts = 0;
+  const MAX_ATTEMPS = 50;
 
-  const games = [];
-  let gameId = 1;
+  const getGames = () => {
+    const players = [...filteredMembers];
+    players.sort(() => Math.random() - 0.5);
+    const games = [] as Game[];
+    let gameId = 1;
 
-  while (filteredMembers.length >= 4) {
-    const group = filteredMembers.splice(0, 4);
+    while (players.length >= 4) {
+      const group = players.splice(0, 4);
 
-    const combinations = [
-      [
-        [group[0], group[1]],
-        [group[2], group[3]],
-      ],
-      [
-        [group[0], group[2]],
-        [group[1], group[3]],
-      ],
-      [
-        [group[0], group[3]],
-        [group[1], group[2]],
-      ],
-    ];
+      const combinations = [
+        [
+          [group[0], group[1]],
+          [group[2], group[3]],
+        ],
+        [
+          [group[0], group[2]],
+          [group[1], group[3]],
+        ],
+        [
+          [group[0], group[3]],
+          [group[1], group[2]],
+        ],
+      ];
 
-    let bestCombination = null;
-    let minTierGap = Infinity;
+      let bestCombination = null;
+      let minTierGap = Infinity;
 
-    for (const [[team1A, team1B], [team2A, team2B]] of combinations) {
-      const team1Sum = team1A.tier + team1B.tier;
-      const team2Sum = team2A.tier + team2B.tier;
-      const tierGap = Math.abs(team1Sum - team2Sum);
-      // 중복 확인
-      const isDuplicate =
-        new Set([
-          team1A.member_id,
-          team1B.member_id,
-          team2A.member_id,
-          team2B.member_id,
-        ]).size !== 4;
-
-      if (!isDuplicate) {
-        if (tierGap < minTierGap) {
-          minTierGap = tierGap;
-          bestCombination = {
-            team1: [team1A, team1B],
-            team2: [team2A, team2B],
-          };
-        }
-      }
-    }
-
-    // 중복이 없는 조합이 없을 경우, 티어 차이가 가장 적은 조합 선택
-    if (!bestCombination) {
       for (const [[team1A, team1B], [team2A, team2B]] of combinations) {
         const team1Sum = team1A.tier + team1B.tier;
         const team2Sum = team2A.tier + team2B.tier;
         const tierGap = Math.abs(team1Sum - team2Sum);
 
+        // 중복 확인
+        const isDuplicate =
+          new Set([
+            team1A.member_id,
+            team1B.member_id,
+            team2A.member_id,
+            team2B.member_id,
+          ]).size !== 4;
+
+        if (isDuplicate && attempts < MAX_ATTEMPS) {
+          return [];
+        }
         if (tierGap < minTierGap) {
           minTierGap = tierGap;
           bestCombination = {
@@ -114,45 +105,58 @@ export const createGames = (
           };
         }
       }
-    }
 
-    if (bestCombination) {
-      const ids = [
-        ...bestCombination.team1.map((member) => member.member_id),
-        ...bestCombination.team2.map((member) => member.member_id),
-      ];
-      const tierGap =
-        bestCombination.team1.reduce((acc, member) => acc + member.tier, 0) -
-        bestCombination.team2.reduce((acc, member) => acc + member.tier, 0);
+      if (bestCombination) {
+        const ids = [
+          ...bestCombination.team1.map((member) => member.member_id),
+          ...bestCombination.team2.map((member) => member.member_id),
+        ];
+        const tierGap =
+          bestCombination.team1.reduce((acc, member) => acc + member.tier, 0) -
+          bestCombination.team2.reduce((acc, member) => acc + member.tier, 0);
 
-      // 게임 추가
-      games.push({
-        gameId: gameId++,
-        title: `game ${gameId - 1}`,
-        members: [
-          ...bestCombination.team1.map((user) => ({
-            ...user,
-            tierGap: tierGap > 0 ? tierGap : 0,
-            duplicate: ids.filter((id) => id === user.member_id).length > 1,
-          })),
-          ...bestCombination.team2.map((user) => ({
-            ...user,
-            tierGap: tierGap < 0 ? -tierGap : 0,
-            duplicate: ids.filter((id) => id === user.member_id).length > 1,
-          })),
-        ],
-      });
+        // 게임 추가
+        games.push({
+          gameId: gameId++,
+          title: `game ${gameId - 1}`,
+          members: [
+            ...bestCombination.team1.map((user) => ({
+              ...user,
+              tierGap: tierGap > 0 ? tierGap : 0,
+              duplicate: ids.filter((id) => id === user.member_id).length > 1,
+            })),
+            ...bestCombination.team2.map((user) => ({
+              ...user,
+              tierGap: tierGap < 0 ? -tierGap : 0,
+              duplicate: ids.filter((id) => id === user.member_id).length > 1,
+            })),
+          ],
+        });
+      }
     }
+    return games;
+  };
+
+  let games = getGames();
+  // 중복이 있는 경우, 중복이 없을 때까지 게임 생성
+  while (games.length < 1 && attempts < MAX_ATTEMPS) {
+    games = getGames();
+    attempts++;
   }
 
   if (pinnedIdxs.length > 0) {
     for (const idx in pinned) {
       games.splice(Number(idx), 0, {
-        gameId: gameId++,
-        title: `game ${gameId - 1}`,
+        gameId: 0, // 임시
+        title: `game idx`, // 임시
         members: pinned[idx],
       });
     }
+    games = games.map((game, idx) => ({
+      gameId: idx + 1,
+      title: `game ${idx + 1}`,
+      members: game.members,
+    }));
   }
 
   return games;
