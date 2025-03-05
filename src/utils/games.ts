@@ -55,11 +55,11 @@ export const createGames = (
 
   const getGames = () => {
     const players = [...filteredMembers];
+    players.sort(() => Math.random() - 0.5);
     const games = [] as Game[];
     let gameId = 1;
 
     while (players.length >= 4) {
-      players.sort(() => Math.random() - 0.5);
       const group = players.splice(0, 4);
 
       const combinations = [
@@ -94,7 +94,9 @@ export const createGames = (
             team2B.member_id,
           ]).size !== 4;
 
-        if (isDuplicate && attempts < MAX_ATTEMPS) break;
+        if (isDuplicate && attempts < MAX_ATTEMPS) {
+          return [];
+        }
         if (tierGap < minTierGap) {
           minTierGap = tierGap;
           bestCombination = {
