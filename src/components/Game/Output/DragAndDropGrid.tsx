@@ -6,6 +6,7 @@ import {
 } from "@hello-pangea/dnd";
 import { CaretUpDown, PushPin } from "@phosphor-icons/react";
 import clsx from "clsx";
+import { useModal } from "../../../middleware/stores/modal";
 import { Game } from "../../../types/Games";
 import { getDuplicateMembers, getTierGapMembers } from "../../../utils/games";
 import Text from "../../common/Text";
@@ -23,6 +24,7 @@ const DragAndDropGrid = ({
   pinnedGames,
   setPinnedGames,
 }: DragAndDropGridProps) => {
+  const { openModal } = useModal();
   const handleOnDragEnd = (result: DropResult) => {
     const { source, destination, type } = result;
 
@@ -119,6 +121,15 @@ const DragAndDropGrid = ({
                           <button
                             className="p-0"
                             onClick={() => {
+                              if (
+                                game.members.some((member) => member.duplicate)
+                              ) {
+                                return openModal({
+                                  title: "알림",
+                                  message:
+                                    "중복된 참가자가 있는 경우 고정할 수 없습니다.",
+                                });
+                              }
                               setPinnedGames([
                                 ...pinnedGames.slice(0, gameIndex),
                                 !pinnedGames[gameIndex],
