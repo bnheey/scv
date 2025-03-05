@@ -50,9 +50,6 @@ export const createGames = (
     filteredMembers = [...(membersOrGames as Member[])];
   }
 
-  let attempts = 0;
-  const MAX_ATTEMPS = 50;
-
   const getGames = () => {
     const players = [...filteredMembers];
     players.sort(() => Math.random() - 0.5);
@@ -94,7 +91,7 @@ export const createGames = (
             team2B.member_id,
           ]).size !== 4;
 
-        if (isDuplicate && attempts < MAX_ATTEMPS) {
+        if (isDuplicate) {
           return [];
         }
         if (tierGap < minTierGap) {
@@ -138,10 +135,8 @@ export const createGames = (
   };
 
   let games = getGames();
-  // 중복이 있는 경우, 중복이 없을 때까지 게임 생성
-  while (games.length < 1 && attempts < MAX_ATTEMPS) {
+  while (games.length < 1) {
     games = getGames();
-    attempts++;
   }
 
   if (pinnedIdxs.length > 0) {
