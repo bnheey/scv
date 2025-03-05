@@ -147,11 +147,16 @@ export const createGames = (
   if (pinnedIdxs.length > 0) {
     for (const idx in pinned) {
       games.splice(Number(idx), 0, {
-        gameId: Number(idx),
-        title: `game ${Number(idx) - 1}`,
+        gameId: 0, // 임시
+        title: `game idx`, // 임시
         members: pinned[idx],
       });
     }
+    games = games.map((game, idx) => ({
+      gameId: idx + 1,
+      title: `game ${idx + 1}`,
+      members: game.members,
+    }));
   }
 
   return games;
