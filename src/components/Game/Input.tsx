@@ -27,7 +27,7 @@ const Input = ({
   }, []);
 
   const handleSortNames = (inputText: string) => {
-    const namePattern = /([가-힣]+(?:\(게\))?.*?)(?=\n|$)/g;
+    const namePattern = /\d+\.\s*([가-힣]+(?:\(게\))?.*?)(?=\n|$)/g;
     const names = [];
     let match;
     while ((match = namePattern.exec(inputText)) !== null) {
