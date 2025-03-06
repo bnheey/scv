@@ -106,9 +106,14 @@ const Input = ({
         },
       });
     } else if (selectMembers.length < 1) {
-      openModal({
+      return openModal({
         title: "경고",
         message: "입력된 이름이 없거나 잘못된 이름입니다.",
+      });
+    } else if (names.length < 4) {
+      return openModal({
+        title: "경고",
+        message: "4명 이상의 참가자를 입력해주세요.",
       });
     } else {
       setMembersInfo(selectMembers);
