@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useModal } from "../../../middleware/stores/modal";
 import type { Member } from "../../../types/Members";
 import { formatDate } from "../../../utils/date";
@@ -19,6 +20,13 @@ const Output = ({ membersInfo }: { membersInfo: Member[] }) => {
     Array(games.length).fill(false)
   );
   const { openModal } = useModal();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (membersInfo.length === 0) {
+      navigate("/game");
+    }
+  }, [membersInfo, navigate]);
 
   const handleOnPaste = () => {
     const gamesText = games

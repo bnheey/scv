@@ -25,29 +25,33 @@ export const getGamesToMember = (games: Game[], pinnedIdxs: number[]) => {
  * membersOrGames를 받아 랜덤하게 게임을 생성하여 반환
  * type이 "game"일 경우, membersOrGames는 Game[]이어야 함
  * type이 "game"일 경우, pinnedIdxs를 받아 해당 인덱스에는 고정된 게임을 생성
- * @param membersOrGames : Member[] | Game[]
+ * @param inputGameData : Member[] | Game[]
  * @param type: "member" | "game"
  * @param pinnedIdxs: number[]
  * @returns
  */
 export const createGames = (
-  membersOrGames: Member[] | Game[],
+  inputGameData: Member[] | Game[],
   type: "member" | "game" = "member",
   pinnedIdxs: number[] = []
 ) => {
+  if (inputGameData.length === 0) {
+    return [];
+  }
+
   let filteredMembers = [] as Member[];
   let pinned = {} as { [key: number]: GameMember[] };
 
   // type 이 game 일 경우, 고정되어있는 게임의 멤버 정보와 나머지 멤버 정보를 분리
   if (type === "game") {
     const { members, pinnedMembers } = getGamesToMember(
-      membersOrGames as Game[],
+      inputGameData as Game[],
       pinnedIdxs
     );
     filteredMembers = [...members];
     pinned = pinnedMembers;
   } else {
-    filteredMembers = [...(membersOrGames as Member[])];
+    filteredMembers = [...(inputGameData as Member[])];
   }
 
   const getGames = () => {
