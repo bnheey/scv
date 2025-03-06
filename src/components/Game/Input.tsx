@@ -57,7 +57,12 @@ const Input = ({
       (name) => !selectMembers.map((member) => member.name).includes(name)
     );
 
-    if (guestNames.length > 0) {
+    if (names.length < 4) {
+      return openModal({
+        title: "경고",
+        message: "4명 이상의 참가자를 입력해주세요.",
+      });
+    } else if (guestNames.length > 0) {
       let guests = [] as { name: string; tier: number; member_id: number }[];
       openModal({
         title: "게스트 등록",
@@ -109,11 +114,6 @@ const Input = ({
       return openModal({
         title: "경고",
         message: "입력된 이름이 없거나 잘못된 이름입니다.",
-      });
-    } else if (names.length < 4) {
-      return openModal({
-        title: "경고",
-        message: "4명 이상의 참가자를 입력해주세요.",
       });
     } else {
       setMembersInfo(selectMembers);
