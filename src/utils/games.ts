@@ -1,3 +1,4 @@
+import moment from "moment";
 import { TierOptions } from "../constants/Member";
 import { Game, GameMember } from "../types/Games";
 import type { Member } from "../types/Members";
@@ -252,3 +253,14 @@ export const uniqueMembers = (members: Member[]) =>
     (member, index, self) =>
       index === self.findIndex((m) => m.member_id === member.member_id)
   );
+
+export const getMemberName = (
+  name: string,
+  createdTimestamp: string = "",
+  sliceIdx: number = 0
+) => {
+  const isFresh =
+    createdTimestamp && moment().diff(moment(createdTimestamp), "days") < 30;
+  const formattedName = name.replace(/\s+/g, "").replace(/\(.*?\)/g, "");
+  return isFresh ? `${formattedName.slice(sliceIdx)}🐣` : formattedName;
+};
