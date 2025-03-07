@@ -45,7 +45,6 @@ const ListHeader = ({
       })
       .filter(Boolean)
       .join("\n\n")}`;
-    console.log(pasteText);
 
     navigator.clipboard.writeText(pasteText);
   };

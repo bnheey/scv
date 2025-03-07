@@ -144,6 +144,7 @@ const Input = ({
       <textarea
         ref={inputRef}
         className="px-3 py-2 h-[55%] text-sm bg-white border"
+        placeholder={`(예시)\n1. 조석준\n2. 전성혁\n3. 방희연 \n4. 서현주(게스트)\n5. 이현석\n6. 이현재\n7. 허찬웅\n8. 김진호`}
         onPaste={() => {
           setTimeout(() => {
             inputRef.current?.blur();
