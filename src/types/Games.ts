@@ -4,6 +4,7 @@ export type GameMember = {
   tier: number;
   tierGap: number;
   duplicate: boolean;
+  createdTimestamp?: string;
 };
 
 export type Game = {

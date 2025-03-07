@@ -39,9 +39,18 @@ const Input = ({
 
   const handleOnClick = (inputText: string) => {
     const names = handleSortNames(inputText);
+    const guestNames = [] as string[];
     let count = 0;
+    let isDuplicateName = "";
+
     const selectMembers = names.reduce((acc, name) => {
-      const member = members.find((member) => member.name === name);
+      const member = members.find(
+        (member) => name.split("(")[0] === member.name
+      );
+      if (member && name.includes("게")) {
+        isDuplicateName = name;
+        return [];
+      }
       if (member && member.tier !== 0) {
         acc.push(member);
         acc.push(member);
@@ -49,20 +58,25 @@ const Input = ({
           acc.push(member);
           count++;
         }
+      } else {
+        guestNames.push(name);
       }
       return acc;
     }, [] as typeof members);
 
-    const guestNames = names.filter(
-      (name) => !selectMembers.map((member) => member.name).includes(name)
-    );
-
+    if (isDuplicateName) {
+      return openModal({
+        title: "경고",
+        message: `${isDuplicateName}은(는) 이미 회원 명단에 존재합니다.`,
+      });
+    }
     if (names.length < 4) {
       return openModal({
         title: "경고",
         message: "4명 이상의 참가자를 입력해주세요.",
       });
     } else if (guestNames.length > 0) {
+      // 게스트 티어 선택
       let guests = [] as { name: string; tier: number; member_id: number }[];
       openModal({
         title: "게스트 등록",

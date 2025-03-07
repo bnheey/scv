@@ -5,6 +5,7 @@ import type { Member } from "../../../types/Members";
 import { formatDate } from "../../../utils/date";
 import {
   createGames,
+  getMemberName,
   getTierText,
   sortedTiersDesc,
   uniqueMembers,
@@ -35,7 +36,8 @@ const Output = ({ membersInfo }: { membersInfo: Member[] }) => {
           `${gameIdx + 1}경기 ${game.members
             .map(
               (member, memberIdx) =>
-                member.name + (memberIdx === 1 ? " vs" : "")
+                getMemberName(member.name, member.createdTimestamp) +
+                (memberIdx === 1 ? " vs" : "")
             )
             .join(" ")}`
       )
