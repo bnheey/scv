@@ -63,6 +63,21 @@ const Input = ({
         message: "4명 이상의 참가자를 입력해주세요.",
       });
     } else if (guestNames.length > 0) {
+      // 게스트 이름 중복 확인
+      const memberName = guestNames.find((guestName) => {
+        return members.some(
+          (member) => guestName.includes(member.name) && !member.member_id
+        );
+      });
+
+      if (memberName) {
+        return openModal({
+          title: "경고",
+          message: `${memberName}은 이미 등록된 회원입니다.`,
+        });
+      }
+
+      // 게스트 티어 선택
       let guests = [] as { name: string; tier: number; member_id: number }[];
       openModal({
         title: "게스트 등록",
