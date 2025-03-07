@@ -1,10 +1,22 @@
 import { Info, X } from "@phosphor-icons/react";
+import Cookies from "js-cookie";
 import { useEffect, useRef, useState } from "react";
 import Text from "../../common/Text";
 
 const InfoTooltip = () => {
-  const [isOpen, setIsOpen] = useState(false);
+  const SHOW_TUTORIAL = JSON.parse(Cookies.get("SHOW_TUTORIAL") || "[]");
+  const [isOpen, setIsOpen] = useState<boolean>(Boolean(SHOW_TUTORIAL) || true);
+
   const tooltipRef = useRef<HTMLDivElement>(null);
+
+  const handleOnClose = () => {
+    setIsOpen(false);
+    if (!SHOW_TUTORIAL) {
+      Cookies.set("SHOW_TUTORIAL", "false", {
+        expires: 365,
+      });
+    }
+  };
 
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
@@ -12,7 +24,7 @@ const InfoTooltip = () => {
         tooltipRef.current &&
         !tooltipRef.current.contains(e.target as Node)
       ) {
-        setIsOpen(false);
+        handleOnClose();
       }
     };
 
@@ -40,7 +52,7 @@ const InfoTooltip = () => {
         >
           <div className="flex items-center justify-between mb-3">
             <Text type="subTitleBlack">부가 설명</Text>
-            <button className="p-0" onClick={() => setIsOpen(false)}>
+            <button className="p-0" onClick={handleOnClose}>
               <X />
             </button>
           </div>
