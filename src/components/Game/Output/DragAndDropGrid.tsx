@@ -6,6 +6,7 @@ import {
 } from "@hello-pangea/dnd";
 import { CaretUpDown, PushPin } from "@phosphor-icons/react";
 import clsx from "clsx";
+import moment from "moment";
 import { useModal } from "../../../middleware/stores/modal";
 import { Game } from "../../../types/Games";
 import { getDuplicateMembers, getTierGapMembers } from "../../../utils/games";
@@ -179,6 +180,12 @@ const DragAndDropGrid = ({
                                       {member.name
                                         .replace(/\s+/g, "")
                                         .replace(/\(.*?\)/g, "")}
+                                      {moment().diff(
+                                        moment(member.createdTimestamp),
+                                        "days"
+                                      ) < 30
+                                        ? "🐣"
+                                        : ""}
                                     </div>
                                   )}
                                 </Draggable>

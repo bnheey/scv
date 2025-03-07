@@ -39,8 +39,10 @@ const Input = ({
 
   const handleOnClick = (inputText: string) => {
     const names = handleSortNames(inputText);
+    const guestNames = [] as string[];
     let count = 0;
     let isDuplicateName = "";
+
     const selectMembers = names.reduce((acc, name) => {
       const member = members.find(
         (member) => name.split("(")[0] === member.name
@@ -56,13 +58,11 @@ const Input = ({
           acc.push(member);
           count++;
         }
+      } else {
+        guestNames.push(name);
       }
       return acc;
     }, [] as typeof members);
-
-    const guestNames = names.filter(
-      (name) => !selectMembers.map((member) => member.name).includes(name)
-    );
 
     if (isDuplicateName) {
       return openModal({
