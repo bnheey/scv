@@ -177,6 +177,9 @@ const DragAndDropGrid = ({
                                           : "",
                                         member.tierGap >= 2
                                           ? "!border !border-red-600"
+                                          : "",
+                                        !member.createdTimestamp
+                                          ? "!text-gray-400"
                                           : ""
                                       )}
                                     >

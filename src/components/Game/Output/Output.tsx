@@ -47,9 +47,9 @@ const Output = ({ membersInfo }: { membersInfo: Member[] }) => {
       formatDate(new Date(), "a") == "오전" ? "오전 9시" : "오후 7시 30분"
     })\n${sortedTiersDesc(membersInfo)
       .map((tier) => getTierText(membersInfo, tier))
-      .join("\n")}\n\n총원 : ${
+      .join("\n")}\n\n총원 (${
       uniqueMembers(membersInfo).length
-    }명\n\n${gamesText}`;
+    })\n\n${gamesText}`;
 
     navigator.clipboard.writeText(pasteText);
   };
