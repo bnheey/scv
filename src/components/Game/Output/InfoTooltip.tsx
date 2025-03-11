@@ -104,7 +104,7 @@ const InfoTooltip = () => {
       {isOpen && (
         <div
           ref={tooltipRef}
-          className="py-3 px-4 absolute right-0 w-[300px] bg-white border-[2px] rounded-md border-scv-pink"
+          className="animate-fadeIn py-3 px-4 absolute right-0 w-[300px] bg-white border-[2px] rounded-md border-scv-pink"
         >
           <div className="flex items-center justify-between mb-4">
             <Text type="subTitleBlack">부가 설명</Text>
