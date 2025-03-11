@@ -1,6 +1,7 @@
+import { Info } from "@phosphor-icons/react";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useModal } from "../../../middleware/stores/modal";
+import { ToastContainer, toast } from "react-toastify";
 import type { Member } from "../../../types/Members";
 import { formatDate } from "../../../utils/date";
 import {
@@ -20,7 +21,6 @@ const Output = ({ membersInfo }: { membersInfo: Member[] }) => {
   const [pinnedGames, setPinnedGames] = useState<boolean[]>(
     Array(games.length).fill(false)
   );
-  const { openModal } = useModal();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -54,8 +54,24 @@ const Output = ({ membersInfo }: { membersInfo: Member[] }) => {
     navigator.clipboard.writeText(pasteText);
   };
 
+  const getGameText = () => {
+    handleOnPaste();
+    toast("경기표가 복사되었습니다.", {
+      type: "info",
+      className:
+        "w-2/3 top-[65px] font-pretendard text-[14px] text-black rounded-md",
+      icon: (
+        <Info size={14} color="#3b82f6" weight="fill" className="opacity-50" />
+      ),
+      theme: "light",
+      draggable: true,
+      autoClose: 2000,
+    });
+  };
+
   return (
     <div className="h-full">
+      <ToastContainer />
       <div className="relative">
         {sortedTiersDesc(membersInfo).map((tier) => (
           <div key={tier}>
@@ -96,17 +112,7 @@ const Output = ({ membersInfo }: { membersInfo: Member[] }) => {
         >
           랜덤 재배치
         </Button>
-        <Button
-          onClick={() => {
-            handleOnPaste();
-            openModal({
-              title: "알림",
-              message: "경기표가 복사되었습니다.",
-            });
-          }}
-        >
-          경기표 생성
-        </Button>
+        <Button onClick={() => getGameText()}>경기표 생성</Button>
       </div>
     </div>
   );

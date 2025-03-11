@@ -3,8 +3,12 @@ import { useEffect, useRef, useState } from "react";
 import Text from "../../common/Text";
 
 const InfoTooltip = () => {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState<boolean>(false);
   const tooltipRef = useRef<HTMLDivElement>(null);
+
+  const handleOnClose = () => {
+    setIsOpen(false);
+  };
 
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
@@ -12,7 +16,7 @@ const InfoTooltip = () => {
         tooltipRef.current &&
         !tooltipRef.current.contains(e.target as Node)
       ) {
-        setIsOpen(false);
+        handleOnClose();
       }
     };
 
@@ -92,11 +96,11 @@ const InfoTooltip = () => {
       {isOpen && (
         <div
           ref={tooltipRef}
-          className="py-3 px-4 absolute right-0 w-[300px] bg-white border-[2px] rounded-md border-scv-pink"
+          className="animate-fadeIn py-3 px-4 absolute right-0 w-[300px] bg-white border-[2px] rounded-md border-scv-pink"
         >
           <div className="flex items-center justify-between mb-4">
             <Text type="subTitleBlack">부가 설명</Text>
-            <button className="p-0" onClick={() => setIsOpen(false)}>
+            <button className="p-0" onClick={handleOnClose}>
               <X />
             </button>
           </div>
