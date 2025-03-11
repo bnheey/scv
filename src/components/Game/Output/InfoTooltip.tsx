@@ -1,21 +1,13 @@
 import { Info, X } from "@phosphor-icons/react";
-import Cookies from "js-cookie";
 import { useEffect, useRef, useState } from "react";
 import Text from "../../common/Text";
 
 const InfoTooltip = () => {
-  const SHOW_TUTORIAL = JSON.parse(Cookies.get("SHOW_TUTORIAL") || "[]");
-  const [isOpen, setIsOpen] = useState<boolean>(Boolean(SHOW_TUTORIAL) || true);
-
+  const [isOpen, setIsOpen] = useState<boolean>(false);
   const tooltipRef = useRef<HTMLDivElement>(null);
 
   const handleOnClose = () => {
     setIsOpen(false);
-    if (!SHOW_TUTORIAL) {
-      Cookies.set("SHOW_TUTORIAL", "false", {
-        expires: 365,
-      });
-    }
   };
 
   useEffect(() => {
