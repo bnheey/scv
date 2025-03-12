@@ -3,6 +3,7 @@ import moment from "moment";
 import { AttendanceList } from "../../../types/Attendance";
 import { formatDate } from "../../../utils/date";
 import Text from "../../common/Text";
+import { getToast } from "../../../utils/shared";
 
 interface ListHeaderProps {
   attendanceList: AttendanceList;
@@ -62,7 +63,15 @@ const ListHeader = ({
       <Text
         type="subTitleBlack"
         className="font-pretendard"
-        onClick={() => handleOnPaste(attendanceList)}
+        onClick={() => {
+          handleOnPaste(attendanceList);
+          getToast(
+            `${formatDate(
+              currentDate,
+              "yyyy년 MM월"
+            )} 우수참석 현황이 복사되었습니다.`
+          );
+        }}
       >
         {formatDate(currentDate, "yyyy년 MM월")}
       </Text>

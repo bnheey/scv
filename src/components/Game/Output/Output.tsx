@@ -1,7 +1,5 @@
-import { Info } from "@phosphor-icons/react";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { ToastContainer, toast } from "react-toastify";
 import type { Member } from "../../../types/Members";
 import { formatDate } from "../../../utils/date";
 import {
@@ -11,6 +9,7 @@ import {
   sortedTiersDesc,
   uniqueMembers,
 } from "../../../utils/games";
+import { getToast } from "../../../utils/shared";
 import Button from "../../common/Button";
 import Text from "../../common/Text";
 import DragAndDropGrid from "./DragAndDropGrid";
@@ -56,22 +55,11 @@ const Output = ({ membersInfo }: { membersInfo: Member[] }) => {
 
   const getGameText = () => {
     handleOnPaste();
-    toast("경기표가 복사되었습니다.", {
-      type: "info",
-      className:
-        "w-2/3 top-[65px] font-pretendard text-[14px] text-black rounded-md",
-      icon: (
-        <Info size={14} color="#3b82f6" weight="fill" className="opacity-50" />
-      ),
-      theme: "light",
-      draggable: true,
-      autoClose: 2000,
-    });
+    getToast("경기표가 복사되었습니다.");
   };
 
   return (
     <div className="h-full">
-      <ToastContainer />
       <div className="relative">
         {sortedTiersDesc(membersInfo).map((tier) => (
           <div key={tier}>
