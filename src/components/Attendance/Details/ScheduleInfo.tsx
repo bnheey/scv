@@ -3,6 +3,7 @@ import clsx from "clsx";
 import { ScheduleInfoList, SimpleMember } from "../../../types/Attendance";
 import { formatDate } from "../../../utils/date";
 import Text from "../../common/Text";
+import { getToast } from "../../../utils/shared";
 
 const ScheduleInfo = ({
   date,
@@ -52,6 +53,7 @@ const ScheduleInfo = ({
                   className="flex items-center justify-center p-0 bg-transparent"
                   onClick={() => {
                     handleOnPaste(schedule.memberList);
+                    getToast("참석자 목록이 복사되었습니다.");
                   }}
                 >
                   <ClipboardText size={16} weight="fill" color="white" />

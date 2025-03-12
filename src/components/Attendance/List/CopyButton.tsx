@@ -2,6 +2,7 @@ import { AttendanceList } from "../../../types/Attendance";
 import { ClipboardText } from "@phosphor-icons/react";
 import Text from "../../common/Text";
 import { formatDate } from "../../../utils/date";
+import { getToast } from "../../../utils/shared";
 
 type CopyButtonProps = {
   currentDate: Date;
@@ -46,6 +47,7 @@ const CopyButton = ({ currentDate, attendanceList }: CopyButtonProps) => {
       className="flex absolute top-[6px] right-1 items-center justify-center px-[6px] py-[3px] gap-[2px] rounded-md bg-white border border-scv-pink"
       onClick={() => {
         handleOnPaste(attendanceList);
+        getToast("출석 현황이 복사되었습니다.");
       }}
     >
       <ClipboardText size={18} weight="fill" color="#dd9595" />
