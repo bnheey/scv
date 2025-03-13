@@ -1,8 +1,8 @@
 import {
   CalendarCheck,
   Network,
-  SignIn,
-  UserGear,
+  // SignIn,
+  // UserGear,
   X,
 } from "@phosphor-icons/react";
 import { useEffect, useState } from "react";
@@ -32,7 +32,7 @@ const Lnb = ({ onClose }: LnbProps) => {
       label: "경기표",
       paths: ["/game"],
     },
-    { to: "/admin", icon: UserGear, label: "관리자", paths: ["/admin"] },
+    // { to: "/admin", icon: UserGear, label: "관리자", paths: ["/admin"] },
   ];
 
   const handleClose = () => {
@@ -91,12 +91,12 @@ const Lnb = ({ onClose }: LnbProps) => {
             </li>
           ))}
         </ul>
-        <div className="absolute bottom-3 right-4">
+        {/* <div className="absolute bottom-3 right-4">
           <button className="flex gap-1 px-2 py-1 bg-gray-100 border border-gray-400 rounded-md">
             <Text type="normalBlack">관리자</Text>
             <SignIn size={22} weight="light" />
           </button>
-        </div>
+        </div> */}
       </nav>
     </>
   );
