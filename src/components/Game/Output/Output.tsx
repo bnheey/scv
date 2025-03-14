@@ -12,8 +12,8 @@ import {
 import { getToast } from "../../../utils/shared";
 import Button from "../../common/Button";
 import Text from "../../common/Text";
-import DragAndDropGrid from "./DragAndDropGrid";
 import InfoTooltip from "./InfoTooltip";
+import DragAndDropWrapper from "./DragAndDrop/DragAndDropWrapper";
 
 const Output = ({ membersInfo }: { membersInfo: Member[] }) => {
   const [games, setGames] = useState(createGames(membersInfo));
@@ -76,7 +76,7 @@ const Output = ({ membersInfo }: { membersInfo: Member[] }) => {
         </div>
       </div>
       <div className="w-full max-h-[70%] py-2 border-y border-y-gray-300 overflow-y-scroll mt-4">
-        <DragAndDropGrid
+        <DragAndDropWrapper
           games={games}
           setGames={setGames}
           pinnedGames={pinnedGames}
