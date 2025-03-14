@@ -1,8 +1,8 @@
-import { AttendanceList } from "../../../types/Attendance";
+import Text from "@/components/common/Text";
+import type { AttendanceList } from "@/types/Attendance";
+import { formatDate } from "@/utils/date";
+import { getToast } from "@/utils/shared";
 import { ClipboardText } from "@phosphor-icons/react";
-import Text from "../../common/Text";
-import { formatDate } from "../../../utils/date";
-import { getToast } from "../../../utils/shared";
 
 type CopyButtonProps = {
   currentDate: Date;

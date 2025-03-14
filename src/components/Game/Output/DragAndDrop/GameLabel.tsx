@@ -1,9 +1,10 @@
+import Text from "@/components/common/Text";
+import { useModal } from "@/middleware/stores/modal";
+import type { Game } from "@/types/Games";
 import { Draggable, Droppable } from "@hello-pangea/dnd";
-import { type Game } from "../../../../types/Games";
-import { useModal } from "../../../../middleware/stores/modal";
 import { CaretUpDown, PushPin } from "@phosphor-icons/react";
-import Text from "../../../common/Text";
 import MemberLabel from "./MemberLabel";
+
 
 interface GameLabelProps {
   game: Game;

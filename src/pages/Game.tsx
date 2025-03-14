@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { useLocation } from "react-router-dom";
-import Input from "../components/Game/Input";
-import Output from "../components/Game/Output/Output";
+import Input from "@/components/Game/Input";
 import type { Member } from "../types/Members";
+import Output from "@/components/Game/Output/Output";
 
 const Game = () => {
   const location = useLocation();

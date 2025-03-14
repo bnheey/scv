@@ -1,9 +1,9 @@
+import Text from "@/components/common/Text";
+import type { ScheduleInfoList, SimpleMember } from "@/types/Attendance";
+import { formatDate } from "@/utils/date";
+import { getToast } from "@/utils/shared";
 import { CalendarSlash, ClipboardText } from "@phosphor-icons/react";
 import clsx from "clsx";
-import { ScheduleInfoList, SimpleMember } from "../../../types/Attendance";
-import { formatDate } from "../../../utils/date";
-import Text from "../../common/Text";
-import { getToast } from "../../../utils/shared";
 
 const ScheduleInfo = ({
   date,

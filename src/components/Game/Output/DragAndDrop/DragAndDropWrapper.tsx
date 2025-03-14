@@ -1,16 +1,8 @@
-import {
-  DragDropContext,
-  DraggableLocation,
-  Droppable,
-  DropResult,
-} from "@hello-pangea/dnd";
-import { Game } from "../../../../types/Games";
-import {
-  reorderArray,
-  updatePlayerOrder,
-  updatePlayerOrderWithGames,
-} from "../../../../utils/games";
+import type { DraggableLocation, DropResult } from "@hello-pangea/dnd";
+import { DragDropContext, Droppable } from "@hello-pangea/dnd";
 import GameLabel from "./GameLabel";
+import type { Game } from "@/types/Games";
+import { reorderArray, updatePlayerOrder, updatePlayerOrderWithGames } from "@/utils/games";
 
 interface DragAndDropGridProps {
   games: Game[];

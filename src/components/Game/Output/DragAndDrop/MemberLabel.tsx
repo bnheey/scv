@@ -1,7 +1,8 @@
+import type { GameMember } from "@/types/Games";
+import { getMemberName } from "@/utils/games";
 import { Draggable } from "@hello-pangea/dnd";
 import clsx from "clsx";
-import { type GameMember } from "../../../../types/Games";
-import { getMemberName } from "../../../../utils/games";
+
 
 interface MemberLabelProps {
   gameIndex: number;

@@ -1,6 +1,6 @@
 import { X } from "@phosphor-icons/react";
-import { useModal } from "../../middleware/stores/modal";
 import Text from "./Text";
+import { useModal } from "@/middleware/stores/modal";
 
 const Modal = () => {
   const {

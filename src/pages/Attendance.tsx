@@ -1,7 +1,8 @@
+import Calendar from "@/components/Attendance/Details/Calendar";
+import List from "@/components/Attendance/List/List";
+import Tabs from "@/components/common/Tabs";
 import { useLocation } from "react-router-dom";
-import Calendar from "../components/Attendance/Details/Calendar";
-import List from "../components/Attendance/List/List";
-import Tabs from "../components/common/Tabs";
+
 
 const Attendance = () => {
   const location = useLocation();

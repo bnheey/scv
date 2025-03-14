@@ -1,8 +1,7 @@
 import { List, Racquet } from "@phosphor-icons/react";
-import Text from "./common/Text";
-
-import { useLocation } from "react-router-dom";
 import { useState } from "react";
+import { useLocation } from "react-router-dom";
+import Text from "./common/Text";
 import Lnb from "./Lnb";
 
 const Header = () => {
