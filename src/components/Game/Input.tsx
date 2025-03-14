@@ -39,7 +39,7 @@ const Input = ({
 
   const handleOnClick = (inputText: string) => {
     const names = handleSortNames(inputText);
-    const guestNames = [] as string[];
+    let guests = [] as Member[];
     let count = 0;
     let isDuplicateName = "";
 
@@ -58,8 +58,19 @@ const Input = ({
           acc.push(member);
           count++;
         }
+      } else if (member && member.tier === 0) {
+        guests.push({
+          name,
+          tier: 1,
+          member_id: member.member_id,
+          createdTimestamp: member.createdTimestamp,
+        });
       } else {
-        guestNames.push(name);
+        guests.push({
+          name,
+          tier: 1,
+          member_id: Math.random(),
+        });
       }
       return acc;
     }, [] as typeof members);
@@ -75,42 +86,26 @@ const Input = ({
         title: "경고",
         message: "4명 이상의 참가자를 입력해주세요.",
       });
-    } else if (guestNames.length > 0) {
+    } else if (guests.length > 0) {
       // 게스트 티어 선택
-      let guests = [] as { name: string; tier: number; member_id: number }[];
       openModal({
         title: "게스트 등록",
         message: "게스트의 티어를 선택해주세요.",
         confirmText: "저장",
         children: (
           <div className="flex flex-col gap-3 px-2 mt-4">
-            {guestNames.map((guest, index) => {
-              const newGuests = [...guests];
-              newGuests[index] = newGuests[index]
-                ? newGuests[index]
-                : { name: guest, tier: 1, member_id: Math.random() };
-              guests = newGuests;
+            {guests.map((guest, index) => {
               return (
                 <div className="flex items-center gap-3" key={index}>
                   <Text type="normalMediumBlack" className="w-[80px] text-left">
-                    {guest}:{" "}
+                    {guest.name}:{" "}
                   </Text>
                   <Select
                     options={TierOptions}
                     defaultValue={guests?.[index]?.tier}
                     onChange={(e) => {
-                      const newGuests = [...guests];
-                      if (!newGuests[index]) {
-                        newGuests[index] = {
-                          name: guest,
-                          tier: Number(e.target.value),
-                          member_id: guests?.[index].member_id,
-                        };
-                      } else {
-                        newGuests[index].tier = Number(e.target.value);
-                        newGuests[index].name = guest;
-                      }
-                      guests = newGuests;
+                      guests[index].tier = Number(e.target.value);
+                      guests[index].name = guest.name;
                     }}
                   />
                 </div>
@@ -119,7 +114,8 @@ const Input = ({
           </div>
         ),
         onConfirm: () => {
-          const players = [...selectMembers, ...guests, ...guests];
+          const guestPlayers = [...guests, ...guests];
+          const players = [...selectMembers, ...guestPlayers];
           setMembersInfo([...players]);
           navigate("/game/output");
         },
