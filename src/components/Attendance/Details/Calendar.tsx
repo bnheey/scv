@@ -2,14 +2,15 @@ import clsx from "clsx";
 import moment from "moment";
 import { useEffect, useState } from "react";
 import ReactCalendar from "react-calendar";
-import { Value } from "react-calendar/src/shared/types.js";
-import "../../../assets/css/Calendar.css";
-import useLoading from "../../../hooks/useLoading";
-import { getAttendance } from "../../../middleware/endpoints/attendance";
-import { ScheduleInfoList } from "../../../types/Attendance";
-import { formatDate } from "../../../utils/date";
-import Text from "../../common/Text";
-import ScheduleInfo from "../Details/ScheduleInfo";
+import Text from "@/components/common/Text";
+import useLoading from "@/hooks/useLoading";
+import { getAttendance } from "@/middleware/endpoints/attendance";
+import type { ScheduleInfoList } from "@/types/Attendance";
+import { formatDate } from "@/utils/date";
+import type { Value } from "react-calendar/src/shared/types.js";
+import "@/assets/css/Calendar.css";
+import ScheduleInfo from "./ScheduleInfo";
+
 
 const Calendar = () => {
   const [currentDate, setCurrentDate] = useState(new Date());

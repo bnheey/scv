@@ -4,8 +4,12 @@
     "target": "ES2022",
     "lib": ["ES2023"],
     "module": "ESNext",
-    "skipLibCheck": true,
-
+    "skipLibCheck": true, 
+    "baseUrl": "./src",
+    "paths": {
+      "@/*": ["*"]
+    },
+    "verbatimModuleSyntax": true,
     /* Bundler mode */
     "moduleResolution": "Bundler",
     "allowImportingTsExtensions": true,

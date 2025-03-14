@@ -1,19 +1,13 @@
+import Button from "@/components/common/Button";
+import Text from "@/components/common/Text";
+import type { Member } from "@/types/Members";
+import { formatDate } from "@/utils/date";
+import { createGames, getMemberName, getTierText, sortedTiersDesc, uniqueMembers } from "@/utils/games";
+import { getToast } from "@/utils/shared";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import type { Member } from "../../../types/Members";
-import { formatDate } from "../../../utils/date";
-import {
-  createGames,
-  getMemberName,
-  getTierText,
-  sortedTiersDesc,
-  uniqueMembers,
-} from "../../../utils/games";
-import { getToast } from "../../../utils/shared";
-import Button from "../../common/Button";
-import Text from "../../common/Text";
-import InfoTooltip from "./InfoTooltip";
 import DragAndDropWrapper from "./DragAndDrop/DragAndDropWrapper";
+import InfoTooltip from "./InfoTooltip";
 
 const Output = ({ membersInfo }: { membersInfo: Member[] }) => {
   const [games, setGames] = useState(createGames(membersInfo));

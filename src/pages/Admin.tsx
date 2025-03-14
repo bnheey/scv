@@ -1,5 +1,5 @@
 import Lottie from "lottie-react";
-import noData from "../assets/lottie/no_data.json";
+import noData from "@/assets/lottie/no_data.json";
 
 const Admin = () => {
   return (

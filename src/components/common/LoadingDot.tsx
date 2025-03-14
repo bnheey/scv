@@ -1,5 +1,5 @@
 import clsx from "clsx";
-import loadingDot from "../../assets/lottie/loading_dot.json";
+import loadingDot from "@/assets/lottie/loading_dot.json";
 import Lottie from "lottie-react";
 
 interface LoadingDotProps {

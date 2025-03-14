@@ -1,13 +1,15 @@
-import { Dispatch, SetStateAction, useEffect, useRef } from "react";
+import { TierOptions } from "@/constants/Member";
+import { getMembers } from "@/middleware/endpoints/members";
+import { useMembers } from "@/middleware/stores/members";
+import { useModal } from "@/middleware/stores/modal";
+import type { Member } from "@/types/Members";
+import { type Dispatch, type SetStateAction, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import { TierOptions } from "../../constants/Member";
-import { getMembers } from "../../middleware/endpoints/members";
-import { useMembers } from "../../middleware/stores/members";
-import { useModal } from "../../middleware/stores/modal";
 import Button from "../common/Button";
 import Select from "../common/Select";
 import Text from "../common/Text";
-import { Member } from "../../types/Members";
+
+
 
 const Input = ({
   setMembersInfo,
@@ -39,7 +41,7 @@ const Input = ({
 
   const handleOnClick = (inputText: string) => {
     const names = handleSortNames(inputText);
-    let guests = [] as Member[];
+    const guests = [] as Member[];
     let count = 0;
     let isDuplicateName = "";
 

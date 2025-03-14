@@ -1,5 +1,5 @@
+import type { AttendanceList, ScheduleInfoList } from "@/types/Attendance";
 import axios from "axios";
-import { ScheduleInfoList, AttendanceList } from "../../types/Attendance";
 
 export const getAttendance = async ({
   startDateTime,

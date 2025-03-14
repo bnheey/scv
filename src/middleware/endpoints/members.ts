@@ -1,5 +1,5 @@
+import type { Member } from "@/types/Members";
 import axios from "axios";
-import type { Member } from "../../types/Members";
 
 export const getMembers = async () => {
   const { data } = await axios.get<Member[]>(

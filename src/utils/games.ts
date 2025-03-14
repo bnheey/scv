@@ -1,7 +1,7 @@
+import { TierOptions } from "@/constants/Member";
+import type { Game, GameMember } from "@/types/Games";
+import type { Member } from "@/types/Members";
 import moment from "moment";
-import { TierOptions } from "../constants/Member";
-import { Game, GameMember } from "../types/Games";
-import type { Member } from "../types/Members";
 
 /**
  * 게임을 입력 받아 게임에 속한 멤버들을 반환
