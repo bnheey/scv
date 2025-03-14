@@ -1,8 +1,14 @@
-import { DragDropContext, Droppable, DropResult } from "@hello-pangea/dnd";
+import {
+  DragDropContext,
+  DraggableLocation,
+  Droppable,
+  DropResult,
+} from "@hello-pangea/dnd";
 import { Game } from "../../../../types/Games";
 import {
-  getDuplicateMembers,
-  getTierGapMembers,
+  reorderArray,
+  updatePlayerOrder,
+  updatePlayerOrderWithGames,
 } from "../../../../utils/games";
 import GameLabel from "./GameLabel";
 
@@ -21,61 +27,58 @@ const DragAndDropWrapper = ({
 }: DragAndDropGridProps) => {
   const handleOnDragEnd = (result: DropResult) => {
     const { source, destination, type } = result;
-
     if (!destination) return;
 
     if (type === "game") {
-      const newGames = Array.from(games);
-      const [movedGame] = newGames.splice(source.index, 1);
-      newGames.splice(destination.index, 0, movedGame);
-      setGames(newGames);
-
-      const newPinnedGames = Array.from(pinnedGames);
-      const [movedPinnedGame] = newPinnedGames.splice(source.index, 1);
-      newPinnedGames.splice(destination.index, 0, movedPinnedGame);
-      setPinnedGames(newPinnedGames);
+      handleOnDragGameEnd(source, destination);
     } else if (type === "member") {
-      const sourceGameIndex = games.findIndex(
-        (game) => game.gameId === Number(source.droppableId)
+      handleOnDragMemberEnd(source, destination);
+    }
+  };
+
+  const handleOnDragGameEnd = (
+    source: DraggableLocation,
+    destination: DraggableLocation
+  ) => {
+    const newGames = reorderArray(games, source.index, destination.index);
+    setGames(newGames);
+
+    const newPinnedGames = reorderArray(
+      pinnedGames,
+      source.index,
+      destination.index
+    );
+    setPinnedGames(newPinnedGames);
+  };
+
+  const handleOnDragMemberEnd = (
+    source: DraggableLocation,
+    destination: DraggableLocation
+  ) => {
+    const sourceGameIndex = games.findIndex(
+      (game) => game.gameId === Number(source.droppableId)
+    );
+    const destinationGameIndex = games.findIndex(
+      (game) => game.gameId === Number(destination.droppableId)
+    );
+
+    if (sourceGameIndex === destinationGameIndex) {
+      const newGames = updatePlayerOrder(
+        games,
+        sourceGameIndex,
+        source.index,
+        destination.index
       );
-      const destinationGameIndex = games.findIndex(
-        (game) => game.gameId === Number(destination.droppableId)
+      setGames(newGames);
+    } else {
+      const newGames = updatePlayerOrderWithGames(
+        games,
+        sourceGameIndex,
+        destinationGameIndex,
+        source.index,
+        destination.index
       );
-
-      if (sourceGameIndex === destinationGameIndex) {
-        const sourceGame = games[sourceGameIndex];
-        const sourceGames = Array.from(sourceGame.members);
-
-        const [movedMember] = sourceGames.splice(source.index, 1);
-        sourceGames.splice(destination.index, 0, movedMember);
-
-        const newGames = Array.from(games);
-        newGames[sourceGameIndex].members = getTierGapMembers(
-          getDuplicateMembers(sourceGames)
-        );
-        setGames(newGames);
-      } else {
-        const sourceGame = games[sourceGameIndex];
-        const destinationGame = games[destinationGameIndex];
-
-        const sourceGames = Array.from(sourceGame.members);
-        const destinationGames = Array.from(destinationGame.members);
-
-        const [movedMember] = sourceGames.splice(source.index, 1);
-        const [targetMember] = destinationGames.splice(destination.index, 1);
-
-        sourceGames.splice(source.index, 0, targetMember);
-        destinationGames.splice(destination.index, 0, movedMember);
-
-        const newGames = Array.from(games);
-        newGames[sourceGameIndex].members = getTierGapMembers(
-          getDuplicateMembers(sourceGames)
-        );
-        newGames[destinationGameIndex].members = getTierGapMembers(
-          getDuplicateMembers(destinationGames)
-        );
-        setGames(newGames);
-      }
+      setGames(newGames);
     }
   };
 
