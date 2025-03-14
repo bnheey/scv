@@ -254,6 +254,14 @@ export const uniqueMembers = (members: Member[]) =>
       index === self.findIndex((m) => m.member_id === member.member_id)
   );
 
+/**
+ * 멤버 이름을 받아, 30일 이내에 생성된 멤버인 경우 이름 뒤에 🐣를 붙여 반환
+ * sliceIdx를 통해 이름을 잘라낼 수 있음
+ * @param name: string
+ * @param createdTimestamp: string
+ * @param sliceIdx: number
+ * @returns
+ */
 export const getMemberName = (
   name: string,
   createdTimestamp: string = "",
@@ -263,4 +271,89 @@ export const getMemberName = (
     createdTimestamp && moment().diff(moment(createdTimestamp), "days") < 30;
   const formattedName = name.replace(/\s+/g, "").replace(/\(.*?\)/g, "");
   return isFresh ? `${formattedName.slice(sliceIdx)}🐣` : formattedName;
+};
+
+/**
+ * 배열의 startIndex와 endIndex를 받아, 해당 인덱스의 요소를 교체한 배열을 반환
+ * @param member
+ * @param startIndex
+ * @param endIndex
+ * @returns
+ */
+export const reorderArray = <T>(
+  member: T[],
+  startIndex: number,
+  endIndex: number
+) => {
+  const result = Array.from(member);
+  const [removed] = result.splice(startIndex, 1);
+  result.splice(endIndex, 0, removed);
+  return result;
+};
+
+/**
+ * 게임을 입력 받아 게임을 교체한 배열을 반환(동일 게임 내)
+ * @example
+ * 1경기에 [참가자1, 참가자2, 참가자3, 참가자4]가 있을 때,
+ * 참가자1과 참가자3을 교체하면 [참가자3, 참가자2, 참가자1, 참가자4]가 반환
+ * @param games
+ * @param gameIndex
+ * @param sourceIndex
+ * @param destinationIndex
+ * @returns
+ */
+export const updatePlayerOrder = (
+  games: Game[],
+  gameIndex: number,
+  sourceIndex: number,
+  destinationIndex: number
+): Game[] => {
+  const newGames = Array.from(games);
+  const game = newGames[gameIndex];
+  const newMembers = reorderArray(game.members, sourceIndex, destinationIndex);
+  game.members = getTierGapMembers(getDuplicateMembers(newMembers));
+  return newGames;
+};
+
+/**
+ * 게임을 입력 받아 게임을 교체한 배열을 반환(다른 게임 간)
+ * @example
+ * 1경기에 [참가자1, 참가자2, 참가자3, 참가자4]
+ * 2경기에 [참가자5, 참가자6, 참가자7, 참가자8]가 있을 때,
+ * 참가자1과 참가자5을 교체하면
+ * 1경기: [참가자2, 참가자5, 참가자3, 참가자4]
+ * 2경기: [참가자1, 참가자6, 참가자7, 참가자8]
+ * @param games
+ * @param sourceGameIndex
+ * @param destinationGameIndex
+ * @param sourceIndex
+ * @param destinationIndex
+ * @returns
+ */
+export const updatePlayerOrderWithGames = (
+  games: Game[],
+  sourceGameIndex: number,
+  destinationGameIndex: number,
+  sourceIndex: number,
+  destinationIndex: number
+): Game[] => {
+  const newGames = Array.from(games);
+  const sourceGame = newGames[sourceGameIndex];
+  const destinationGame = newGames[destinationGameIndex];
+
+  const sourceMembers = Array.from(sourceGame.members);
+  const destinationMembers = Array.from(destinationGame.members);
+
+  const [movedMember] = sourceMembers.splice(sourceIndex, 1);
+  const [targetMember] = destinationMembers.splice(destinationIndex, 1);
+
+  sourceMembers.splice(sourceIndex, 0, targetMember);
+  destinationMembers.splice(destinationIndex, 0, movedMember);
+
+  sourceGame.members = getTierGapMembers(getDuplicateMembers(sourceMembers));
+  destinationGame.members = getTierGapMembers(
+    getDuplicateMembers(destinationMembers)
+  );
+
+  return newGames;
 };
