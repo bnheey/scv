@@ -1,6 +1,6 @@
+import Text from "@/components/common/Text";
 import { Info, X } from "@phosphor-icons/react";
 import { useEffect, useRef, useState } from "react";
-import Text from "../../common/Text";
 
 const InfoTooltip = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);

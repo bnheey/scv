@@ -1,5 +1,5 @@
+import type { Member } from "@/types/Members";
 import { create } from "zustand";
-import { Member } from "../../types/Members";
 
 interface MemberState {
   members: Member[];

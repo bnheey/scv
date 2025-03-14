@@ -1,9 +1,9 @@
 import { BrowserRouter as Router } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
 import "./App.css";
 import AppRouter from "./components/AppRouter";
 import Modal from "./components/common/Modal";
 import { useModal } from "./middleware/stores/modal";
-import { ToastContainer } from "react-toastify";
 
 const App = () => {
   const { isOpen } = useModal();

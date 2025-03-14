@@ -1,10 +1,10 @@
+import LoadingBadminton from "@/components/common/LoadingBadminton";
+import Table from "@/components/common/Table";
+import { getAttendance } from "@/middleware/endpoints/attendance";
+import type { AttendanceList } from "@/types/Attendance";
 import Cookies from "js-cookie";
 import moment from "moment";
 import { useEffect, useState } from "react";
-import { getAttendance } from "../../../middleware/endpoints/attendance";
-import { AttendanceList } from "../../../types/Attendance";
-import LoadingBadminton from "../../common/LoadingBadminton";
-import Table from "../../common/Table";
 import CopyButton from "./CopyButton";
 import ListHeader from "./ListHeader";
 import Favorite from "./Star";

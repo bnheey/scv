@@ -1,18 +1,12 @@
+import Button from "@/components/common/Button";
+import Text from "@/components/common/Text";
+import type { Member } from "@/types/Members";
+import { formatDate } from "@/utils/date";
+import { createGames, getMemberName, getTierText, sortedTiersDesc, uniqueMembers } from "@/utils/games";
+import { getToast } from "@/utils/shared";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import type { Member } from "../../../types/Members";
-import { formatDate } from "../../../utils/date";
-import {
-  createGames,
-  getMemberName,
-  getTierText,
-  sortedTiersDesc,
-  uniqueMembers,
-} from "../../../utils/games";
-import { getToast } from "../../../utils/shared";
-import Button from "../../common/Button";
-import Text from "../../common/Text";
-import DragAndDropGrid from "./DragAndDropGrid";
+import DragAndDropWrapper from "./DragAndDrop/DragAndDropWrapper";
 import InfoTooltip from "./InfoTooltip";
 
 const Output = ({ membersInfo }: { membersInfo: Member[] }) => {
@@ -76,7 +70,7 @@ const Output = ({ membersInfo }: { membersInfo: Member[] }) => {
         </div>
       </div>
       <div className="w-full max-h-[70%] py-2 border-y border-y-gray-300 overflow-y-scroll mt-4">
-        <DragAndDropGrid
+        <DragAndDropWrapper
           games={games}
           setGames={setGames}
           pinnedGames={pinnedGames}

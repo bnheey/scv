@@ -1,5 +1,5 @@
 import Lottie from "lottie-react";
-import loadingBadminton from "../../assets/lottie/loading_badminton.json";
+import loadingBadminton from "@/assets/lottie/loading_badminton.json";
 
 const LoadingBadminton = () => (
   <div className="w-full h-[60vh] flex items-center justify-center">

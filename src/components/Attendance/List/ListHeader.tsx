@@ -1,9 +1,9 @@
+import Text from "@/components/common/Text";
+import type { AttendanceList } from "@/types/Attendance";
+import { formatDate } from "@/utils/date";
+import { getToast } from "@/utils/shared";
 import { CaretLeft, CaretRight } from "@phosphor-icons/react";
 import moment from "moment";
-import { AttendanceList } from "../../../types/Attendance";
-import { formatDate } from "../../../utils/date";
-import Text from "../../common/Text";
-import { getToast } from "../../../utils/shared";
 
 interface ListHeaderProps {
   attendanceList: AttendanceList;

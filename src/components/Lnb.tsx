@@ -5,10 +5,10 @@ import {
   // UserGear,
   X,
 } from "@phosphor-icons/react";
-import { useEffect, useState } from "react";
-import Text from "./common/Text";
-import { Link, useLocation } from "react-router-dom";
 import clsx from "clsx";
+import { useEffect, useState } from "react";
+import { Link, useLocation } from "react-router-dom";
+import Text from "./common/Text";
 
 interface LnbProps {
   onClose: () => void;

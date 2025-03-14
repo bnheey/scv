@@ -1,5 +1,5 @@
+import LoadingDot from "@/components/common/LoadingDot";
 import { useState } from "react";
-import LoadingDot from "../components/common/LoadingDot";
 
 const useLoading = () => {
   const [isLoading, setIsLoading] = useState(false);
