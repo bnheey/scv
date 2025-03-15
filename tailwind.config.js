@@ -10,7 +10,9 @@ export default {
       },
       colors: {
         "scv-pink": "#dd9595",
+        "scv-light-pink": "#f9ebeb",
         "scv-green": "#a0cb7c",
+        "scv-light-green": "#d9efc9",
         "scv-blue": "#60a5fa",
         "scv-light-blue": "#93c5fd",
       },

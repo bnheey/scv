@@ -3,7 +3,6 @@ import { getMemberName } from "@/utils/games";
 import { Draggable } from "@hello-pangea/dnd";
 import clsx from "clsx";
 
-
 interface MemberLabelProps {
   gameIndex: number;
   member: GameMember;
