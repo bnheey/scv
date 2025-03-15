@@ -3,13 +3,17 @@ import { getMembers } from "@/middleware/endpoints/members";
 import { useMembers } from "@/middleware/stores/members";
 import { useModal } from "@/middleware/stores/modal";
 import type { Member } from "@/types/Members";
-import { type Dispatch, type SetStateAction, useEffect, useRef } from "react";
+import {
+  type Dispatch,
+  type SetStateAction,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import { useNavigate } from "react-router-dom";
 import Button from "../common/Button";
 import Select from "../common/Select";
 import Text from "../common/Text";
-
-
 
 const Input = ({
   setMembersInfo,
@@ -133,6 +137,31 @@ const Input = ({
     }
   };
 
+  // 테스트용 코드 (5번 클릭 시 테스트용 데이터 입력)
+  const [clickCount, setClickCount] = useState(0);
+  const [clickTimer, setClickTimer] = useState<NodeJS.Timeout | null>(null);
+  const handleTestClick = () => {
+    setClickCount((prevCount) => prevCount + 1);
+
+    if (clickTimer) {
+      clearTimeout(clickTimer);
+    }
+    const timer = setTimeout(() => {
+      setClickCount(0);
+    }, 2000);
+
+    setClickTimer(timer);
+
+    if (clickCount + 1 === 5) {
+      if (inputRef.current) {
+        inputRef.current.value =
+          "1. 방희연\n2. 전성혁\n3. 이정석\n4. 문교원\n5. 함려나\n6. 신재성";
+      }
+      setClickCount(0);
+      clearTimeout(timer);
+    }
+  };
+
   return (
     <>
       <Text type="subTitleBlack" className="pl-1 mr-auto">
@@ -140,7 +169,7 @@ const Input = ({
       </Text>
       <textarea
         ref={inputRef}
-        className="px-3 py-2 h-[55%] text-sm bg-white border"
+        className="px-3 py-2 h-[55%] text-sm bg-white border focus:outline-none focus:border-gray-500 rounded"
         placeholder={`(예시)\n1. 조석준\n2. 전성혁\n3. 방희연 \n4. 서현주(게스트)\n5. 이현석\n6. 이현재\n7. 허찬웅\n8. 김진호`}
         onPaste={() => {
           setTimeout(() => {
@@ -153,6 +182,8 @@ const Input = ({
         onClick={() => {
           handleOnClick(inputRef.current?.value || "");
         }}
+        onMouseDown={handleTestClick}
+        onTouchStart={handleTestClick}
         size="lg"
       >
         경기 배치
