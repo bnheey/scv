@@ -4,7 +4,7 @@ import type { Game } from "@/types/Games";
 import { Draggable, Droppable } from "@hello-pangea/dnd";
 import { CaretUpDown, PushPin } from "@phosphor-icons/react";
 import MemberLabel from "./MemberLabel";
-
+import clsx from "clsx";
 
 interface GameLabelProps {
   game: Game;
@@ -39,14 +39,17 @@ const GameLabel = ({
             direction="horizontal"
             type="member"
           >
-            {(provided) => (
+            {(provided, snapshot) => (
               <div
                 {...provided.droppableProps}
                 ref={provided.innerRef}
-                className="relative flex items-center justify-around p-2 px-3 pr-8 bg-white border-[0.5px] rounded shadow-sm"
+                className={clsx(
+                  "relative flex items-center justify-around p-2 px-3 pr-8 border-[0.5px] rounded shadow-sm",
+                  snapshot.isDraggingOver ? "!bg-gray-50" : "!bg-white"
+                )}
               >
                 <button
-                  className="p-0"
+                  className="p-0 !bg-transparent"
                   onClick={() => {
                     if (game.members.some((member) => member.duplicate)) {
                       return openModal({

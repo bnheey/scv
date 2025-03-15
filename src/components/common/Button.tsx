@@ -39,7 +39,7 @@ const Button = ({
   return (
     <button
       className={clsx(
-        `bg-scv-pink rounded-lg`,
+        `bg-scv-pink rounded-lg select-none`,
         getClassName(),
         getSize(),
         className
