@@ -1,5 +1,6 @@
 import Text from "@/components/common/Text";
 import { Info, X } from "@phosphor-icons/react";
+import clsx from "clsx";
 import { useEffect, useRef, useState } from "react";
 
 const InfoTooltip = () => {
@@ -69,7 +70,7 @@ const InfoTooltip = () => {
     }[]
   ) => (
     <>
-      <Text className="text-left mb-2" type="normalMediumBlack">
+      <Text className="mb-2 text-left" type="normalMediumBlack">
         {title}
       </Text>
       <div className="flex flex-col gap-1 ml-1">
@@ -109,6 +110,12 @@ const InfoTooltip = () => {
             <hr className=" text-gray-200 my-2 border-[-1px]" />
             {getLabelInfoComponent("Game 정보", infoList.gameInfo)}
           </div>
+          <div
+            className={clsx(
+              "absolute w-0 h-0 border-l-[8px] border-l-transparent border-r-[8px] border-r-transparent border-b-[8px] border-scv-pink",
+              "bottom-full right-0.5"
+            )}
+          ></div>
         </div>
       )}
     </>
