@@ -1,6 +1,7 @@
 import type { GameMember } from "@/types/Games";
 import { getMemberName } from "@/utils/games";
 import { Draggable } from "@hello-pangea/dnd";
+import { Spinner } from "@phosphor-icons/react";
 import clsx from "clsx";
 
 interface MemberLabelProps {
@@ -21,13 +22,22 @@ const MemberLabel = ({ gameIndex, member, memberIndex }: MemberLabelProps) => (
         {...provided.draggableProps}
         {...provided.dragHandleProps}
         className={clsx(
-          "text-nowrap py-1.5 px-1 border border-gray-200 rounded bg-white",
+          "relative text-nowrap py-1.5 px-1 rounded bg-transparent",
           member.duplicate ? "!bg-red-600 border-none text-white" : "",
-          member.tierGap === 1 ? "!border !border-orange-300" : "",
-          member.tierGap >= 2 ? "!border !border-red-600" : "",
           !member.createdTimestamp ? "!text-gray-400" : ""
         )}
       >
+        <div className="absolute -left-4 -top-6 opacity-90">
+          <Spinner
+            size={80}
+            weight="thin"
+            className={clsx(
+              "text-gray-200",
+              member.tierGap === 1 ? "!text-orange-300" : "",
+              member.tierGap >= 2 ? "!text-red-600" : ""
+            )}
+          />
+        </div>
         {getMemberName(member.name, member.createdTimestamp, -2)}
       </div>
     )}
