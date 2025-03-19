@@ -62,7 +62,7 @@ const ListHeader = ({
       </button>
       <Text
         type="subTitleBlack"
-        className="font-pretendard"
+        className="font-gaegu"
         onClick={() => {
           handleOnPaste(attendanceList);
           getToast(

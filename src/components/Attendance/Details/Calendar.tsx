@@ -11,7 +11,6 @@ import type { Value } from "react-calendar/src/shared/types.js";
 import "@/assets/css/Calendar.css";
 import ScheduleInfo from "./ScheduleInfo";
 
-
 const Calendar = () => {
   const [currentDate, setCurrentDate] = useState(new Date());
   const [activeStartDate, setActiveStartDate] = useState<Date | null>(
@@ -114,7 +113,7 @@ const Calendar = () => {
         }}
         navigationLabel={({ date }) => {
           return (
-            <Text type="subTitleBlack" className="font-pretendard">
+            <Text type="subTitleBlack" className="font-gaegu">
               {formatDate(date, "YYYY년 MM월")}
             </Text>
           );

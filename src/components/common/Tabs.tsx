@@ -27,7 +27,7 @@ const Tabs: React.FC<TabsProps> = ({ tabs }) => {
         >
           <Text
             type="subTitleBlack"
-            className={tab.active ? "text-scv-pink font-pretendard-bold" : ""}
+            className={tab.active ? "text-scv-pink font-gaegu" : ""}
           >
             {tab.title}
           </Text>

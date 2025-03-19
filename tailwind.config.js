@@ -7,6 +7,7 @@ export default {
         pretendard: ["Pretendard-Regular", "sans-serif"],
         "pretendard-medium": ["Pretendard-Medium", "sans-serif"],
         "pretendard-bold": ["Pretendard-Bold", "sans-serif"],
+        gaegu: ["Gaegu", "sans-serif"],
       },
       colors: {
         "scv-pink": "#dd9595",

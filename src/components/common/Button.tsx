@@ -46,7 +46,7 @@ const Button = ({
       )}
       {...props}
     >
-      <p className="!font-pretendard-medium text-[14px]">{children}</p>
+      <p className="!font-gaegu text-[14px]">{children}</p>
     </button>
   );
 };

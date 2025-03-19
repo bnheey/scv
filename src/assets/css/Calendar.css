@@ -3,7 +3,7 @@
   max-width: 95%;
   margin: 0 auto;
   background: white;
-  font-family: "Pretendard-Regular", "Arial", "Helvetica", sans-serif;
+  font-family: "Gaegu", "Pretendard-Regular", "Arial", "Helvetica", sans-serif;
   line-height: 1.125em;
 }
 
@@ -111,7 +111,7 @@
 
 .react-calendar__tile--now {
   background: #f3f4f6;
-  font-family: "Pretendard-Bold", "Arial", "Helvetica", sans-serif;
+  font-family: "Gaegu", "Pretendard-Bold", "Arial", "Helvetica", sans-serif;
 }
 
 .react-calendar__tile--hasActive {
