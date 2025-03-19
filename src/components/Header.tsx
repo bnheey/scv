@@ -1,4 +1,4 @@
-import { List, Racquet } from "@phosphor-icons/react";
+import { List, SoccerBall } from "@phosphor-icons/react";
 import { useState } from "react";
 import { useLocation } from "react-router-dom";
 import Text from "./common/Text";
@@ -32,7 +32,7 @@ const Header = () => {
         <Text type="titleBlack" className="text-left">
           {getTitle()}
         </Text>
-        <Racquet size={20} weight="fill" />
+        <SoccerBall size={20} weight="fill" />
       </div>
       <List size={20} onClick={handleListClick} className="cursor-pointer" />
       {isLnbOpen && (

@@ -119,7 +119,15 @@ const Table = ({
                 className="px-4 py-2 whitespace-nowrap"
                 style={{ width: column.width ? `${column.width}px` : "" }}
               >
-                <Text type="normalBlack" className="text-left">
+                <Text
+                  type="normalBlack"
+                  className="text-left"
+                  style={{
+                    color: `hsl(${
+                      (index * 360) / sortedData.length
+                    }, 70%, 50%)`,
+                  }}
+                >
                   {item[column.key]}
                 </Text>
               </td>

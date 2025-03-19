@@ -65,8 +65,23 @@ const ScheduleInfo = ({
               <div className="flex flex-wrap pl-2">
                 {schedule.memberList.map((item, index) => (
                   <div className="flex" key={index}>
-                    <Text>{item.name}</Text>
-                    <Text className="mr-1">
+                    <Text
+                      style={{
+                        color: `hsl(${
+                          (index * 360) / schedule.memberList.length
+                        }, 70%, 50%)`,
+                      }}
+                    >
+                      {item.name}
+                    </Text>
+                    <Text
+                      className="mr-1"
+                      style={{
+                        color: `hsl(${
+                          (index * 360) / schedule.memberList.length
+                        }, 70%, 50%)`,
+                      }}
+                    >
                       {schedule.memberList.length - 1 !== index ? ", " : ""}
                     </Text>
                   </div>
