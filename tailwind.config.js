@@ -7,10 +7,10 @@ export default {
         pretendard: ["Pretendard-Regular", "sans-serif"],
         "pretendard-medium": ["Pretendard-Medium", "sans-serif"],
         "pretendard-bold": ["Pretendard-Bold", "sans-serif"],
-        gaegu: ["Gaegu", "sans-serif"],
+        gaegu: ["Song Myung", "Black And White Picture", "Gugi", "sans-serif"],
       },
       colors: {
-        "scv-pink": "#dd9595",
+        "scv-pink": `hsl(${Math.random() * 360}, 75%, 50%)`,
         "scv-light-pink": "#f9ebeb",
         "scv-green": "#a0cb7c",
         "scv-light-green": "#d9efc9",

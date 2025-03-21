@@ -119,12 +119,12 @@ const Calendar = () => {
           );
         }}
       />
-      <button
+      {/* <button
         onClick={handleTodayClick}
         className="absolute top-0 px-2 py-1 my-2 bg-gray-100 right-[21%]"
       >
         <Text type="smallBlack">오늘</Text>
-      </button>
+      </button> */}
       <hr />
       {isLoading ? (
         <Loading />

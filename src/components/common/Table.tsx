@@ -90,6 +90,7 @@ const Table = ({
                     ? "bg-gray-100"
                     : "bg-white"
                 )}
+                style={{ color: `hsl(${Math.random() * 360}, 75%, 50%)` }}
               >
                 {column.label}
                 {column.sort &&
@@ -117,19 +118,27 @@ const Table = ({
               <td
                 key={column.key}
                 className="px-4 py-2 whitespace-nowrap"
-                style={{ width: column.width ? `${column.width}px` : "" }}
+                style={{
+                  width: column.width ? `${column.width}px` : "",
+                  color: `hsl(${Math.random() * 360}, 75%, 50%)`,
+                }}
               >
-                <Text
-                  type="normalBlack"
-                  className="text-left"
-                  style={{
-                    color: `hsl(${
-                      (index * 360) / sortedData.length
-                    }, 70%, 50%)`,
-                  }}
-                >
-                  {item[column.key]}
-                </Text>
+                <span>
+                  {typeof item[column.key] === "string"
+                    ? item[column.key]
+                        .split("")
+                        .map((char: string, index: number) => (
+                          <span
+                            key={index}
+                            style={{
+                              color: `hsl(${Math.random() * 360}, 75%, 50%)`,
+                            }}
+                          >
+                            {char}
+                          </span>
+                        ))
+                    : item[column.key]}
+                </span>
               </td>
             ))}
           </tr>

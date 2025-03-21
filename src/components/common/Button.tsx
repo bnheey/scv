@@ -46,7 +46,14 @@ const Button = ({
       )}
       {...props}
     >
-      <p className="!font-gaegu text-[14px]">{children}</p>
+      <p
+        className="!font-gaegu text-[14px]"
+        style={{
+          color: `hsl(${Math.random() * 360}, 75%, 90%)`,
+        }}
+      >
+        {children}
+      </p>
     </button>
   );
 };
