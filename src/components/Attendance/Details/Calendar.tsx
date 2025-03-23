@@ -35,12 +35,6 @@ const Calendar = () => {
     }
   };
 
-  const handleTodayClick = () => {
-    const today = new Date();
-    setActiveStartDate(today);
-    setCurrentDate(today);
-  };
-
   useEffect(() => {
     if (activeStartDate === null) return;
 
