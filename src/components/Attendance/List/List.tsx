@@ -93,7 +93,7 @@ const List = () => {
         />
       ),
       name: (
-        <div className="flex ml-1">
+        <div className="flex">
           <Text>{member.name}</Text>
           <TierImage
             tier={

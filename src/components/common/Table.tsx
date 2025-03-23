@@ -119,9 +119,13 @@ const Table = ({
                 className="px-4 py-2 whitespace-nowrap"
                 style={{ width: column.width ? `${column.width}px` : "" }}
               >
-                <Text type="normalBlack" className="text-left">
-                  {item[column.key]}
-                </Text>
+                {typeof item[column.key] === "object" ? (
+                  item[column.key]
+                ) : (
+                  <Text type="normalBlack" className="text-left">
+                    {item[column.key]}
+                  </Text>
+                )}
               </td>
             ))}
           </tr>
