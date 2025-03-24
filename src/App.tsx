@@ -11,7 +11,7 @@ const App = () => {
 
   return (
     <>
-      <div className="h-5 w-full max-w-[500px] overflow-hidden bg-red-600">
+      <div className="h-5 w-full max-w-[500px] overflow-hidden bg-red-600 mx-auto">
         <Text className="animate-marquee text-nowrap !text-white">
           책 없는 방은 마음 없는 육체와 같다. (기케로전)&nbsp;&nbsp;&nbsp;&nbsp;
           단 한 권의 책 밖에 읽은 적이 없는 인간을 경계하라.

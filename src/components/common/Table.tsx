@@ -123,22 +123,13 @@ const Table = ({
                   color: `hsl(${Math.random() * 360}, 75%, 50%)`,
                 }}
               >
-                <span>
-                  {typeof item[column.key] === "string"
-                    ? item[column.key]
-                        .split("")
-                        .map((char: string, index: number) => (
-                          <span
-                            key={index}
-                            style={{
-                              color: `hsl(${Math.random() * 360}, 75%, 50%)`,
-                            }}
-                          >
-                            {char}
-                          </span>
-                        ))
-                    : item[column.key]}
-                </span>
+                {typeof item[column.key] === "object" ? (
+                  item[column.key]
+                ) : (
+                  <Text type="normalBlack" className="text-left">
+                    {item[column.key]}
+                  </Text>
+                )}
               </td>
             ))}
           </tr>
