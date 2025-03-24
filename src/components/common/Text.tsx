@@ -21,26 +21,26 @@ const Text = ({ children, type, className, ...props }: TextProps) => {
   const getClassName = () => {
     switch (type) {
       case "bigTitleBlack":
-        return "text-black text-[24px] leading-[36px]";
+        return "text-black text-[22px] leading-[36px]";
       case "titleBlack":
-        return "text-black text-[18px] leading-[28px]";
+        return "text-black text-[16px] leading-[28px]";
       case "subTitleBlack":
-        return "text-black text-[16px] leading-[22px]";
+        return "text-black text-[14px] leading-[22px]";
       case "subTitleWhite":
-        return "text-white text-[16px] leading-[22px]";
+        return "text-white text-[14px] leading-[22px]";
       case "smallMediumWhite":
         return "text-white text-[11px] leading-4";
       case "smallBlack":
         return "text-black text-[11px] leading-5";
       case "normalMediumWhite":
-        return "text-white text-[14px] leading-5";
+        return "text-white text-[12px] leading-5";
       case "normalMediumBlack":
-        return "text-black text-[14px] leading-5";
+        return "text-black text-[12px] leading-5";
       case "normalGray":
-        return "text-gray-400 text-[14px] leading-5";
+        return "text-gray-400 text-[12px] leading-5";
       case "normalBlack":
       default:
-        return "text-black text-[14px] leading-5";
+        return "text-black text-[12px] leading-5";
     }
   };
 

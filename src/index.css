@@ -26,8 +26,16 @@
   font-style: normal;
 }
 
+@font-face {
+  font-family: "yg-jalnan";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_four@1.2/JalnanOTF00.woff")
+    format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+
 :root {
-  font-family: "Song Myung", "Black And White Picture", "Gugi",
+  font-family: "yg-jalnan", "Song Myung", "Black And White Picture", "Gugi",
     "Pretendard-Regular", system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 500;
