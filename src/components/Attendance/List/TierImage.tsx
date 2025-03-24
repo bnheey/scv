@@ -1,9 +1,9 @@
-import tier1Image from "@/assets/image/1.png";
-import tier2Image from "@/assets/image/2.png";
-import tier3Image from "@/assets/image/3.png";
-import tier4Image from "@/assets/image/4.png";
-import tier5Image from "@/assets/image/5.png";
-import tier6Image from "@/assets/image/6.png";
+import tier1Image from "@/assets/image/1.webp";
+import tier2Image from "@/assets/image/2.webp";
+import tier3Image from "@/assets/image/3.webp";
+import tier4Image from "@/assets/image/4.webp";
+import tier5Image from "@/assets/image/5.webp";
+import tier6Image from "@/assets/image/6.webp";
 import clsx from "clsx";
 import { useState } from "react";
 
