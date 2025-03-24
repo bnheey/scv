@@ -23,7 +23,7 @@ const App = () => {
       </div>
       <div className="flex items-center justify-center app">
         <Router>
-          <div className="w-[500px] h-screen bg-white flex flex-col gap-4 pt-6 px-4 overflow-hidden relative">
+          <div className="w-[500px] h-[calc(100vh-20px)] bg-white flex flex-col gap-4 pt-6 px-4 overflow-hidden relative">
             <AppRouter />
           </div>
         </Router>
