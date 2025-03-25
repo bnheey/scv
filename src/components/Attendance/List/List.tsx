@@ -9,8 +9,6 @@ import { useEffect, useState } from "react";
 import CopyButton from "./CopyButton";
 import ListHeader from "./ListHeader";
 import Favorite from "./Star";
-import { useMembers } from "@/middleware/stores/members";
-import { getMembers } from "@/middleware/endpoints/members";
 import TierImage from "./TierImage";
 
 const List = () => {
@@ -19,9 +17,6 @@ const List = () => {
   const [currentDate, setCurrentDate] = useState(new Date());
   const [attendanceList, setAttendanceList] = useState<AttendanceList>([]);
   const [isLoading, setIsLoading] = useState(true);
-
-  const membersInfo = useMembers((state) => state.members);
-  const setMembersInfo = useMembers((state) => state.setMembers);
 
   useEffect(() => {
     setIsLoading(true);
@@ -66,13 +61,6 @@ const List = () => {
     }
   }, [fixedMembers]);
 
-  useEffect(() => {
-    if (membersInfo.length > 0) return;
-    getMembers().then((members) => {
-      setMembersInfo(members);
-    });
-  }, []);
-
   const data =
     attendanceList?.map((member) => ({
       isFixed: fixedMembers.includes(member.memberId),
@@ -95,12 +83,7 @@ const List = () => {
       name: (
         <div className="flex">
           <Text>{member.name}</Text>
-          <TierImage
-            tier={
-              membersInfo.find((info) => info.member_id === member.memberId)
-                ?.tier || 1
-            }
-          />
+          <TierImage tier={member.tier} />
         </div>
       ),
       total: member.totalAttendance,
