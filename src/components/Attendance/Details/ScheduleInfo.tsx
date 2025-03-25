@@ -1,5 +1,5 @@
 import Text from "@/components/common/Text";
-import type { ScheduleInfoList, SimpleMember } from "@/types/Attendance";
+import type { ScheduleInfoList } from "@/types/Attendance";
 import { formatDate } from "@/utils/date";
 import { getToast } from "@/utils/shared";
 import { CalendarSlash, ClipboardText } from "@phosphor-icons/react";
@@ -18,7 +18,7 @@ const ScheduleInfo = ({
     );
   });
 
-  const handleOnPaste = (memberList: SimpleMember[]) => {
+  const handleOnPaste = (memberList: { memberId: number; name: string }[]) => {
     navigator.clipboard.writeText(
       `참석: ${memberList.length} \n(${memberList
         .map((x) => x.name)
