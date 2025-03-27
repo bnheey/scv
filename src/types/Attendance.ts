@@ -1,7 +1,7 @@
 export type SimpleMember = {
   memberId: number;
   name: string;
-  totalAttendance?: number;
+  totalAttendance: number;
   tier: number;
 };
 
