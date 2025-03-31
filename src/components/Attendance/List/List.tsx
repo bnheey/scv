@@ -8,7 +8,7 @@ import moment from "moment";
 import { useEffect, useState } from "react";
 import CopyButton from "./CopyButton";
 import ListHeader from "./ListHeader";
-import Favorite from "./Star";
+import Favorite from "./Favorite";
 import TierImage from "./TierImage";
 
 const List = () => {
@@ -33,12 +33,6 @@ const List = () => {
     });
   }, [currentDate]);
 
-  const columns = [
-    { key: "fix", label: "", width: 45 },
-    { key: "name", label: "이름", sort: true },
-    { key: "total", label: "출석수", sort: true },
-  ];
-
   useEffect(() => {
     if (fixedMembers.length > 0) {
       // fixedMembers 에 호함된 멤버들을 상단으로 정렬
@@ -61,32 +55,44 @@ const List = () => {
     }
   }, [fixedMembers]);
 
+  const columns = [
+    { key: "fix", label: "", width: 45 },
+    { key: "name", label: "이름", sort: true },
+    { key: "total", label: "출석수", sort: true },
+  ];
+
   const data =
     attendanceList?.map((member) => ({
-      isFixed: fixedMembers.includes(member.memberId),
-      fix: (
-        <Favorite
-          isFixed={fixedMembers.includes(member.memberId)}
-          onClick={() => {
-            setFixedMembers((prev) => {
-              const updatedFixMembers = prev.includes(member.memberId)
-                ? prev.filter((id) => id !== member.memberId)
-                : [...prev, member.memberId];
-              Cookies.set("FIX_MEMBERS", JSON.stringify(updatedFixMembers), {
-                expires: 365,
+      isFixed: { data: fixedMembers.includes(member.memberId) },
+      fix: {
+        data: fixedMembers.includes(member.memberId),
+        cell: (
+          <Favorite
+            isFixed={fixedMembers.includes(member.memberId)}
+            onClick={() => {
+              setFixedMembers((prev) => {
+                const updatedFixMembers = prev.includes(member.memberId)
+                  ? prev.filter((id) => id !== member.memberId)
+                  : [...prev, member.memberId];
+                Cookies.set("FIX_MEMBERS", JSON.stringify(updatedFixMembers), {
+                  expires: 365,
+                });
+                return updatedFixMembers;
               });
-              return updatedFixMembers;
-            });
-          }}
-        />
-      ),
-      name: (
-        <div className="flex">
-          <Text>{member.name}</Text>
-          <TierImage tier={member.tier} />
-        </div>
-      ),
-      total: member.totalAttendance,
+            }}
+          />
+        ),
+      },
+      name: {
+        data: member.name,
+        cell: (
+          <div className="flex">
+            <Text>{member.name}</Text>
+            <TierImage tier={member.tier} />
+          </div>
+        ),
+      },
+      total: { data: member.totalAttendance },
     })) ?? [];
 
   return (

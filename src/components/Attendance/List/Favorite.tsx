@@ -3,7 +3,7 @@ interface PinProps {
   isFixed: boolean;
   onClick: () => void;
 }
-const Star = ({ isFixed, onClick }: PinProps) => (
+const Favorite = ({ isFixed, onClick }: PinProps) => (
   <StarIcon
     size={16}
     weight={isFixed ? "fill" : "light"}
@@ -14,4 +14,4 @@ const Star = ({ isFixed, onClick }: PinProps) => (
   />
 );
 
-export default Star;
+export default Favorite;
