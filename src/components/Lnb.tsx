@@ -23,13 +23,13 @@ const Lnb = ({ onClose }: LnbProps) => {
     {
       to: "/attendance",
       icon: CalendarCheck,
-      label: "출석",
+      label: "독서 현황",
       paths: ["/attendance", "/"],
     },
     {
       to: "/game",
       icon: Network,
-      label: "경기표",
+      label: "독서 토론 패널 생성",
       paths: ["/game"],
     },
     // { to: "/admin", icon: UserGear, label: "관리자", paths: ["/admin"] },
