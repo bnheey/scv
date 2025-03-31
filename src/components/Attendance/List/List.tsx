@@ -1,15 +1,13 @@
 import LoadingBadminton from "@/components/common/LoadingBadminton";
 import Table from "@/components/common/Table";
 import { getAttendance } from "@/middleware/endpoints/attendance";
-import { getMembers } from "@/middleware/endpoints/members";
-import { useMembers } from "@/middleware/stores/members";
 import type { AttendanceList } from "@/types/Attendance";
 import Cookies from "js-cookie";
 import moment from "moment";
 import { useEffect, useState } from "react";
 import CopyButton from "./CopyButton";
+import Favorite from "./Favorite";
 import ListHeader from "./ListHeader";
-import Favorite from "./Star";
 import TierImage from "./TierImage";
 
 const List = () => {
@@ -18,9 +16,6 @@ const List = () => {
   const [currentDate, setCurrentDate] = useState(new Date());
   const [attendanceList, setAttendanceList] = useState<AttendanceList>([]);
   const [isLoading, setIsLoading] = useState(true);
-
-  const membersInfo = useMembers((state) => state.members);
-  const setMembersInfo = useMembers((state) => state.setMembers);
 
   useEffect(() => {
     setIsLoading(true);
@@ -36,12 +31,6 @@ const List = () => {
       setIsLoading(false);
     });
   }, [currentDate]);
-
-  const columns = [
-    { key: "fix", label: "", width: 45 },
-    { key: "name", label: "이름", sort: true },
-    { key: "total", label: "출석수", sort: true },
-  ];
 
   useEffect(() => {
     if (fixedMembers.length > 0) {
@@ -65,53 +54,53 @@ const List = () => {
     }
   }, [fixedMembers]);
 
-  useEffect(() => {
-    if (membersInfo.length > 0) return;
-    getMembers().then((members) => {
-      setMembersInfo(members);
-    });
-  }, []);
+  const columns = [
+    { key: "fix", label: "", width: 45 },
+    { key: "name", label: "이름", sort: true },
+    { key: "total", label: "출석수", sort: true },
+  ];
 
   const data =
     attendanceList?.map((member) => ({
-      isFixed: fixedMembers.includes(member.memberId),
-      fix: (
-        <Favorite
-          isFixed={fixedMembers.includes(member.memberId)}
-          onClick={() => {
-            setFixedMembers((prev) => {
-              const updatedFixMembers = prev.includes(member.memberId)
-                ? prev.filter((id) => id !== member.memberId)
-                : [...prev, member.memberId];
-              Cookies.set("FIX_MEMBERS", JSON.stringify(updatedFixMembers), {
-                expires: 365,
+      isFixed: { data: fixedMembers.includes(member.memberId) },
+      fix: {
+        data: fixedMembers.includes(member.memberId),
+        cell: (
+          <Favorite
+            isFixed={fixedMembers.includes(member.memberId)}
+            onClick={() => {
+              setFixedMembers((prev) => {
+                const updatedFixMembers = prev.includes(member.memberId)
+                  ? prev.filter((id) => id !== member.memberId)
+                  : [...prev, member.memberId];
+                Cookies.set("FIX_MEMBERS", JSON.stringify(updatedFixMembers), {
+                  expires: 365,
+                });
+                return updatedFixMembers;
               });
-              return updatedFixMembers;
-            });
-          }}
-        />
-      ),
-      name: (
-        <div className="flex">
-          {member.name.split("").map((char: string, index: number) => (
-            <span
-              key={index}
-              style={{
-                color: `hsl(${Math.random() * 360}, 75%, 50%)`,
-              }}
-            >
-              {char}
-            </span>
-          ))}
-          <TierImage
-            tier={
-              membersInfo.find((info) => info.member_id === member.memberId)
-                ?.tier || 1
-            }
+            }}
           />
-        </div>
-      ),
-      total: member.totalAttendance,
+        ),
+      },
+      name: {
+        data: member.name,
+        cell: (
+          <div className="flex">
+            {member.name.split("").map((char: string, index: number) => (
+              <span
+                key={index}
+                style={{
+                  color: `hsl(${Math.random() * 360}, 75%, 50%)`,
+                }}
+              >
+                {char}
+              </span>
+            ))}
+            <TierImage tier={member.tier || 1} />
+          </div>
+        ),
+      },
+      total: { data: member.totalAttendance },
     })) ?? [];
 
   return (

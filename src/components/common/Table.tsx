@@ -5,7 +5,12 @@ import Text from "./Text";
 import clsx from "clsx";
 
 interface TableProps {
-  data: Array<{ isFixed?: boolean; [key: string]: any }>;
+  data: Array<{
+    [key: string]: {
+      data: string | number | boolean;
+      cell?: React.ReactNode;
+    };
+  }>;
   columns: Array<{
     key: string;
     label: string;
@@ -32,16 +37,16 @@ const Table = ({
     direction: defaultSort || "asc",
   });
 
-  const sortedData = React.useMemo(() => {
-    const fixedData = data.filter((item) => item.isFixed);
-    const sortableData = data.filter((item) => !item.isFixed);
+  const getSortedData = React.useMemo(() => {
+    const fixedData = data.filter((item) => item.isFixed.data);
+    const sortableData = data.filter((item) => !item.isFixed.data);
 
     if (sortConfig !== null) {
       sortableData.sort((a, b) => {
-        if (a[sortConfig.key] < b[sortConfig.key]) {
+        if (a[sortConfig.key].data < b[sortConfig.key].data) {
           return sortConfig.direction === "asc" ? -1 : 1;
         }
-        if (a[sortConfig.key] > b[sortConfig.key]) {
+        if (a[sortConfig.key].data > b[sortConfig.key].data) {
           return sortConfig.direction === "asc" ? 1 : -1;
         }
         return 0;
@@ -50,7 +55,7 @@ const Table = ({
     return [...fixedData, ...sortableData];
   }, [data, sortConfig]);
 
-  const requestSort = (key: string) => {
+  const handleSort = (key: string) => {
     const tbodyElement = document.getElementsByTagName("tbody")[0];
     tbodyElement.scrollTo({
       top: 0,
@@ -76,7 +81,7 @@ const Table = ({
             <th
               key={column.key}
               onClick={() => {
-                if (column.sort) requestSort(column.key);
+                if (column.sort) handleSort(column.key);
               }}
               className="bg-white cursor-pointer"
               style={{ width: column.width ? `${column.width}px` : "" }}
@@ -112,7 +117,7 @@ const Table = ({
         className="block overflow-scroll bg-white divide-ydivide-gray-200"
         style={{ maxHeight: height }}
       >
-        {sortedData.map((item, index) => (
+        {getSortedData.map((item, index) => (
           <tr key={index} className="table w-full table-fixed">
             {columns.map((column) => (
               <td
@@ -123,11 +128,11 @@ const Table = ({
                   color: `hsl(${Math.random() * 360}, 75%, 50%)`,
                 }}
               >
-                {typeof item[column.key] === "object" ? (
-                  item[column.key]
+                {item[column.key].cell ? (
+                  item[column.key].cell
                 ) : (
                   <Text type="normalBlack" className="text-left">
-                    {item[column.key]}
+                    {item[column.key].data}
                   </Text>
                 )}
               </td>

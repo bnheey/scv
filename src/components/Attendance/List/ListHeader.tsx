@@ -65,12 +65,7 @@ const ListHeader = ({
         className="font-gaegu"
         onClick={() => {
           handleOnPaste(attendanceList);
-          getToast(
-            `${formatDate(
-              currentDate,
-              "yyyy년 MM월"
-            )} 우수참석 현황이 복사되었습니다.`
-          );
+          getToast("면제권 현황이 복사되었습니다.");
         }}
       >
         {formatDate(currentDate, "yyyy년 MM월")}

@@ -4,6 +4,8 @@ import tier3Image from "@/assets/image/4.webp";
 import tier4Image from "@/assets/image/3.webp";
 import tier5Image from "@/assets/image/2.webp";
 import tier6Image from "@/assets/image/1.webp";
+import tierNoneImage from "@/assets/image/tier_none.webp";
+
 import clsx from "clsx";
 import { useState } from "react";
 
@@ -28,7 +30,7 @@ const TierImage = ({ tier }: { tier: number }) => {
         <div className="w-5 h-5 ml-0.5 bg-gray-200 rounded-md animate-pulse" />
       )}
       <img
-        src={tierImage[tier]}
+        src={tier ? tierImage[tier] : tierNoneImage}
         className={clsx(
           "w-5 h-5 ml-0.5 rounded-md mt-0.5",
           !isLoaded ? "hidden" : ""
