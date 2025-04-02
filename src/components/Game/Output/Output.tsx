@@ -2,12 +2,19 @@ import Button from "@/components/common/Button";
 import Text from "@/components/common/Text";
 import type { Member } from "@/types/Members";
 import { formatDate } from "@/utils/date";
-import { createGames, getMemberName, getTierText, sortedTiersDesc, uniqueMembers } from "@/utils/games";
+import {
+  createGames,
+  getMemberName,
+  getTierText,
+  sortedTiersDesc,
+  uniqueMembers,
+} from "@/utils/games";
 import { getToast } from "@/utils/shared";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import DragAndDropWrapper from "./DragAndDrop/DragAndDropWrapper";
 import InfoTooltip from "./InfoTooltip";
+import TierImage from "@/components/Attendance/List/TierImage";
 
 const Output = ({ membersInfo }: { membersInfo: Member[] }) => {
   const [games, setGames] = useState(createGames(membersInfo));
@@ -56,7 +63,8 @@ const Output = ({ membersInfo }: { membersInfo: Member[] }) => {
     <div className="h-full">
       <div className="relative">
         {sortedTiersDesc(membersInfo).map((tier) => (
-          <div key={tier}>
+          <div key={tier} className="flex">
+            <TierImage tier={tier} />
             <Text
               type="smallMediumWhite"
               className="px-2 !text-black !leading-[17px] text-left "
