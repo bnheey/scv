@@ -96,7 +96,8 @@ export const createGames = (
             team2B.member_id,
           ]).size !== 4;
 
-        if (isDuplicate) {
+        if (isDuplicate && filteredMembers.length > 4) {
+          // filteredMembers가 4명 이하인 경우 예외적으로 중복 허용
           return [];
         }
         if (tierGap < minTierGap) {
