@@ -11,8 +11,8 @@ interface MemberLabelProps {
 
 const MemberLabel = ({ gameIndex, member, memberIndex }: MemberLabelProps) => (
   <Draggable
-    key={`member-${member.member_id}-${gameIndex}-${memberIndex}`}
-    draggableId={`member-${member.member_id}-${gameIndex}-${memberIndex}`}
+    key={`member-${member.memberId}-${gameIndex}-${memberIndex}`}
+    draggableId={`member-${member.memberId}-${gameIndex}-${memberIndex}`}
     index={memberIndex}
   >
     {(provided) => (

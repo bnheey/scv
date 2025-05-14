@@ -1,5 +1,5 @@
 export type GameMember = {
-  member_id: number;
+  memberId: number;
   name: string;
   tier: number;
   tierGap: number;

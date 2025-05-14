@@ -2352,7 +2352,7 @@ export const ATTENDANCE_DATA = {
 
 export const MEMBER_DATA = [
   {
-    member_id: 4,
+    memberId: 4,
     tier: 2,
     exemptionCoupon: 5,
     sex: 2,
@@ -2360,7 +2360,7 @@ export const MEMBER_DATA = [
     name: "강지수",
   },
   {
-    member_id: 5,
+    memberId: 5,
     tier: 2,
     exemptionCoupon: 4,
     sex: 2,
@@ -2368,7 +2368,7 @@ export const MEMBER_DATA = [
     name: "강지원",
   },
   {
-    member_id: 10,
+    memberId: 10,
     tier: 4,
     exemptionCoupon: 0,
     sex: 1,
@@ -2376,7 +2376,7 @@ export const MEMBER_DATA = [
     name: "구본혁",
   },
   {
-    member_id: 18,
+    memberId: 18,
     tier: 6,
     exemptionCoupon: 1,
     sex: 1,
@@ -2384,7 +2384,7 @@ export const MEMBER_DATA = [
     name: "김승욱",
   },
   {
-    member_id: 19,
+    memberId: 19,
     tier: 4,
     exemptionCoupon: 1,
     sex: 1,
@@ -2392,7 +2392,7 @@ export const MEMBER_DATA = [
     name: "김영찬",
   },
   {
-    member_id: 21,
+    memberId: 21,
     tier: 6,
     exemptionCoupon: 2,
     sex: 1,
@@ -2400,7 +2400,7 @@ export const MEMBER_DATA = [
     name: "김유신",
   },
   {
-    member_id: 35,
+    memberId: 35,
     tier: 4,
     exemptionCoupon: 1,
     sex: 1,
@@ -2408,7 +2408,7 @@ export const MEMBER_DATA = [
     name: "노우석",
   },
   {
-    member_id: 37,
+    memberId: 37,
     tier: 3,
     exemptionCoupon: 1,
     sex: 1,
@@ -2416,7 +2416,7 @@ export const MEMBER_DATA = [
     name: "문교원",
   },
   {
-    member_id: 39,
+    memberId: 39,
     tier: 5,
     exemptionCoupon: 2,
     sex: 1,
@@ -2424,7 +2424,7 @@ export const MEMBER_DATA = [
     name: "문성규",
   },
   {
-    member_id: 43,
+    memberId: 43,
     tier: 4,
     exemptionCoupon: 1,
     sex: 1,
@@ -2432,7 +2432,7 @@ export const MEMBER_DATA = [
     name: "박제영",
   },
   {
-    member_id: 48,
+    memberId: 48,
     tier: 5,
     exemptionCoupon: 2,
     sex: 2,
@@ -2440,7 +2440,7 @@ export const MEMBER_DATA = [
     name: "방한결",
   },
   {
-    member_id: 49,
+    memberId: 49,
     tier: 1,
     exemptionCoupon: 2,
     sex: 2,
@@ -2448,7 +2448,7 @@ export const MEMBER_DATA = [
     name: "방희연",
   },
   {
-    member_id: 51,
+    memberId: 51,
     tier: 3,
     exemptionCoupon: 2,
     sex: 2,
@@ -2456,7 +2456,7 @@ export const MEMBER_DATA = [
     name: "배하이",
   },
   {
-    member_id: 53,
+    memberId: 53,
     tier: 6,
     exemptionCoupon: 0,
     sex: 2,
@@ -2464,7 +2464,7 @@ export const MEMBER_DATA = [
     name: "백슬기",
   },
   {
-    member_id: 55,
+    memberId: 55,
     tier: 5,
     exemptionCoupon: 1,
     sex: 1,
@@ -2472,7 +2472,7 @@ export const MEMBER_DATA = [
     name: "서광철",
   },
   {
-    member_id: 58,
+    memberId: 58,
     tier: 2,
     exemptionCoupon: 0,
     sex: 1,
@@ -2480,7 +2480,7 @@ export const MEMBER_DATA = [
     name: "서준배",
   },
   {
-    member_id: 59,
+    memberId: 59,
     tier: 1,
     exemptionCoupon: 0,
     sex: 1,
@@ -2488,7 +2488,7 @@ export const MEMBER_DATA = [
     name: "선우윤호",
   },
   {
-    member_id: 68,
+    memberId: 68,
     tier: 5,
     exemptionCoupon: 3,
     sex: 1,
@@ -2496,7 +2496,7 @@ export const MEMBER_DATA = [
     name: "신국섭",
   },
   {
-    member_id: 69,
+    memberId: 69,
     tier: 6,
     exemptionCoupon: 6,
     sex: 1,
@@ -2504,7 +2504,7 @@ export const MEMBER_DATA = [
     name: "신재성",
   },
   {
-    member_id: 71,
+    memberId: 71,
     tier: 3,
     exemptionCoupon: 1,
     sex: 2,
@@ -2512,7 +2512,7 @@ export const MEMBER_DATA = [
     name: "심예림",
   },
   {
-    member_id: 73,
+    memberId: 73,
     tier: 3,
     exemptionCoupon: 0,
     sex: 1,
@@ -2520,7 +2520,7 @@ export const MEMBER_DATA = [
     name: "양정주",
   },
   {
-    member_id: 78,
+    memberId: 78,
     tier: 2,
     exemptionCoupon: 0,
     sex: 1,
@@ -2528,7 +2528,7 @@ export const MEMBER_DATA = [
     name: "윤명현",
   },
   {
-    member_id: 80,
+    memberId: 80,
     tier: 3,
     exemptionCoupon: 1,
     sex: 2,
@@ -2536,7 +2536,7 @@ export const MEMBER_DATA = [
     name: "윤효진",
   },
   {
-    member_id: 92,
+    memberId: 92,
     tier: 6,
     exemptionCoupon: 4,
     sex: 1,
@@ -2544,7 +2544,7 @@ export const MEMBER_DATA = [
     name: "이승재",
   },
   {
-    member_id: 96,
+    memberId: 96,
     tier: 4,
     exemptionCoupon: 3,
     sex: 1,
@@ -2552,7 +2552,7 @@ export const MEMBER_DATA = [
     name: "이정석",
   },
   {
-    member_id: 102,
+    memberId: 102,
     tier: 3,
     exemptionCoupon: 0,
     sex: 1,
@@ -2560,7 +2560,7 @@ export const MEMBER_DATA = [
     name: "이찬민",
   },
   {
-    member_id: 103,
+    memberId: 103,
     tier: 2,
     exemptionCoupon: 0,
     sex: 1,
@@ -2568,7 +2568,7 @@ export const MEMBER_DATA = [
     name: "이창연",
   },
   {
-    member_id: 109,
+    memberId: 109,
     tier: 5,
     exemptionCoupon: 22,
     sex: 1,
@@ -2576,7 +2576,7 @@ export const MEMBER_DATA = [
     name: "이현석",
   },
   {
-    member_id: 110,
+    memberId: 110,
     tier: 6,
     exemptionCoupon: 1,
     sex: 1,
@@ -2584,7 +2584,7 @@ export const MEMBER_DATA = [
     name: "이현우",
   },
   {
-    member_id: 111,
+    memberId: 111,
     tier: 3,
     exemptionCoupon: 17,
     sex: 1,
@@ -2592,7 +2592,7 @@ export const MEMBER_DATA = [
     name: "이현재",
   },
   {
-    member_id: 114,
+    memberId: 114,
     tier: 2,
     exemptionCoupon: 3,
     sex: 1,
@@ -2600,7 +2600,7 @@ export const MEMBER_DATA = [
     name: "임보선",
   },
   {
-    member_id: 118,
+    memberId: 118,
     tier: 2,
     exemptionCoupon: 1,
     sex: 2,
@@ -2608,7 +2608,7 @@ export const MEMBER_DATA = [
     name: "전나원",
   },
   {
-    member_id: 120,
+    memberId: 120,
     tier: 4,
     exemptionCoupon: 14,
     sex: 1,
@@ -2616,7 +2616,7 @@ export const MEMBER_DATA = [
     name: "전성혁",
   },
   {
-    member_id: 121,
+    memberId: 121,
     tier: 1,
     exemptionCoupon: 1,
     sex: 2,
@@ -2624,7 +2624,7 @@ export const MEMBER_DATA = [
     name: "정다운",
   },
   {
-    member_id: 124,
+    memberId: 124,
     tier: 3,
     exemptionCoupon: 4,
     sex: 1,
@@ -2632,7 +2632,7 @@ export const MEMBER_DATA = [
     name: "정창수",
   },
   {
-    member_id: 126,
+    memberId: 126,
     tier: 5,
     exemptionCoupon: 6,
     sex: 1,
@@ -2640,7 +2640,7 @@ export const MEMBER_DATA = [
     name: "정해준",
   },
   {
-    member_id: 128,
+    memberId: 128,
     tier: 5,
     exemptionCoupon: 25,
     sex: 1,
@@ -2648,7 +2648,7 @@ export const MEMBER_DATA = [
     name: "조석준",
   },
   {
-    member_id: 139,
+    memberId: 139,
     tier: 2,
     exemptionCoupon: 0,
     sex: 1,
@@ -2656,7 +2656,7 @@ export const MEMBER_DATA = [
     name: "최수헌",
   },
   {
-    member_id: 141,
+    memberId: 141,
     tier: 5,
     exemptionCoupon: 7,
     sex: 1,
@@ -2664,7 +2664,7 @@ export const MEMBER_DATA = [
     name: "최진영",
   },
   {
-    member_id: 144,
+    memberId: 144,
     tier: 1,
     exemptionCoupon: 0,
     sex: 2,
@@ -2672,7 +2672,7 @@ export const MEMBER_DATA = [
     name: "한수정",
   },
   {
-    member_id: 150,
+    memberId: 150,
     tier: 4,
     exemptionCoupon: 3,
     sex: 1,
@@ -2680,7 +2680,7 @@ export const MEMBER_DATA = [
     name: "허찬웅",
   },
   {
-    member_id: 177,
+    memberId: 177,
     tier: 6,
     exemptionCoupon: 2,
     sex: 1,
@@ -2688,7 +2688,7 @@ export const MEMBER_DATA = [
     name: "이바울",
   },
   {
-    member_id: 201,
+    memberId: 201,
     tier: 2,
     exemptionCoupon: 2,
     sex: 1,
@@ -2696,7 +2696,7 @@ export const MEMBER_DATA = [
     name: "박헌서",
   },
   {
-    member_id: 205,
+    memberId: 205,
     tier: 2,
     exemptionCoupon: 2,
     sex: 2,
@@ -2704,7 +2704,7 @@ export const MEMBER_DATA = [
     name: "함려나",
   },
   {
-    member_id: 209,
+    memberId: 209,
     tier: 5,
     exemptionCoupon: 1,
     sex: 1,
@@ -2712,7 +2712,7 @@ export const MEMBER_DATA = [
     name: "최현묵",
   },
   {
-    member_id: 210,
+    memberId: 210,
     tier: 4,
     exemptionCoupon: 1,
     sex: 1,
@@ -2720,7 +2720,7 @@ export const MEMBER_DATA = [
     name: "장재일",
   },
   {
-    member_id: 211,
+    memberId: 211,
     tier: 3,
     exemptionCoupon: 3,
     sex: 1,
@@ -2728,7 +2728,7 @@ export const MEMBER_DATA = [
     name: "임명균",
   },
   {
-    member_id: 215,
+    memberId: 215,
     tier: 4,
     exemptionCoupon: 5,
     sex: 1,
@@ -2736,7 +2736,7 @@ export const MEMBER_DATA = [
     name: "김진호",
   },
   {
-    member_id: 217,
+    memberId: 217,
     tier: 2,
     exemptionCoupon: 0,
     sex: 1,
@@ -2744,7 +2744,7 @@ export const MEMBER_DATA = [
     name: "백주현",
   },
   {
-    member_id: 218,
+    memberId: 218,
     tier: 3,
     exemptionCoupon: 0,
     sex: 2,
@@ -2752,7 +2752,7 @@ export const MEMBER_DATA = [
     name: "장지영",
   },
   {
-    member_id: 219,
+    memberId: 219,
     tier: 4,
     exemptionCoupon: 3,
     sex: 1,
@@ -2760,7 +2760,7 @@ export const MEMBER_DATA = [
     name: "강희준",
   },
   {
-    member_id: 221,
+    memberId: 221,
     tier: 5,
     exemptionCoupon: 0,
     sex: 2,
@@ -2768,7 +2768,7 @@ export const MEMBER_DATA = [
     name: "민지원",
   },
   {
-    member_id: 222,
+    memberId: 222,
     tier: 2,
     exemptionCoupon: 1,
     sex: 1,
@@ -2776,7 +2776,7 @@ export const MEMBER_DATA = [
     name: "김환기",
   },
   {
-    member_id: 226,
+    memberId: 226,
     tier: 6,
     exemptionCoupon: 0,
     sex: 1,
@@ -2784,7 +2784,7 @@ export const MEMBER_DATA = [
     name: "김상우",
   },
   {
-    member_id: 232,
+    memberId: 232,
     tier: 4,
     exemptionCoupon: 0,
     sex: 1,
@@ -2792,7 +2792,7 @@ export const MEMBER_DATA = [
     name: "황준하",
   },
   {
-    member_id: 233,
+    memberId: 233,
     tier: 1,
     exemptionCoupon: 0,
     sex: 2,
@@ -2800,7 +2800,7 @@ export const MEMBER_DATA = [
     name: "서보미",
   },
   {
-    member_id: 234,
+    memberId: 234,
     tier: 4,
     exemptionCoupon: 0,
     sex: 1,
@@ -2808,7 +2808,7 @@ export const MEMBER_DATA = [
     name: "김대중",
   },
   {
-    member_id: 235,
+    memberId: 235,
     tier: 2,
     exemptionCoupon: 0,
     sex: 1,
@@ -2816,7 +2816,7 @@ export const MEMBER_DATA = [
     name: "전범기",
   },
   {
-    member_id: 236,
+    memberId: 236,
     tier: 0,
     exemptionCoupon: 0,
     sex: 2,
@@ -2824,7 +2824,7 @@ export const MEMBER_DATA = [
     name: "송유진",
   },
   {
-    member_id: 237,
+    memberId: 237,
     tier: 4,
     exemptionCoupon: 0,
     sex: 1,
@@ -2832,7 +2832,7 @@ export const MEMBER_DATA = [
     name: "신한수",
   },
   {
-    member_id: 238,
+    memberId: 238,
     tier: 1,
     exemptionCoupon: 0,
     sex: 1,
@@ -2840,7 +2840,7 @@ export const MEMBER_DATA = [
     name: "이빈규",
   },
   {
-    member_id: 239,
+    memberId: 239,
     tier: 1,
     exemptionCoupon: 0,
     sex: 2,
@@ -2848,7 +2848,7 @@ export const MEMBER_DATA = [
     name: "조광민",
   },
   {
-    member_id: 240,
+    memberId: 240,
     tier: 4,
     exemptionCoupon: 0,
     sex: 1,
@@ -2856,7 +2856,7 @@ export const MEMBER_DATA = [
     name: "김준우",
   },
   {
-    member_id: 243,
+    memberId: 243,
     tier: 3,
     exemptionCoupon: 0,
     sex: 1,
@@ -2864,7 +2864,7 @@ export const MEMBER_DATA = [
     name: "박성준",
   },
   {
-    member_id: 244,
+    memberId: 244,
     tier: 1,
     exemptionCoupon: 0,
     sex: 2,
@@ -2872,7 +2872,7 @@ export const MEMBER_DATA = [
     name: "전소연",
   },
   {
-    member_id: 245,
+    memberId: 245,
     tier: 6,
     exemptionCoupon: 0,
     sex: 2,
@@ -2880,7 +2880,7 @@ export const MEMBER_DATA = [
     name: "양미수",
   },
   {
-    member_id: 246,
+    memberId: 246,
     tier: 4,
     exemptionCoupon: 0,
     sex: 1,
@@ -2888,7 +2888,7 @@ export const MEMBER_DATA = [
     name: "정원욱",
   },
   {
-    member_id: 247,
+    memberId: 247,
     tier: 5,
     exemptionCoupon: 0,
     sex: 1,
@@ -2896,7 +2896,7 @@ export const MEMBER_DATA = [
     name: "곽기훈",
   },
   {
-    member_id: 248,
+    memberId: 248,
     tier: 5,
     exemptionCoupon: 1,
     sex: 1,
@@ -2904,7 +2904,7 @@ export const MEMBER_DATA = [
     name: "강준식",
   },
   {
-    member_id: 249,
+    memberId: 249,
     tier: 5,
     exemptionCoupon: 0,
     sex: 1,
@@ -2912,7 +2912,7 @@ export const MEMBER_DATA = [
     name: "황준성",
   },
   {
-    member_id: 250,
+    memberId: 250,
     tier: 3,
     exemptionCoupon: 0,
     sex: 1,
@@ -2920,7 +2920,7 @@ export const MEMBER_DATA = [
     name: "신경배",
   },
   {
-    member_id: 251,
+    memberId: 251,
     tier: 5,
     exemptionCoupon: 0,
     sex: 1,
@@ -2928,7 +2928,7 @@ export const MEMBER_DATA = [
     name: "김구범",
   },
   {
-    member_id: 252,
+    memberId: 252,
     tier: 6,
     exemptionCoupon: 0,
     sex: 1,

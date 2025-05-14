@@ -6,7 +6,7 @@ import moment from "moment";
 /**
  * 게임을 입력 받아 게임에 속한 멤버들을 반환
  * @param games: Game[]
- * @returns [{name: "참가자1", tier: 1, member_id: 1}, {name: "참가자2", tier: 2, member_id: 2}, ...]
+ * @returns [{name: "참가자1", tier: 1, memberId: 1}, {name: "참가자2", tier: 2, memberId: 2}, ...]
  */
 export const getGamesToMember = (games: Game[], pinnedIdxs: number[]) => {
   const members = [] as GameMember[];
@@ -90,10 +90,10 @@ export const createGames = (
         // 중복 확인
         const isDuplicate =
           new Set([
-            team1A.member_id,
-            team1B.member_id,
-            team2A.member_id,
-            team2B.member_id,
+            team1A.memberId,
+            team1B.memberId,
+            team2A.memberId,
+            team2B.memberId,
           ]).size !== 4;
 
         if (isDuplicate && filteredMembers.length > 4) {
@@ -111,8 +111,8 @@ export const createGames = (
 
       if (bestCombination) {
         const ids = [
-          ...bestCombination.team1.map((member) => member.member_id),
-          ...bestCombination.team2.map((member) => member.member_id),
+          ...bestCombination.team1.map((member) => member.memberId),
+          ...bestCombination.team2.map((member) => member.memberId),
         ];
         const tierGap =
           bestCombination.team1.reduce((acc, member) => acc + member.tier, 0) -
@@ -126,12 +126,12 @@ export const createGames = (
             ...bestCombination.team1.map((user) => ({
               ...user,
               tierGap: tierGap > 0 ? tierGap : 0,
-              duplicate: ids.filter((id) => id === user.member_id).length > 1,
+              duplicate: ids.filter((id) => id === user.memberId).length > 1,
             })),
             ...bestCombination.team2.map((user) => ({
               ...user,
               tierGap: tierGap < 0 ? -tierGap : 0,
-              duplicate: ids.filter((id) => id === user.member_id).length > 1,
+              duplicate: ids.filter((id) => id === user.memberId).length > 1,
             })),
           ],
         });
@@ -169,7 +169,7 @@ export const createGames = (
  * @returns [12, 21, 2, 4]
  */
 export const getDuplicateIds = (members: GameMember[]) => {
-  const memberIds = members.map((member) => member.member_id);
+  const memberIds = members.map((member) => member.memberId);
   const duplicateIds = memberIds.filter(
     (id, index) => memberIds.indexOf(id) !== index
   );
@@ -179,20 +179,20 @@ export const getDuplicateIds = (members: GameMember[]) => {
 /**
  * 중복된 멤버를 찾아 duplicate 속성을 추가하여 반환
  * @param members: GameMember[]
- * @returns [{name: "참가자1", tier: 1, member_id: 1, duplicate: false}, {name: "참가자2", tier: 2, member_id: 2, duplicate: true}, ...]
+ * @returns [{name: "참가자1", tier: 1, memberId: 1, duplicate: false}, {name: "참가자2", tier: 2, memberId: 2, duplicate: true}, ...]
  */
 export const getDuplicateMembers = (members: GameMember[]) => {
   const duplicateIds = getDuplicateIds(members);
   return members.map((member) => ({
     ...member,
-    duplicate: duplicateIds.includes(member.member_id),
+    duplicate: duplicateIds.includes(member.memberId),
   }));
 };
 
 /**
  * 팀별 티어 합을 계산하여 각 멤버에 티어 차이를 추가하여 반환
  * @param members: GameMember[]
- * @returns [{name: "참가자1", tier: 1, member_id: 1, tierGap: 2}, {name: "참가자2", tier: 2, member_id: 2, tierGap: 2}, ...]
+ * @returns [{name: "참가자1", tier: 1, memberId: 1, tierGap: 2}, {name: "참가자2", tier: 2, memberId: 2, tierGap: 2}, ...]
  */
 export const getTierGapMembers = (members: GameMember[]) => {
   const team1Sum = members[0].tier + members[1].tier;
@@ -252,7 +252,7 @@ export const getTierText = (members: Member[], tier: number) => {
 export const uniqueMembers = (members: Member[]) =>
   members.filter(
     (member, index, self) =>
-      index === self.findIndex((m) => m.member_id === member.member_id)
+      index === self.findIndex((m) => m.memberId === member.memberId)
   );
 
 /**

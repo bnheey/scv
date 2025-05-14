@@ -1,5 +1,5 @@
 export type Member = {
-  member_id: number;
+  memberId: number;
   tier: number;
   exemptionCoupon?: number;
   sex?: number;

@@ -68,14 +68,14 @@ const Input = ({
         guests.push({
           name,
           tier: 1,
-          member_id: member.member_id,
+          memberId: member.memberId,
           createdTimestamp: member.createdTimestamp,
         });
       } else {
         guests.push({
           name,
           tier: 1,
-          member_id: Math.random(),
+          memberId: Math.random(),
         });
       }
       return acc;
