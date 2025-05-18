@@ -1,7 +1,7 @@
 import { TierOptions } from "@/constants/Member";
 import type { Game, GameMember } from "@/types/Games";
 import type { Member } from "@/types/Members";
-import moment from "moment";
+import { isFreshMember } from "./shared";
 
 /**
  * 게임을 입력 받아 게임에 속한 멤버들을 반환
@@ -214,7 +214,7 @@ export const groupedByTier = (members: Member[]) =>
     if (!acc[member.tier]) {
       acc[member.tier] = [];
     }
-    acc[member.tier].push(member.name);
+    acc[member.tier].push(getMemberName(member.name, member.createdTimestamp));
     return acc;
   }, {} as { [key: number]: string[] });
 
@@ -266,12 +266,16 @@ export const uniqueMembers = (members: Member[]) =>
 export const getMemberName = (
   name: string,
   createdTimestamp: string = "",
-  sliceIdx: number = 0
+  sliceIdx: number = 0,
+  useFresh: boolean = true,
+  useGuest: boolean = true
 ) => {
-  const isFresh =
-    createdTimestamp && moment().diff(moment(createdTimestamp), "days") < 30;
+  const isFresh = createdTimestamp && isFreshMember(createdTimestamp);
+  const isGuest = !createdTimestamp;
   const formattedName = name.replace(/\s+/g, "").replace(/\(.*?\)/g, "");
-  return isFresh ? `${formattedName.slice(sliceIdx)}🐣` : formattedName;
+  if (isGuest && useGuest) return `${formattedName}(게스트)`;
+  if (isFresh && useFresh) return `${formattedName.slice(sliceIdx)}🐣`;
+  return formattedName;
 };
 
 /**

@@ -31,7 +31,7 @@ const TierImage = ({ tier }: { tier: number }) => {
       <img
         src={tier ? tierImage[tier] : tierNoneImage}
         className={clsx(
-          "w-5 h-5 ml-0.5 rounded-md mt-0.5",
+          "w-5 h-5 ml-0.5 rounded-md mt-1",
           !isLoaded ? "hidden" : ""
         )}
         onLoad={handleImageLoaded}

@@ -57,14 +57,15 @@ const Input = ({
         isDuplicateName = name;
         return [];
       }
-      if (member && member.tier !== 0) {
+
+      if (member && member.tier) {
         acc.push(member);
         acc.push(member);
         if (names.length % 2 === 1 && count < 2) {
           acc.push(member);
           count++;
         }
-      } else if (member && member.tier === 0) {
+      } else if (member && member.createdTimestamp) {
         guests.push({
           name,
           tier: 1,
