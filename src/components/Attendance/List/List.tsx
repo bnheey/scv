@@ -3,12 +3,14 @@ import Table from "@/components/common/Table";
 import Text from "@/components/common/Text";
 import { getAttendance } from "@/middleware/endpoints/attendance";
 import type { AttendanceList } from "@/types/Attendance";
+import { isFreshMember } from "@/utils/shared";
+import { Smiley } from "@phosphor-icons/react";
 import Cookies from "js-cookie";
 import moment from "moment";
 import { useEffect, useState } from "react";
 import CopyButton from "./CopyButton";
-import ListHeader from "./ListHeader";
 import Favorite from "./Favorite";
+import ListHeader from "./ListHeader";
 import TierImage from "./TierImage";
 
 const List = () => {
@@ -86,9 +88,15 @@ const List = () => {
       name: {
         data: member.name,
         cell: (
-          <div className="flex">
+          <div className="flex items-center">
             <Text>{member.name}</Text>
             <TierImage tier={member.tier} />
+            {member.createdTimestamp &&
+              isFreshMember(
+                member.createdTimestamp,
+                1,
+                currentDate.toISOString()
+              ) && <Smiley size={16} className="ml-0.5" color="#ffd500" />}
           </div>
         ),
       },

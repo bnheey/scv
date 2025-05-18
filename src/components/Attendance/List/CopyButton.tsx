@@ -1,7 +1,7 @@
 import Text from "@/components/common/Text";
 import type { AttendanceList } from "@/types/Attendance";
 import { formatDate } from "@/utils/date";
-import { getToast } from "@/utils/shared";
+import { getToast, isFreshMember } from "@/utils/shared";
 import { ClipboardText } from "@phosphor-icons/react";
 
 type CopyButtonProps = {
@@ -21,8 +21,7 @@ const CopyButton = ({ currentDate, attendanceList }: CopyButtonProps) => {
         groupedAttendance[total] = [];
       }
       const memberName = item.createdTimestamp
-        ? formatDate(item.createdTimestamp, "MM") ===
-          formatDate(currentDate, "MM")
+        ? isFreshMember(item.createdTimestamp, 1, currentDate.toISOString())
           ? `${item.name}(${formatDate(item.createdTimestamp, "MM/DD")})`
           : item.name
         : item.name;
