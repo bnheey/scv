@@ -3,6 +3,7 @@ export type SimpleMember = {
   name: string;
   totalAttendance: number;
   tier: number;
+  createdTimestamp?: string;
 };
 
 export interface ScheduleInfo {

@@ -20,7 +20,13 @@ const CopyButton = ({ currentDate, attendanceList }: CopyButtonProps) => {
       if (!groupedAttendance[total]) {
         groupedAttendance[total] = [];
       }
-      groupedAttendance[total].push(item.name);
+      const memberName = item.createdTimestamp
+        ? formatDate(item.createdTimestamp, "MM") ===
+          formatDate(currentDate, "MM")
+          ? `${item.name}(${formatDate(item.createdTimestamp, "MM/DD")})`
+          : item.name
+        : item.name;
+      groupedAttendance[total].push(memberName);
     });
 
     const sortedAttendance = Object.keys(groupedAttendance).sort((a, b) =>

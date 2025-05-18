@@ -1,10 +1,10 @@
+import TierImage from "@/components/Attendance/List/TierImage";
 import Button from "@/components/common/Button";
 import Text from "@/components/common/Text";
 import type { Member } from "@/types/Members";
 import { formatDate } from "@/utils/date";
 import {
   createGames,
-  getMemberName,
   getTierText,
   sortedTiersDesc,
   uniqueMembers,
@@ -14,7 +14,6 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import DragAndDropWrapper from "./DragAndDrop/DragAndDropWrapper";
 import InfoTooltip from "./InfoTooltip";
-import TierImage from "@/components/Attendance/List/TierImage";
 
 const Output = ({ membersInfo }: { membersInfo: Member[] }) => {
   const [games, setGames] = useState(createGames(membersInfo));
@@ -36,7 +35,7 @@ const Output = ({ membersInfo }: { membersInfo: Member[] }) => {
           `${gameIdx + 1}경기 ${game.members
             .map(
               (member, memberIdx) =>
-                getMemberName(member.name, member.createdTimestamp) +
+                member.name.replace(/\s+/g, "").replace(/\(.*?\)/g, "") +
                 (memberIdx === 1 ? " vs" : "")
             )
             .join(" ")}`

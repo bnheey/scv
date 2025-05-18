@@ -28,7 +28,7 @@ const MemberLabel = ({ gameIndex, member, memberIndex }: MemberLabelProps) => (
           !member.createdTimestamp ? "!text-gray-400" : ""
         )}
       >
-        {getMemberName(member.name, member.createdTimestamp, -2)}
+        {getMemberName(member.name, member.createdTimestamp, -2, true, false)}
       </div>
     )}
   </Draggable>
