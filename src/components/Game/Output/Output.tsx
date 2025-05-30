@@ -58,6 +58,19 @@ const Output = ({ membersInfo }: { membersInfo: Member[] }) => {
     getToast("경기표가 복사되었습니다.");
   };
 
+  const closeKakaoBrowser = () => {
+    const ua = navigator.userAgent.toLowerCase();
+    if (ua.indexOf("kakaotalk") > -1) {
+      if (/iphone|ipad|ipod/.test(ua)) {
+        window.location.href = "kakaoweb://closeBrowser";
+      } else {
+        window.location.href = "kakaotalk://inappbrowser/close";
+      }
+    } else {
+      window.close();
+    }
+  };
+
   return (
     <div className="h-full">
       <div className="relative">
@@ -101,7 +114,16 @@ const Output = ({ membersInfo }: { membersInfo: Member[] }) => {
         >
           랜덤 재배치
         </Button>
-        <Button onClick={() => getGameText()}>경기표 생성</Button>
+        <Button
+          onClick={() => {
+            getGameText();
+            setTimeout(() => {
+              closeKakaoBrowser();
+            }, 300);
+          }}
+        >
+          경기표 생성
+        </Button>
       </div>
     </div>
   );
