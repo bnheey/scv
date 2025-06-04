@@ -24,3 +24,6 @@ export const TierOptions = [
     value: 6,
   },
 ];
+
+export const DeveloperIds = [49, 120];
+export const LeaderIds = [109, 219, 111, 128, 120];

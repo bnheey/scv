@@ -1,17 +1,14 @@
 import LoadingBadminton from "@/components/common/LoadingBadminton";
 import Table from "@/components/common/Table";
-import Text from "@/components/common/Text";
 import { getAttendance } from "@/middleware/endpoints/attendance";
 import type { AttendanceList } from "@/types/Attendance";
-import { isFreshMember } from "@/utils/shared";
-import { Smiley } from "@phosphor-icons/react";
 import Cookies from "js-cookie";
 import moment from "moment";
 import { useEffect, useState } from "react";
 import CopyButton from "./CopyButton";
 import Favorite from "./Favorite";
 import ListHeader from "./ListHeader";
-import TierImage from "./TierImage";
+import MemberName from "./MemberName";
 
 const List = () => {
   const FIXED_MEMBERS = JSON.parse(Cookies.get("FIX_MEMBERS") || "[]");
@@ -63,6 +60,11 @@ const List = () => {
     { key: "total", label: "출석수", sort: true },
   ];
 
+  const maxAttendance =
+    attendanceList.length > 0
+      ? Math.max(...attendanceList.map((m) => m.totalAttendance))
+      : 0;
+
   const data =
     attendanceList?.map((member) => ({
       isFixed: { data: fixedMembers.includes(member.memberId) },
@@ -88,16 +90,11 @@ const List = () => {
       name: {
         data: member.name,
         cell: (
-          <div className="flex items-center">
-            <Text>{member.name}</Text>
-            <TierImage tier={member.tier} />
-            {member.createdTimestamp &&
-              isFreshMember(
-                member.createdTimestamp,
-                1,
-                currentDate.toISOString()
-              ) && <Smiley size={16} className="ml-0.5" color="#ffd500" />}
-          </div>
+          <MemberName
+            member={member}
+            currentDate={currentDate}
+            maxAttendance={maxAttendance}
+          />
         ),
       },
       total: { data: member.totalAttendance },
