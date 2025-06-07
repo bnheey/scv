@@ -11,7 +11,6 @@ import type { Value } from "react-calendar/src/shared/types.js";
 import "@/assets/css/Calendar.css";
 import ScheduleInfo from "./ScheduleInfo";
 
-
 const Calendar = () => {
   const [currentDate, setCurrentDate] = useState(new Date());
   const [activeStartDate, setActiveStartDate] = useState<Date | null>(
@@ -81,6 +80,7 @@ const Calendar = () => {
           setCurrentDate(activeStartDate);
           setActiveStartDate(activeStartDate);
         }}
+        minDate={new Date("2024-11-01")}
         maxDate={new Date()}
         defaultActiveStartDate={currentDate}
         prev2Label={null}

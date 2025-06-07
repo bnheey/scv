@@ -54,6 +54,7 @@ const ListHeader = ({
     <div className="flex items-center justify-center pt-2">
       <button
         onClick={() => {
+          if (moment(currentDate).isSameOrBefore("2024-11-30")) return;
           setCurrentDate(moment(currentDate).add(-1, "month").toDate());
         }}
         className="py-0"
