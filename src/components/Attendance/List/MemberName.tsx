@@ -13,7 +13,7 @@ const MemberName = ({
 }: {
   member: SimpleMember;
   currentDate: Date;
-  maxAttendance?: number;
+  maxAttendance: number;
 }) => {
   const isFresh =
     member.createdTimestamp &&
@@ -36,7 +36,7 @@ const MemberName = ({
           <Crown size={11} color="white" weight="fill" />
         </Badge>
       )}
-      {maxAttendance && maxAttendance === member.totalAttendance && (
+      {maxAttendance > 0 && maxAttendance === member.totalAttendance && (
         <Badge className="!bg-orange-400">Best</Badge>
       )}
     </div>
