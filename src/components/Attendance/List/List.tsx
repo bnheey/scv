@@ -27,7 +27,12 @@ const List = () => {
         .endOf("month")
         .format("yyyy-MM-DDTHH:mm:ss"),
     }).then((attendance) => {
-      setAttendanceList(attendance.totalAttendanceList);
+      const monthStart = moment(currentDate).startOf("month");
+      const filteredAttendanceList = attendance.totalAttendanceList?.filter(
+        (member) =>
+          moment(member.createdTimestamp).isSameOrBefore(monthStart, "day")
+      );
+      setAttendanceList(filteredAttendanceList);
       setIsLoading(false);
     });
   }, [currentDate]);
