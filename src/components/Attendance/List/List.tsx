@@ -62,7 +62,7 @@ const List = () => {
   const columns = [
     { key: "fix", label: "", width: 45 },
     { key: "name", label: "이름", sort: true },
-    { key: "total", label: "출석수", sort: true },
+    { key: "total", label: "출석수", sort: true, width: 100 },
   ];
 
   const maxAttendance =

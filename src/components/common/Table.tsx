@@ -89,7 +89,7 @@ const Table = ({
               <Text
                 type={"normalMediumBlack"}
                 className={clsx(
-                  "flex items-center gap-1 text-left px-[18px] py-[6px] m-[2px] rounded-sm",
+                  "flex items-center gap-1 text-left px-3 py-[6px] m-[2px] rounded-sm",
                   (!sortConfig?.key && index === 0) ||
                     sortConfig?.key === column.key
                     ? "bg-gray-100"
