@@ -27,8 +27,10 @@ const ScheduleInfo = ({
   };
 
   return (
-    <div className="flex flex-col items-start mt-1">
-      <Text type="subTitleBlack">{date}</Text>
+    <div className="flex flex-col items-start mt-1.5">
+      <Text type="subTitleBlack" className="mb-1 ml-1">
+        {date}
+      </Text>
       {sortedScheduleInfoList.length > 0 ? (
         <div className="flex flex-col w-full gap-2 mt-2">
           {sortedScheduleInfoList.map((schedule) => (

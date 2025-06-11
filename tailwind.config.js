@@ -29,11 +29,21 @@ export default {
           "0%": { opacity: "0", transform: "translateY(1rem) scale(0.95)" },
           "100%": { opacity: "1", transform: "translateY(0) scale(1)" },
         },
+        slideTop: {
+          "0%": { transform: "translateY(100%)" },
+          "100%": { transform: "translateY(0%)" },
+        },
+        slideBottom: {
+          "0%": { transform: "translateY(-30%)" },
+          "100%": { transform: "translateY(0%)" },
+        },
       },
       animation: {
         slideIn: "slideIn 0.5s ease-out",
         slideOut: "slideOut 0.5s ease-out",
         fadeIn: "fadeIn 0.2s ease-out",
+        slideTop: "slideTop 0.5s ease-out",
+        slideBottom: "slideBottom 0.5s ease-out",
       },
     },
   },
