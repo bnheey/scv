@@ -30,7 +30,7 @@ const List = () => {
       const monthStart = moment(currentDate).startOf("month");
       const filteredAttendanceList = attendance.totalAttendanceList?.filter(
         (member) =>
-          moment(member.createdTimestamp).isSameOrBefore(monthStart, "day")
+          moment(member.createdTimestamp).isSameOrBefore(monthStart, "month")
       );
       setAttendanceList(filteredAttendanceList);
       setIsLoading(false);

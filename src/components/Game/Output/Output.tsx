@@ -42,9 +42,19 @@ const Output = ({ membersInfo }: { membersInfo: Member[] }) => {
       )
       .join("\n");
 
-    const pasteText = `SCV경기표🏸\n(${formatDate(new Date(), "M월 D일")} ${
-      formatDate(new Date(), "a") == "오전" ? "오전 9시" : "오후 7시 30분"
-    })\n${sortedTiersDesc(membersInfo)
+    const getGameTime = () => {
+      const currentHour = new Date().getHours();
+      const isWeekend = [0, 6].includes(new Date().getDay());
+      if (isWeekend) {
+        return currentHour < 12 ? "오전 9시 00분" : "오후 1시 00분";
+      }
+      return currentHour < 12 ? "오전 10시 00분" : "오후 7시 30분";
+    };
+
+    const pasteText = `SCV경기표🏸\n(${formatDate(
+      new Date(),
+      "M월 D일"
+    )} ${getGameTime()})\n${sortedTiersDesc(membersInfo)
       .map((tier) => getTierText(membersInfo, tier))
       .join("\n")}\n\n총원 (${
       uniqueMembers(membersInfo).length
