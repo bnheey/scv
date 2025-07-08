@@ -2,7 +2,9 @@ import { TierOptions } from "@/constants/Member";
 import { getMembers } from "@/middleware/endpoints/members";
 import { useMembers } from "@/middleware/stores/members";
 import { useModal } from "@/middleware/stores/modal";
+import type { Game } from "@/types/Games";
 import type { Member } from "@/types/Members";
+import { parseGameText } from "@/utils/games";
 import {
   type Dispatch,
   type SetStateAction,
@@ -16,9 +18,9 @@ import Select from "../common/Select";
 import Text from "../common/Text";
 
 const Input = ({
-  setMembersInfo,
+  setParseInput,
 }: {
-  setMembersInfo: Dispatch<SetStateAction<Member[]>>;
+  setParseInput: Dispatch<SetStateAction<Member[] | Game[]>>;
 }) => {
   const inputRef = useRef<HTMLTextAreaElement>(null);
   const { members, setMembers } = useMembers();
@@ -43,7 +45,7 @@ const Input = ({
     return names;
   };
 
-  const handleOnClick = (inputText: string) => {
+  const handleOnMember = (inputText: string) => {
     const names = handleSortNames(inputText);
     const guests = [] as Member[];
     let count = 0;
@@ -53,6 +55,8 @@ const Input = ({
       const member = members.find(
         (member) => name.split("(")[0] === member.name
       );
+      let guestId = 10000;
+
       if (member && name.includes("게")) {
         isDuplicateName = name;
         return [];
@@ -76,7 +80,7 @@ const Input = ({
         guests.push({
           name,
           tier: 1,
-          memberId: Math.random(),
+          memberId: guestId++,
         });
       }
       return acc;
@@ -123,7 +127,7 @@ const Input = ({
         onConfirm: () => {
           const guestPlayers = [...guests, ...guests];
           const players = [...selectMembers, ...guestPlayers];
-          setMembersInfo([...players]);
+          setParseInput([...players]);
           navigate("/game/output");
         },
       });
@@ -133,10 +137,24 @@ const Input = ({
         message: "입력된 이름이 없거나 잘못된 이름입니다.",
       });
     } else {
-      setMembersInfo(selectMembers);
+      setParseInput(selectMembers);
       navigate("/game/output");
     }
   };
+
+  // const handleOnClick = (inputText: string) => {
+  //   const type = getInputType(inputText);
+  //   if (type === "member") handleOnMember(inputText);
+  //   else if (type === "game") {
+  //     setParseInput(parseGameText(inputText));
+  //     navigate("/game/output?type=game");
+  //   } else {
+  //     openModal({
+  //       title: "경고",
+  //       message: "입력 형식이 잘못되었습니다. 올바른 형식으로 입력해주세요.",
+  //     });
+  //   }
+  // };
 
   // 테스트용 코드 (5번 클릭 시 테스트용 데이터 입력)
   const [clickCount, setClickCount] = useState(0);
@@ -178,17 +196,28 @@ const Input = ({
           }, 0);
         }}
       />
-      <Button
-        className="ml-auto"
-        onClick={() => {
-          handleOnClick(inputRef.current?.value || "");
-        }}
-        onMouseDown={handleTestClick}
-        onTouchStart={handleTestClick}
-        size="lg"
-      >
-        경기 배치
-      </Button>
+      <div className="flex items-center justify-end gap-2">
+        <Button
+          color="text"
+          onClick={() => {
+            setParseInput(parseGameText(inputRef.current?.value || ""));
+            navigate("/game/output?type=game");
+          }}
+          size="lg"
+        >
+          경기 수정
+        </Button>
+        <Button
+          onClick={() => {
+            handleOnMember(inputRef.current?.value || "");
+          }}
+          onMouseDown={handleTestClick}
+          onTouchStart={handleTestClick}
+          size="lg"
+        >
+          경기 생성
+        </Button>
+      </div>
     </>
   );
 };

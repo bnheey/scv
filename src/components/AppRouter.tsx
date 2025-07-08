@@ -1,10 +1,10 @@
+import { useEffect } from "react";
 import { Route, Routes, useLocation } from "react-router-dom";
+import { useModal } from "../middleware/stores/modal";
 import Admin from "../pages/Admin";
 import Attendance from "../pages/Attendance";
 import Game from "../pages/Game";
 import Header from "./Header";
-import { useEffect } from "react";
-import { useModal } from "../middleware/stores/modal";
 
 const AppRouter = () => {
   const location = useLocation();
