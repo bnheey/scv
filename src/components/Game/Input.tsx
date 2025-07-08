@@ -29,9 +29,13 @@ const Input = ({
 
   useEffect(() => {
     if (members.length > 0) return;
-    getMembers().then((members) => {
-      setMembers(members);
-    });
+    getMembers()
+      .then((members) => {
+        setMembers(members);
+      })
+      .catch(() => {
+        navigate("/500");
+      });
   }, []);
 
   const handleSortNames = (inputText: string) => {

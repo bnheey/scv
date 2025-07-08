@@ -10,8 +10,10 @@ import { formatDate } from "@/utils/date";
 import type { Value } from "react-calendar/src/shared/types.js";
 import "@/assets/css/Calendar.css";
 import ScheduleInfo from "./ScheduleInfo";
+import { useNavigate } from "react-router-dom";
 
 const Calendar = () => {
+  const navigate = useNavigate();
   const [currentDate, setCurrentDate] = useState(new Date());
   const [activeStartDate, setActiveStartDate] = useState<Date | null>(
     new Date(moment(currentDate).startOf("month").format("yyyy-MM-DDTHH:mm:ss"))
@@ -52,17 +54,21 @@ const Calendar = () => {
       endDateTime: moment(activeStartDate)
         .endOf("month")
         .format("yyyy-MM-DDTHH:mm:ss"),
-    }).then((attendance) => {
-      setScheduleInfoList(attendance.scheduleInfoList);
-      setIsLoading(false);
-      setScheduleInfo([]);
-      setScheduleInfo(
-        () =>
-          attendance.scheduleInfoList?.filter(
-            (x) => formatDate(x.scheduleTime) === formatDate(currentDate)
-          ) || []
-      );
-    });
+    })
+      .then((attendance) => {
+        setScheduleInfoList(attendance.scheduleInfoList);
+        setIsLoading(false);
+        setScheduleInfo([]);
+        setScheduleInfo(
+          () =>
+            attendance.scheduleInfoList?.filter(
+              (x) => formatDate(x.scheduleTime) === formatDate(currentDate)
+            ) || []
+        );
+      })
+      .catch(() => {
+        navigate("/500");
+      });
   }, [activeStartDate]);
 
   // TODO 스크롤 위치 고민
