@@ -116,12 +116,9 @@ const Output = ({
     <div className="h-full">
       <div className="relative">
         {sortedTiersDesc(getAllMembersFromGames()).map((tier) => (
-          <div key={tier} className="flex">
+          <div key={tier} className="flex items-center">
             <TierImage tier={tier} />
-            <Text
-              type="smallMediumWhite"
-              className="px-2 !text-black !leading-[17px] text-left "
-            >
+            <Text type="smallMediumWhite" className="px-2 !text-black">
               {getTierText(getAllMembersFromGames(), tier)}
             </Text>
           </div>

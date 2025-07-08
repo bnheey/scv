@@ -11,6 +11,7 @@ interface GameLabelProps {
   gameIndex: number;
   pinnedGames: boolean[];
   setPinnedGames: React.Dispatch<React.SetStateAction<boolean[]>>;
+  isLastGame?: boolean;
 }
 
 const GameLabel = ({
@@ -18,6 +19,7 @@ const GameLabel = ({
   gameIndex,
   pinnedGames,
   setPinnedGames,
+  isLastGame,
 }: GameLabelProps) => {
   const { openModal } = useModal();
 
@@ -32,7 +34,7 @@ const GameLabel = ({
           ref={provided.innerRef}
           {...provided.draggableProps}
           {...provided.dragHandleProps}
-          className="pb-1 mb-1"
+          className={isLastGame ? "" : "pb-1 mb-1"}
         >
           <Droppable
             droppableId={String(game.gameId)}

@@ -2,7 +2,11 @@ import type { DraggableLocation, DropResult } from "@hello-pangea/dnd";
 import { DragDropContext, Droppable } from "@hello-pangea/dnd";
 import GameLabel from "./GameLabel";
 import type { Game } from "@/types/Games";
-import { reorderArray, updatePlayerOrder, updatePlayerOrderWithGames } from "@/utils/games";
+import {
+  reorderArray,
+  updatePlayerOrder,
+  updatePlayerOrderWithGames,
+} from "@/utils/games";
 
 interface DragAndDropGridProps {
   games: Game[];
@@ -89,6 +93,7 @@ const DragAndDropWrapper = ({
                 gameIndex={gameIndex}
                 pinnedGames={pinnedGames}
                 setPinnedGames={setPinnedGames}
+                isLastGame={gameIndex === games.length - 1}
               />
             ))}
             {provided.placeholder}
