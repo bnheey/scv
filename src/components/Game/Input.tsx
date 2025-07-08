@@ -59,7 +59,6 @@ const Input = ({
       const member = members.find(
         (member) => name.split("(")[0] === member.name
       );
-      let guestId = 10000;
 
       if (member && name.includes("게")) {
         isDuplicateName = name;
@@ -84,7 +83,7 @@ const Input = ({
         guests.push({
           name,
           tier: 1,
-          memberId: guestId++,
+          memberId: Math.random(),
         });
       }
       return acc;

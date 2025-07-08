@@ -42,7 +42,7 @@ export const parseGameText = (inputText: string) => {
   >();
 
   // 티어 정보를 추출하여 memberTierMap에 저장
-  const tierPattern = /(마|다|플|골|실|브):\s*([가-힣\s🐣]+)(?=\n|$)/gsu;
+  const tierPattern = /(마|다|플|골|실|브):\s*([*가-힣\s🐣()]+?)(?=\n|$)/gsu;
   let tierMatch;
   while ((tierMatch = tierPattern.exec(inputText)) !== null) {
     const tierKey = tierMatch[1] as keyof typeof tierMapping;
@@ -53,8 +53,12 @@ export const parseGameText = (inputText: string) => {
     const names = membersList.split(/\s+/).filter((name) => name.trim());
     names.forEach((name) => {
       const isFresh = name.includes("🐣");
-      const isGuest = name.includes("(게스트)");
-      const cleanName = name.replace("🐣", "").replace("(게스트)", "");
+      const isGuest = name.includes("(게스트)") || name.includes("(게)");
+      const cleanName = name
+        .replace(/\*/g, "")
+        .replace("🐣", "")
+        .replace("(게스트)", "")
+        .replace("(게)", "");
 
       let createdTimestamp: string | undefined;
       if (isFresh) createdTimestamp = new Date().toISOString();

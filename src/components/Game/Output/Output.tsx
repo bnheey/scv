@@ -56,7 +56,9 @@ const Output = ({
         }
       });
     });
-    return allMembers;
+    return allMembers.sort((a, b) => {
+      return a.name.localeCompare(b.name);
+    });
   };
 
   const handleOnPaste = () => {
@@ -116,9 +118,12 @@ const Output = ({
     <div className="h-full">
       <div className="relative">
         {sortedTiersDesc(getAllMembersFromGames()).map((tier) => (
-          <div key={tier} className="flex items-center">
+          <div key={tier} className="flex items-start">
             <TierImage tier={tier} />
-            <Text type="smallMediumWhite" className="px-2 !text-black">
+            <Text
+              type="smallMediumWhite"
+              className="px-2 !text-black text-left my-auto"
+            >
               {getTierText(getAllMembersFromGames(), tier)}
             </Text>
           </div>
