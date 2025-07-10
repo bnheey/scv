@@ -1,7 +1,142 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { TierOptions } from "@/constants/Member";
 import type { Game, GameMember } from "@/types/Games";
 import type { Member } from "@/types/Members";
 import { isFreshMember } from "./shared";
+
+/**
+ * 텍스트를 입력받아 Game 타입인지, Member 타입인지 확인
+ * @param inputText: string
+ * @returns "game" | "member"
+ */
+export const getInputType = (inputText: string) => {
+  const memberPattern = /\d+\.\s*([가-힣]+(?:\(게\))?.*?)(?=\n|$)/g;
+  const memberMatches = inputText.match(memberPattern);
+  const hasGameKeyword = /\d+경기/g.test(inputText);
+  const hasVsKeyword = /vs/g.test(inputText);
+
+  if (memberMatches && memberMatches.length >= 4) {
+    return "member";
+  } else if (hasGameKeyword && hasVsKeyword) {
+    return "game";
+  }
+};
+
+/**
+ * 게임 텍스트 형식의 문자열을 받아 Game 타입으로 변환
+ * @param inputText: string
+ * @returns Game[]
+ */
+export const parseGameText = (inputText: string) => {
+  const tierMapping = {
+    마: 6,
+    다: 5,
+    플: 4,
+    골: 3,
+    실: 2,
+    브: 1,
+  };
+  const memberTierMap = new Map<
+    string,
+    { tier: number; createdTimestamp?: string; memberId: number }
+  >();
+
+  // 티어 정보를 추출하여 memberTierMap에 저장
+  const tierPattern = /(마|다|플|골|실|브):\s*([*가-힣\s🐣()]+?)(?=\n|$)/gsu;
+  let tierMatch;
+  while ((tierMatch = tierPattern.exec(inputText)) !== null) {
+    const tierKey = tierMatch[1] as keyof typeof tierMapping;
+    const tier = tierMapping[tierKey];
+    const membersList = tierMatch[2].trim();
+
+    // 이름들을 공백으로 분리
+    const names = membersList.split(/\s+/).filter((name) => name.trim());
+    names.forEach((name) => {
+      const isFresh = name.includes("🐣");
+      const isGuest = name.includes("(게스트)") || name.includes("(게)");
+      const cleanName = name
+        .replace(/\*/g, "")
+        .replace("🐣", "")
+        .replace("(게스트)", "")
+        .replace("(게)", "");
+
+      let createdTimestamp: string | undefined;
+      if (isFresh) createdTimestamp = new Date().toISOString();
+      if (isGuest) {
+        createdTimestamp = undefined;
+      } else {
+        // 신입 or 게스트가 아니면 생성일 2달 전 날짜로 임의 설정
+        const oldMemberCreatedDate = new Date();
+        oldMemberCreatedDate.setMonth(oldMemberCreatedDate.getMonth() - 2);
+        createdTimestamp = oldMemberCreatedDate.toISOString();
+      }
+
+      memberTierMap.set(cleanName, {
+        tier,
+        createdTimestamp,
+        memberId: Math.floor(Math.random() * 10000) + 1000,
+      });
+    });
+  }
+
+  // 게임 정보 파싱
+  const gamePattern =
+    /(\d+)경기\s+([가-힣]+)\s+([가-힣]+)\s+vs\s+([가-힣]+)\s+([가-힣]+)/g;
+  const games = [];
+  let gameMatch;
+
+  // eslint-disable-next-line no-cond-assign
+  while ((gameMatch = gamePattern.exec(inputText)) !== null) {
+    const [_, gameNumber, player1, player2, player3, player4] = gameMatch;
+    const playerNames = [player1, player2, player3, player4];
+    const members: GameMember[] = [];
+
+    // 중복 체크를 위한 Map
+    const nameCount = new Map<string, number>();
+    playerNames.forEach((name) => {
+      nameCount.set(name, (nameCount.get(name) || 0) + 1);
+    });
+
+    playerNames.forEach((name) => {
+      const memberInfo = memberTierMap.get(name);
+      const tier = memberInfo?.tier || 1;
+      const createdTimestamp = memberInfo?.createdTimestamp;
+      const isDuplicate = (nameCount.get(name) || 0) > 1;
+
+      members.push({
+        memberId:
+          memberInfo?.memberId || Math.floor(Math.random() * 10000) + 1000,
+        name,
+        tier,
+        tierGap: 0, // 나중에 계산
+        duplicate: isDuplicate,
+        createdTimestamp,
+      });
+    });
+
+    // 티어 갭 계산
+    const team1Sum = members[0].tier + members[1].tier;
+    const team2Sum = members[2].tier + members[3].tier;
+    const tierGap = Math.abs(team1Sum - team2Sum);
+
+    // 티어 갭을 각 멤버에 할당
+    members.forEach((member, index) => {
+      if (index < 2) {
+        member.tierGap = team1Sum > team2Sum ? tierGap : 0;
+      } else {
+        member.tierGap = team2Sum > team1Sum ? tierGap : 0;
+      }
+    });
+
+    games.push({
+      gameId: Number(gameNumber),
+      title: `game ${gameNumber}`,
+      members,
+    });
+  }
+
+  return games;
+};
 
 /**
  * 게임을 입력 받아 게임에 속한 멤버들을 반환

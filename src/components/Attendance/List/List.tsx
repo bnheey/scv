@@ -9,8 +9,10 @@ import CopyButton from "./CopyButton";
 import Favorite from "./Favorite";
 import ListHeader from "./ListHeader";
 import MemberName from "./MemberName";
+import { useNavigate } from "react-router-dom";
 
 const List = () => {
+  const navigate = useNavigate();
   const FIXED_MEMBERS = JSON.parse(Cookies.get("FIX_MEMBERS") || "[]");
   const [fixedMembers, setFixedMembers] = useState<number[]>(FIXED_MEMBERS);
   const [currentDate, setCurrentDate] = useState(new Date());
@@ -26,15 +28,19 @@ const List = () => {
       endDateTime: moment(currentDate)
         .endOf("month")
         .format("yyyy-MM-DDTHH:mm:ss"),
-    }).then((attendance) => {
-      const monthStart = moment(currentDate).startOf("month");
-      const filteredAttendanceList = attendance.totalAttendanceList?.filter(
-        (member) =>
-          moment(member.createdTimestamp).isSameOrBefore(monthStart, "month")
-      );
-      setAttendanceList(filteredAttendanceList);
-      setIsLoading(false);
-    });
+    })
+      .then((attendance) => {
+        const monthStart = moment(currentDate).startOf("month");
+        const filteredAttendanceList = attendance.totalAttendanceList?.filter(
+          (member) =>
+            moment(member.createdTimestamp).isSameOrBefore(monthStart, "month")
+        );
+        setAttendanceList(filteredAttendanceList);
+        setIsLoading(false);
+      })
+      .catch(() => {
+        navigate("/500");
+      });
   }, [currentDate]);
 
   useEffect(() => {
@@ -62,7 +68,7 @@ const List = () => {
   const columns = [
     { key: "fix", label: "", width: 45 },
     { key: "name", label: "이름", sort: true },
-    { key: "total", label: "출석수", sort: true },
+    { key: "total", label: "출석수", sort: true, width: 100 },
   ];
 
   const maxAttendance =

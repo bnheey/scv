@@ -1,6 +1,7 @@
 import TierImage from "@/components/Attendance/List/TierImage";
 import Button from "@/components/common/Button";
 import Text from "@/components/common/Text";
+import type { Game } from "@/types/Games";
 import type { Member } from "@/types/Members";
 import { formatDate } from "@/utils/date";
 import {
@@ -15,18 +16,50 @@ import { useNavigate } from "react-router-dom";
 import DragAndDropWrapper from "./DragAndDrop/DragAndDropWrapper";
 import InfoTooltip from "./InfoTooltip";
 
-const Output = ({ membersInfo }: { membersInfo: Member[] }) => {
-  const [games, setGames] = useState(createGames(membersInfo));
+const Output = ({
+  parseInput,
+  type,
+}: {
+  parseInput: Member[] | Game[];
+  type: string;
+}) => {
+  const [games, setGames] = useState(
+    type === "game" ? (parseInput as Game[]) : createGames(parseInput)
+  );
   const [pinnedGames, setPinnedGames] = useState<boolean[]>(
     Array(games.length).fill(false)
   );
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (membersInfo.length === 0) {
+    if (parseInput.length === 0) {
       navigate("/game");
     }
-  }, [membersInfo, navigate]);
+  }, [parseInput, navigate]);
+
+  // TODO: getGamesToMember 함수와 비교해서 추후 제거
+  const getAllMembersFromGames = () => {
+    const allMembers: Member[] = [];
+    games.forEach((game) => {
+      game.members.forEach((member) => {
+        // 중복 제거를 위해 memberId로 확인
+        const existingMember = allMembers.find(
+          (m) => m.memberId === member.memberId
+        );
+        if (!existingMember) {
+          allMembers.push({
+            memberId: member.memberId,
+            name: member.name,
+            tier: member.tier,
+            createdTimestamp: member.createdTimestamp,
+          });
+        }
+      });
+    });
+    return allMembers.sort((a, b) => {
+      return a.name.localeCompare(b.name);
+    });
+  };
 
   const handleOnPaste = () => {
     const gamesText = games
@@ -54,10 +87,10 @@ const Output = ({ membersInfo }: { membersInfo: Member[] }) => {
     const pasteText = `SCV경기표🏸\n(${formatDate(
       new Date(),
       "M월 D일"
-    )} ${getGameTime()})\n${sortedTiersDesc(membersInfo)
-      .map((tier) => getTierText(membersInfo, tier))
+    )} ${getGameTime()})\n${sortedTiersDesc(getAllMembersFromGames())
+      .map((tier) => getTierText(getAllMembersFromGames(), tier))
       .join("\n")}\n\n총원 (${
-      uniqueMembers(membersInfo).length
+      uniqueMembers(getAllMembersFromGames()).length
     })\n\n${gamesText}`;
 
     navigator.clipboard.writeText(pasteText);
@@ -84,14 +117,14 @@ const Output = ({ membersInfo }: { membersInfo: Member[] }) => {
   return (
     <div className="h-full">
       <div className="relative">
-        {sortedTiersDesc(membersInfo).map((tier) => (
-          <div key={tier} className="flex">
+        {sortedTiersDesc(getAllMembersFromGames()).map((tier) => (
+          <div key={tier} className="flex items-start">
             <TierImage tier={tier} />
             <Text
               type="smallMediumWhite"
-              className="px-2 !text-black !leading-[17px] text-left "
+              className="px-2 !text-black text-left my-auto"
             >
-              {getTierText(membersInfo, tier)}
+              {getTierText(getAllMembersFromGames(), tier)}
             </Text>
           </div>
         ))}

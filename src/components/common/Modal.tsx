@@ -3,16 +3,8 @@ import Text from "./Text";
 import { useModal } from "@/middleware/stores/modal";
 
 const Modal = () => {
-  const {
-    closeModal,
-    onConfirm,
-    title,
-    message,
-    width,
-    height,
-    children,
-    confirmText,
-  } = useModal();
+  const { closeModal, onConfirm, title, message, children, confirmText } =
+    useModal();
   return (
     <div className={`fixed inset-0 z-50 flex items-center justify-center`}>
       {/* 딤드 */}
@@ -21,10 +13,7 @@ const Modal = () => {
         onClick={closeModal}
       />
       {/* 모달 */}
-      <div
-        className="relative px-4 py-5 bg-white rounded-lg shadow-lg max-w-[400px] w-[80%] min-w-[70%]"
-        style={{ width, height }}
-      >
+      <div className="relative px-4 py-5 bg-white rounded-lg shadow-lg max-w-[400px] w-[80%]">
         <div className="flex items-center justify-center">
           <Text type="subTitleBlack">{title}</Text>
           <X className="ml-auto" size={20} onClick={closeModal} />

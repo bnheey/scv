@@ -2,7 +2,9 @@ import { TierOptions } from "@/constants/Member";
 import { getMembers } from "@/middleware/endpoints/members";
 import { useMembers } from "@/middleware/stores/members";
 import { useModal } from "@/middleware/stores/modal";
+import type { Game } from "@/types/Games";
 import type { Member } from "@/types/Members";
+import { getInputType, parseGameText } from "@/utils/games";
 import {
   type Dispatch,
   type SetStateAction,
@@ -16,9 +18,9 @@ import Select from "../common/Select";
 import Text from "../common/Text";
 
 const Input = ({
-  setMembersInfo,
+  setParseInput,
 }: {
-  setMembersInfo: Dispatch<SetStateAction<Member[]>>;
+  setParseInput: Dispatch<SetStateAction<Member[] | Game[]>>;
 }) => {
   const inputRef = useRef<HTMLTextAreaElement>(null);
   const { members, setMembers } = useMembers();
@@ -27,9 +29,13 @@ const Input = ({
 
   useEffect(() => {
     if (members.length > 0) return;
-    getMembers().then((members) => {
-      setMembers(members);
-    });
+    getMembers()
+      .then((members) => {
+        setMembers(members);
+      })
+      .catch(() => {
+        navigate("/500");
+      });
   }, []);
 
   const handleSortNames = (inputText: string) => {
@@ -43,7 +49,7 @@ const Input = ({
     return names;
   };
 
-  const handleOnClick = (inputText: string) => {
+  const handleOnMember = (inputText: string) => {
     const names = handleSortNames(inputText);
     const guests = [] as Member[];
     let count = 0;
@@ -53,6 +59,7 @@ const Input = ({
       const member = members.find(
         (member) => name.split("(")[0] === member.name
       );
+
       if (member && name.includes("게")) {
         isDuplicateName = name;
         return [];
@@ -123,7 +130,7 @@ const Input = ({
         onConfirm: () => {
           const guestPlayers = [...guests, ...guests];
           const players = [...selectMembers, ...guestPlayers];
-          setMembersInfo([...players]);
+          setParseInput([...players]);
           navigate("/game/output");
         },
       });
@@ -133,8 +140,32 @@ const Input = ({
         message: "입력된 이름이 없거나 잘못된 이름입니다.",
       });
     } else {
-      setMembersInfo(selectMembers);
+      setParseInput(selectMembers);
       navigate("/game/output");
+    }
+  };
+
+  const handleOnGame = (inputText: string) => {
+    if (!inputText) {
+      return openModal({
+        title: "경고",
+        message: "[경기표] 또는 [출석표]를 입력해주세요.",
+      });
+    }
+
+    setParseInput(parseGameText(inputText));
+    navigate("/game/output?type=game");
+  };
+
+  const handleOnClick = (inputText: string) => {
+    const type = getInputType(inputText);
+    if (type === "member") return handleOnMember(inputText);
+    else if (type === "game") return handleOnGame(inputText);
+    else {
+      return openModal({
+        title: "경고",
+        message: "입력 형식이 잘못되었습니다. 올바른 형식으로 입력해주세요.",
+      });
     }
   };
 
@@ -178,17 +209,27 @@ const Input = ({
           }, 0);
         }}
       />
-      <Button
-        className="ml-auto"
-        onClick={() => {
-          handleOnClick(inputRef.current?.value || "");
-        }}
-        onMouseDown={handleTestClick}
-        onTouchStart={handleTestClick}
-        size="lg"
-      >
-        경기 배치
-      </Button>
+      <div className="flex items-center justify-end gap-1 mt-1">
+        <Button
+          color="text"
+          onClick={() => {
+            handleOnClick(inputRef.current?.value || "");
+          }}
+          size="lg"
+        >
+          경기 수정
+        </Button>
+        <Button
+          onClick={() => {
+            handleOnClick(inputRef.current?.value || "");
+          }}
+          onMouseDown={handleTestClick}
+          onTouchStart={handleTestClick}
+          size="lg"
+        >
+          경기 생성
+        </Button>
+      </div>
     </>
   );
 };
