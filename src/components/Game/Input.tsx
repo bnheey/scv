@@ -4,7 +4,7 @@ import { useMembers } from "@/middleware/stores/members";
 import { useModal } from "@/middleware/stores/modal";
 import type { Game } from "@/types/Games";
 import type { Member } from "@/types/Members";
-import { parseGameText } from "@/utils/games";
+import { getInputType, parseGameText } from "@/utils/games";
 import {
   type Dispatch,
   type SetStateAction,
@@ -145,19 +145,29 @@ const Input = ({
     }
   };
 
-  // const handleOnClick = (inputText: string) => {
-  //   const type = getInputType(inputText);
-  //   if (type === "member") handleOnMember(inputText);
-  //   else if (type === "game") {
-  //     setParseInput(parseGameText(inputText));
-  //     navigate("/game/output?type=game");
-  //   } else {
-  //     openModal({
-  //       title: "경고",
-  //       message: "입력 형식이 잘못되었습니다. 올바른 형식으로 입력해주세요.",
-  //     });
-  //   }
-  // };
+  const handleOnGame = (inputText: string) => {
+    if (!inputText) {
+      return openModal({
+        title: "경고",
+        message: "[경기표] 또는 [출석표]를 입력해주세요.",
+      });
+    }
+
+    setParseInput(parseGameText(inputText));
+    navigate("/game/output?type=game");
+  };
+
+  const handleOnClick = (inputText: string) => {
+    const type = getInputType(inputText);
+    if (type === "member") return handleOnMember(inputText);
+    else if (type === "game") return handleOnGame(inputText);
+    else {
+      return openModal({
+        title: "경고",
+        message: "입력 형식이 잘못되었습니다. 올바른 형식으로 입력해주세요.",
+      });
+    }
+  };
 
   // 테스트용 코드 (5번 클릭 시 테스트용 데이터 입력)
   const [clickCount, setClickCount] = useState(0);
@@ -203,8 +213,7 @@ const Input = ({
         <Button
           color="text"
           onClick={() => {
-            setParseInput(parseGameText(inputRef.current?.value || ""));
-            navigate("/game/output?type=game");
+            handleOnClick(inputRef.current?.value || "");
           }}
           size="lg"
         >
@@ -212,7 +221,7 @@ const Input = ({
         </Button>
         <Button
           onClick={() => {
-            handleOnMember(inputRef.current?.value || "");
+            handleOnClick(inputRef.current?.value || "");
           }}
           onMouseDown={handleTestClick}
           onTouchStart={handleTestClick}
