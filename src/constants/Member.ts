@@ -26,4 +26,4 @@ export const TierOptions = [
 ];
 
 export const DeveloperIds = [49, 120];
-export const LeaderIds = [109, 219, 111, 128, 120];
+export const AdminIds = [109, 111, 120, 128, 275]; // 이현석, 이현재, 전성혁, 조석준, 홍석준
