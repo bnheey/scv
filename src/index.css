@@ -91,3 +91,11 @@ button:hover {
     background-color: #f9f9f9;
   }
 }
+
+.shine-text {
+  background: linear-gradient(90deg, #333, #666, #aaa, #666, #333);
+  background-size: 300%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
