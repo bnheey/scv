@@ -23,6 +23,22 @@ export const getInputType = (inputText: string) => {
 };
 
 /**
+ * 멤버 텍스트 형식의 문자열을 받아 Member 타입으로 변환
+ * @param inputText : string
+ * @returns Member[]
+ */
+export const parseMemberText = (inputText: string) => {
+  const namePattern = /\d+\.\s*([가-힣]+(?:\(게\))?.*?)(?=\n|$)/g;
+  const names = [];
+  let match;
+  while ((match = namePattern.exec(inputText)) !== null) {
+    const name = match[1].trim();
+    names.push(name);
+  }
+  return names;
+};
+
+/**
  * 게임 텍스트 형식의 문자열을 받아 Game 타입으로 변환
  * @param inputText: string
  * @returns Game[]

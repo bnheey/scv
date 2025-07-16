@@ -57,7 +57,7 @@ const ListHeader = ({
           if (moment(currentDate).isSameOrBefore("2024-11-30")) return;
           setCurrentDate(moment(currentDate).add(-1, "month").toDate());
         }}
-        className="py-0"
+        className="py-0 !bg-transparent"
       >
         <CaretLeft />
       </button>
@@ -77,7 +77,7 @@ const ListHeader = ({
           if (moment(nextDate).isAfter(new Date())) return;
           setCurrentDate(nextDate);
         }}
-        className="py-0"
+        className="py-0 !bg-transparent"
       >
         <CaretRight />
       </button>

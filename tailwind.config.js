@@ -15,6 +15,8 @@ export default {
         "scv-light-green": "#d9efc9",
         "scv-blue": "#60a5fa",
         "scv-light-blue": "#93c5fd",
+        "scv-ash-blue": "#769cbf",
+        "scv-ash-purple": "#a38cc6",
       },
       keyframes: {
         slideIn: {

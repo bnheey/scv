@@ -4,7 +4,7 @@ import { useMembers } from "@/middleware/stores/members";
 import { useModal } from "@/middleware/stores/modal";
 import type { Game } from "@/types/Games";
 import type { Member } from "@/types/Members";
-import { getInputType, parseGameText } from "@/utils/games";
+import { getInputType, parseGameText, parseMemberText } from "@/utils/games";
 import {
   type Dispatch,
   type SetStateAction,
@@ -16,6 +16,8 @@ import { useNavigate } from "react-router-dom";
 import Button from "../common/Button";
 import Select from "../common/Select";
 import Text from "../common/Text";
+import { CheckCircle } from "@phosphor-icons/react";
+import clsx from "clsx";
 
 const Input = ({
   setParseInput,
@@ -26,6 +28,13 @@ const Input = ({
   const { members, setMembers } = useMembers();
   const { openModal } = useModal();
   const navigate = useNavigate();
+
+  const [mode, setMode] = useState<"unknown" | "create" | "edit">("unknown");
+  const buttonStyles = {
+    unknown: "!bg-gray-300 !text-gray-600 cursor-not-allowed",
+    create: "!bg-scv-pink !text-white",
+    edit: "!bg-scv-ash-purple !text-white",
+  };
 
   useEffect(() => {
     if (members.length > 0) return;
@@ -38,19 +47,8 @@ const Input = ({
       });
   }, []);
 
-  const handleSortNames = (inputText: string) => {
-    const namePattern = /\d+\.\s*([가-힣]+(?:\(게\))?.*?)(?=\n|$)/g;
-    const names = [];
-    let match;
-    while ((match = namePattern.exec(inputText)) !== null) {
-      const name = match[1].trim();
-      names.push(name);
-    }
-    return names;
-  };
-
   const handleOnMember = (inputText: string) => {
-    const names = handleSortNames(inputText);
+    const names = parseMemberText(inputText);
     const guests = [] as Member[];
     let count = 0;
     let isDuplicateName = "";
@@ -146,13 +144,6 @@ const Input = ({
   };
 
   const handleOnGame = (inputText: string) => {
-    if (!inputText) {
-      return openModal({
-        title: "경고",
-        message: "[경기표] 또는 [출석표]를 입력해주세요.",
-      });
-    }
-
     setParseInput(parseGameText(inputText));
     navigate("/game/output?type=game");
   };
@@ -166,31 +157,6 @@ const Input = ({
         title: "경고",
         message: "입력 형식이 잘못되었습니다. 올바른 형식으로 입력해주세요.",
       });
-    }
-  };
-
-  // 테스트용 코드 (5번 클릭 시 테스트용 데이터 입력)
-  const [clickCount, setClickCount] = useState(0);
-  const [clickTimer, setClickTimer] = useState<NodeJS.Timeout | null>(null);
-  const handleTestClick = () => {
-    setClickCount((prevCount) => prevCount + 1);
-
-    if (clickTimer) {
-      clearTimeout(clickTimer);
-    }
-    const timer = setTimeout(() => {
-      setClickCount(0);
-    }, 2000);
-
-    setClickTimer(timer);
-
-    if (clickCount + 1 === 5) {
-      if (inputRef.current) {
-        inputRef.current.value =
-          "1. 방희연\n2. 전성혁\n3. 이정석\n4. 문교원\n5. 함려나\n6. 신재성";
-      }
-      setClickCount(0);
-      clearTimeout(timer);
     }
   };
 
@@ -208,26 +174,37 @@ const Input = ({
             inputRef.current?.blur();
           }, 0);
         }}
+        onChange={(e) => {
+          const type = getInputType(e.target.value);
+          if (type === "member") return setMode("create");
+          else if (type === "game") return setMode("edit");
+        }}
       />
-      <div className="flex items-center justify-end gap-1 mt-1">
+      <div className="flex items-end justify-end gap-2 mt-1">
+        <div
+          className={clsx(
+            "flex items-center gap-1 text-sm transition-all duration-300 ease-out",
+            mode === "unknown"
+              ? "opacity-0 -translate-y-2 pointer-events-none"
+              : "opacity-100 translate-y-0"
+          )}
+        >
+          <CheckCircle className="text-[#04906F]" size={16} />
+          <Text type="normalGray" className="!py-2.5">
+            {mode === "create"
+              ? "출석표가 입력되었습니다."
+              : "경기표가 입력되었습니다."}
+          </Text>
+        </div>
         <Button
-          color="text"
           onClick={() => {
             handleOnClick(inputRef.current?.value || "");
           }}
+          className={`${buttonStyles[mode]} mt-[10px] transition-all duration-300`}
           size="lg"
+          disabled={mode === "unknown"}
         >
-          경기 수정
-        </Button>
-        <Button
-          onClick={() => {
-            handleOnClick(inputRef.current?.value || "");
-          }}
-          onMouseDown={handleTestClick}
-          onTouchStart={handleTestClick}
-          size="lg"
-        >
-          경기 생성
+          {mode === "edit" ? "경기 수정" : "경기 생성"}
         </Button>
       </div>
     </>
