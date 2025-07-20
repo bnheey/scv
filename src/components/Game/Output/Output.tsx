@@ -3,14 +3,14 @@ import Button from "@/components/common/Button";
 import Text from "@/components/common/Text";
 import type { Game } from "@/types/Games";
 import type { Member } from "@/types/Members";
-import { formatDate } from "@/utils/date";
+import { formatDate, getGameTime } from "@/utils/date";
 import {
   createGames,
   getTierText,
   sortedTiersDesc,
   uniqueMembers,
 } from "@/utils/games";
-import { getToast } from "@/utils/shared";
+import { closeKakaoBrowser, getToast } from "@/utils/shared";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import DragAndDropWrapper from "./DragAndDrop/DragAndDropWrapper";
@@ -75,15 +75,6 @@ const Output = ({
       )
       .join("\n");
 
-    const getGameTime = () => {
-      const currentHour = new Date().getHours();
-      const isWeekend = [0, 6].includes(new Date().getDay());
-      if (isWeekend) {
-        return currentHour < 12 ? "오전 9시 00분" : "오후 1시 00분";
-      }
-      return currentHour < 12 ? "오전 10시 00분" : "오후 7시 30분";
-    };
-
     const pasteText = `SCV경기표🏸\n(${formatDate(
       new Date(),
       "M월 D일"
@@ -99,19 +90,6 @@ const Output = ({
   const getGameText = () => {
     handleOnPaste();
     getToast("경기표가 복사되었습니다.");
-  };
-
-  const closeKakaoBrowser = () => {
-    const ua = navigator.userAgent.toLowerCase();
-    if (ua.indexOf("kakaotalk") > -1) {
-      if (/iphone|ipad|ipod/.test(ua)) {
-        window.location.href = "kakaoweb://closeBrowser";
-      } else {
-        window.location.href = "kakaotalk://inappbrowser/close";
-      }
-    } else {
-      window.close();
-    }
   };
 
   return (

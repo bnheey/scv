@@ -19,6 +19,8 @@ const Header = () => {
         return "출석 확인";
       case "game":
         return "경기표 생성";
+      case "form":
+        return "양식";
       case "admin":
         return "관리자";
       default:
