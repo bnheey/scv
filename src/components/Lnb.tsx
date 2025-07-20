@@ -1,8 +1,7 @@
 import {
   CalendarCheck,
+  ClipboardText,
   Network,
-  // SignIn,
-  // UserGear,
   X,
 } from "@phosphor-icons/react";
 import clsx from "clsx";
@@ -32,6 +31,7 @@ const Lnb = ({ onClose }: LnbProps) => {
       label: "경기표",
       paths: ["/game"],
     },
+    { to: "/form", icon: ClipboardText, label: "양식", paths: ["/form"] },
     // { to: "/admin", icon: UserGear, label: "관리자", paths: ["/admin"] },
   ];
 
