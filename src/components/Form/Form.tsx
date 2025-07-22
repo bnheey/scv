@@ -74,7 +74,7 @@ const Form = () => {
           getToast("양식이 복사되었습니다.");
           setTimeout(() => {
             closeKakaoBrowser();
-          }, 300);
+          }, 400);
         }}
       >
         복사하기
