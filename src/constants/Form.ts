@@ -3,6 +3,7 @@ import { formatDate, getDayName, getGameTime } from "@/utils/date";
 export const formPasteText = {
   attendance: `SCV🏸 ☆ (${getDayName(new Date())}) ${getGameTime()}
 코트번호 : 1번
+
 콕 남 3개, 여 2개
 <참석명단>
 1.

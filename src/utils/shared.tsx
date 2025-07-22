@@ -52,6 +52,7 @@ export const closeKakaoBrowser = () => {
       window.location.href = "kakaotalk://inappbrowser/close";
     }
   } else {
-    window.close();
+    const openChatUrl = "https://open.kakao.com/o/gqKloLpe";
+    window.location.href = openChatUrl;
   }
 };

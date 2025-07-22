@@ -25,7 +25,7 @@ export function SubTabs<T extends string>({
           key={tab}
           onClick={() => onChange(tab)}
           className={clsx(
-            "px-4 py-2 transition-colors duration-200 font-medium",
+            "flex-1 px-4 py-2 transition-colors duration-200 font-medium",
             selected === tab
               ? "bg-[#dd9595] text-white"
               : "text-gray-600 hover:bg-gray-200"

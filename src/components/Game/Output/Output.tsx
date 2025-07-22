@@ -140,7 +140,7 @@ const Output = ({
             getGameText();
             setTimeout(() => {
               closeKakaoBrowser();
-            }, 300);
+            }, 400);
           }}
         >
           경기표 생성

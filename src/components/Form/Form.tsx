@@ -7,6 +7,14 @@ import { SubTabs } from "../common/SubTabs";
 
 const Form = () => {
   const [currentTab, setCurrentTab] = useState("출석");
+  const [isShaking, setIsShaking] = useState(false);
+
+  const playAnimation = () => {
+    setIsShaking(false);
+    setTimeout(() => {
+      setIsShaking(true);
+    }, 10);
+  };
 
   return (
     <>
@@ -15,6 +23,7 @@ const Form = () => {
         selected={currentTab}
         onChange={(tab) => {
           setCurrentTab(tab);
+          playAnimation();
         }}
       />
       <div className="relative p-4 text-sm text-left whitespace-pre-wrap bg-white border rounded-lg shadow-inner min-h-[55%] max-h-[55%] overflow-auto">
@@ -61,7 +70,7 @@ const Form = () => {
       </div>
       <Button
         color="pink"
-        size="md"
+        size="lg"
         onClick={() => {
           const pasteKey =
             currentTab === "출석"
@@ -74,8 +83,9 @@ const Form = () => {
           getToast("양식이 복사되었습니다.");
           setTimeout(() => {
             closeKakaoBrowser();
-          }, 300);
+          }, 400);
         }}
+        className={isShaking ? "animate-shake" : ""}
       >
         복사하기
       </Button>
