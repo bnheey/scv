@@ -1,50 +1,113 @@
-# React + TypeScript + Vite
+# 🏸 SCV Club
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+배드민턴 동호회의 **출석 관리와 복식 경기 편성을 효율적으로 운영하기
+위해 개발한 웹 서비스**
 
-Currently, two official plugins are available:
+👉 https://scv-six.vercel.app/
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+동호회 운영 시 반복적으로 발생하는\
+**출석 관리, 경기 조 편성, 경기 변경 작업의 비효율**을 해결하기 위해\
+직접 **서비스 기획, UX 설계, 프론트엔드 개발**을 진행했습니다.
 
-## Expanding the ESLint configuration
+<br>
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+# Problem
 
-- Configure the top-level `parserOptions` property like this:
+배드민턴 동호회 운영 과정에서 다음과 같은 문제가 발생했습니다.
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+- 출석을 종이나 단톡방으로 관리
+- 경기 조를 매번 사람이 직접 구성
+- 경기 조 변경 시 다시 작성해야 하는 번거로움
+- 회원 등급 / 역할을 한눈에 파악하기 어려움
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+특히 경기 조 편성은 **운영자의 경험과 기억에 의존하는 작업**이었습니다.
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+이 과정에서
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+- 운영 시간이 길어지고
+- 경기 시작이 지연되며
+- 운영자의 피로도가 증가하는 문제가 있었습니다.
+
+<br>
+
+# Solution
+
+SCV Club은 **출석 관리 → 경기 생성 → 경기 편성 수정**까지의 과정을
+하나의 서비스로 통합했습니다.
+
+### 핵심 기능
+
+- 회원 출석 관리
+- 2 vs 2 복식 경기 자동 생성
+- Drag & Drop 기반 경기 편성 수정
+- 회원 등급 / 역할 Badge 관리
+
+이를 통해 동호회 운영 시 발생하는 **수작업과 운영 부담을 크게
+줄였습니다.**
+
+<br>
+
+# UX Design
+
+이 프로젝트는 단순한 기능 구현이 아니라\
+**실제 동호회 운영 경험을 기반으로 UI / UX를 직접 설계하고 개선한
+서비스**입니다.
+
+<br>
+
+## Member Badge 시스템
+
+회원의 정보를 **Badge UI로 시각화**하여 운영자가 빠르게 상태를 파악할 수
+있도록 설계했습니다.
+
+예시
+
+- 🏅 운영진
+- ⭐ 우수회원
+- 👤 일반회원
+
+이를 통해 **회원 관리의 가독성을 개선했습니다.**
+
+## Drag & Drop 경기 편성 UX
+
+경기 편성을 빠르게 수정할 수 있도록\
+**직관적인 Drag & Drop 인터랙션**을 설계했습니다.
+
+사용자는
+
+- 선수 교체
+- 팀 변경
+- 경기 재배치
+
+를 **마우스 조작만으로 수행**할 수 있습니다.
+
+실제 코트 운영 상황에서 **빠른 경기 조 변경이 가능하도록 UX를
+설계했습니다.**
+
+<br>
+
+# Tech Stack
+
+### Frontend
+
+- React
+- TypeScript
+- Vite
+- Zustand
+- Tailwind CSS
+
+### Deployment
+
+- Vercel
+
+<br>
+
+# Impact
+
+SCV Club은 실제 동호회 운영에 사용되고 있으며
+
+- 출석 관리 시간 단축
+- 경기 편성 작업 감소
+- 경기 운영 효율 개선
+
+에 기여했습니다.
